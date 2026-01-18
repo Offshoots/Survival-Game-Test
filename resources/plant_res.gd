@@ -29,7 +29,7 @@ func setup(seed_enum: Enum.Seed):
 	grow_speed = Data.PLANT_DATA[seed_enum]['grow_speed']
 	h_frames = Data.PLANT_DATA[seed_enum]['h_frames']
 	death_max = Data.PLANT_DATA[seed_enum]['death_max']
-	#reward = Data.PLANT_DATA[seed_enum]['reward']
+	reward = Data.PLANT_DATA[seed_enum]['reward']
 
 #passing the sprite in from the plant scene allows us to update the frame to a new "Growth" stage.
 func grow(sprite: Sprite2D):

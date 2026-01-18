@@ -35,8 +35,14 @@ func grow(watered: bool):
 		
 
 
-func _on_area_2d_body_entered(_body: Node2D) -> void:
+func _on_area_2d_body_entered(body: Node2D) -> void:
 	if res.get_complete():
 		$FlashSprite2D.flash(0.2, 0.4, queue_free)
+		#Need to creat player inventory, where rewards can go. 
+		#An example below would be body.inventory where "inventory" is an array that can have new items appended.
+		#Furthermore, would be to create specific places in the inventory like a spot for plants
+		#And create if/match criteria to place the reward in the inventory in a matching slot. Ex: Two of the same plants now with "2" indicationg the total stacked in an inventory slot.
+		body.inventory.append(res.reward)
+		print(body.inventory)
 		death.emit(coord)
 		res.dead = true

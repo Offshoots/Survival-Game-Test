@@ -92,6 +92,7 @@ func level_reset():
 	$Overlay/CanvasLayer/PlantInfoContainer.update_all()
 	$Layers/SoilWaterLayer.clear()
 	$Timers/DayTimer.start()
+	#print(player.inventory)
 	#This code will search for all object (Trees or other) that have a reset function and will execute the reset.
 	for object in get_tree().get_nodes_in_group('Objects'):
 		if 'reset' in object:

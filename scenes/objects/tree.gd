@@ -4,7 +4,6 @@ const apple_texture = preload("res://graphics/plants/apple.png")
 var health := 4:
 	set(value):
 		health = value
-		print(value)
 		if health <= 0:
 			$FlashSprite2D.hide()
 			$Stump.show()
