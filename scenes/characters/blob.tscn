@@ -1,0 +1,164 @@
+[gd_scene load_steps=14 format=3 uid="uid://d158imc22rl57"]
+
+[ext_resource type="Texture2D" uid="uid://b466fqj7w4mne" path="res://graphics/characters/blob.png" id="1_n17ut"]
+[ext_resource type="Script" uid="uid://ddmq08koxrnac" path="res://scenes/characters/blob.gd" id="1_xa0uo"]
+[ext_resource type="PackedScene" uid="uid://b1a4cl0kv3lpw" path="res://scenes/vfx/flash_sprite_2d.tscn" id="2_xa0uo"]
+[ext_resource type="Shader" uid="uid://b6nm5dtkeitqy" path="res://shaders/flash.tres" id="3_50kq6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pjcp6"]
+resource_local_to_scene = true
+shader = ExtResource("3_50kq6")
+shader_parameter/Color = Color(1, 1, 1, 1)
+shader_parameter/Progress = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nlap5"]
+radius = 6.0827627
+
+[sub_resource type="Animation" id="Animation_n17ut"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlashSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_mt6qh"]
+resource_name = "idle_down"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlashSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_xa0uo"]
+resource_name = "idle_left"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlashSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [15, 16]
+}
+
+[sub_resource type="Animation" id="Animation_50kq6"]
+resource_name = "idle_right"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlashSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [29, 30]
+}
+
+[sub_resource type="Animation" id="Animation_pjcp6"]
+resource_name = "idle_up"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlashSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [43, 44]
+}
+
+[sub_resource type="Animation" id="Animation_nlap5"]
+resource_name = "explode"
+length = 1.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FlashSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [7, 8, 9, 10, 11, 12, 13]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1oscj"]
+_data = {
+&"RESET": SubResource("Animation_n17ut"),
+&"explode": SubResource("Animation_nlap5"),
+&"idle_down": SubResource("Animation_mt6qh"),
+&"idle_left": SubResource("Animation_xa0uo"),
+&"idle_right": SubResource("Animation_50kq6"),
+&"idle_up": SubResource("Animation_pjcp6")
+}
+
+[node name="Blob" type="CharacterBody2D" groups=["Objects"]]
+collision_layer = 4
+script = ExtResource("1_xa0uo")
+
+[node name="Blob" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(361, 10)
+texture = ExtResource("1_n17ut")
+
+[node name="FlashSprite2D" parent="." instance=ExtResource("2_xa0uo")]
+material = SubResource("ShaderMaterial_pjcp6")
+texture = ExtResource("1_n17ut")
+hframes = 14
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_nlap5")
+
+[node name="Animation" type="Node" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Animation"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_1oscj")
+}
+autoplay = "idle_down"
+
+[node name="AnimationTree" type="AnimationTree" parent="Animation"]
