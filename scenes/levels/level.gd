@@ -2,6 +2,7 @@ extends Node2D
 
 var plant_scene = preload("res://scenes/objects/plant.tscn")
 var plant_info_scene = preload("res://scenes/ui/plant_info.tscn")
+var item_info_scene = preload("res://scenes/ui/item_info.tscn")
 var used_cells: Array[Vector2i]
 @onready var player = $Objects/Player
 @onready var tree = $Objects/Tree
@@ -66,14 +67,23 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 				plant_info.setup(plant_res)
 				$Overlay/CanvasLayer/PlantInfoContainer.add(plant_info)
 				
+
+				
 		Enum.Tool.AXE, Enum.Tool.SWORD:
 			for object in get_tree().get_nodes_in_group('Objects'):
 				if object.position.distance_to(pos)< 20:
 					object.hit(tool)
+					#Setting up the variables to add items to the Inventory
+					var item_res = MapResource.new()
+					item_res.setup(player.current_inventory)
+					var item_info = item_info_scene.instantiate()
+					item_info.setup(item_res)
+					$Overlay/CanvasLayer/InventoryContainer.add(item_info)
 
 #This will toggle the plant info bar on/off by pressing the diagnose button "N"
 func _on_player_diagnose() -> void:
 	$Overlay/CanvasLayer/PlantInfoContainer.visible = not $Overlay/CanvasLayer/PlantInfoContainer.visible
+	#$Overlay/CanvasLayer/InventoryContainer.visible = not $Overlay/CanvasLayer/InventoryContainer.visible
 
 func day_restart():
 	var tween = create_tween()

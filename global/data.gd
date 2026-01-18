@@ -41,6 +41,36 @@ const PLANT_DATA = {
 		'grow_speed': 1.0,
 		'death_max': 3,
 		'reward': Enum.Item.WHEAT}}
+const INVENTORY_DATA = {
+	Enum.Item.WOOD: {
+		#'texture': "res://graphics/plants/tomato.png",
+		'icon_texture': "res://graphics/icons/wood.png",
+		'name':'Wood'},
+	Enum.Item.STONE: {
+		#'texture': "res://graphics/plants/tomato.png",
+		'icon_texture':"res://graphics/icons/blue.png",
+		'name':'Stone'},
+	Enum.Item.APPLE: {
+		#'texture': "res://graphics/plants/tomato.png",
+		'icon_texture': "res://graphics/icons/apple.png",
+		'name':'Apple'},
+	Enum.Item.TOMATO: {
+		#'texture': "res://graphics/plants/tomato.png",
+		'icon_texture': "res://graphics/icons/tomato.png",
+		'name':'Tomato'},
+	Enum.Item.CORN: {
+		#'texture': "res://graphics/plants/tomato.png",
+		'icon_texture': "res://graphics/icons/corn.png",
+		'name':'Corn'},
+	Enum.Item.PUMPKIN: {
+		#'texture': "res://graphics/plants/tomato.png",
+		'icon_texture': "res://graphics/icons/pumpkin.png",
+		'name':'Pumpkin'},
+	Enum.Item.WHEAT: {
+		#'texture': "res://graphics/plants/tomato.png",
+		'icon_texture': "res://graphics/icons/wheat.png",
+		'name':'Wheat'}
+		}
 const MACHINE_UPGRADE_COST = {
 	Enum.Machine.SPRINKLER: {
 		'name': 'Sprinkler',

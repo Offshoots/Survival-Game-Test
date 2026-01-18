@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=4 uid="uid://dkaf0otbgtrp5"]
+[gd_scene load_steps=25 format=4 uid="uid://dkaf0otbgtrp5"]
 
 [ext_resource type="Texture2D" uid="uid://b1cmu3aai85qc" path="res://graphics/tilesets/grass.png" id="1_bovvr"]
 [ext_resource type="Script" uid="uid://crdbsib38ohef" path="res://scenes/levels/level.gd" id="1_urvlt"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://vem02mh7silc" path="res://scenes/objects/simple_object.tscn" id="9_icy5c"]
 [ext_resource type="Shader" uid="uid://2dfugyjih0oe" path="res://shaders/circle_transition.gdshader" id="10_rmjfq"]
 [ext_resource type="PackedScene" uid="uid://gxfhn8vu2d0l" path="res://scenes/ui/plant_info_container.tscn" id="11_7pb6i"]
+[ext_resource type="PackedScene" uid="uid://gth410vtrg87" path="res://scenes/ui/inventory_container.tscn" id="12_xfk5q"]
 
 [sub_resource type="Gradient" id="Gradient_icy5c"]
 offsets = PackedFloat32Array(0, 0.23302752, 0.7798165, 1)
@@ -928,6 +929,8 @@ grow_vertical = 2
 color = Color(0.0885599, 0.0885599, 0.0885599, 1)
 
 [node name="PlantInfoContainer" parent="Overlay/CanvasLayer" instance=ExtResource("11_7pb6i")]
+
+[node name="InventoryContainer" parent="Overlay/CanvasLayer" instance=ExtResource("12_xfk5q")]
 
 [node name="Timers" type="Node" parent="."]
 

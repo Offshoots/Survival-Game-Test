@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://dav64kvys2pab"]
+
+[ext_resource type="Script" uid="uid://cpqdncmsbbwb" path="res://scenes/ui/item_info.gd" id="1_ov2lr"]
+
+[node name="ItemInfo" type="PanelContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_ov2lr")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="IconTexture" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+stretch_mode = 5
+
+[node name="ItemLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Wood"

@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="GodewValley"
+config/name="Survival Test Game"
 run/main_scene="uid://dkaf0otbgtrp5"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"

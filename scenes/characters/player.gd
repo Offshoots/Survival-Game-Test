@@ -9,6 +9,7 @@ var can_move: bool = true
 @onready var tool_state_machine = $Animation/AnimationTree.get("parameters/ToolStateMachine/playback")
 var current_tool: Enum.Tool = Enum.Tool.SWORD
 var current_seed: Enum.Seed = Enum.Seed.TOMATO
+var current_inventory: Enum.Item = Enum.Item.APPLE
 var inventory : Array
 
 signal tool_use(tool: Enum.Tool, pos: Vector2)
