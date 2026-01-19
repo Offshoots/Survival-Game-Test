@@ -13,7 +13,6 @@ var health := 4:
 			shape.size = Vector2(12,6)
 			$CollisionShape2D.shape = shape
 			$CollisionShape2D.position.y = 6
-			return Enum.Item.WOOD
 		
 
 #To Do list:
@@ -33,7 +32,8 @@ func hit(tool: Enum.Tool):
 		$FlashSprite2D.flash()
 		get_apples()
 		health -= 1
-		
+	
+	
 
 #Populate apples in random position via markers on the Tree
 func create_apples(num: int):

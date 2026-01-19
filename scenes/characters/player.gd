@@ -5,6 +5,8 @@ var last_direction: Vector2
 var speed = 50
 var can_move: bool = true
 
+@export var inv : Inv
+
 @onready var move_state_machine = $Animation/AnimationTree.get("parameters/MoveStateMachine/playback")
 @onready var tool_state_machine = $Animation/AnimationTree.get("parameters/ToolStateMachine/playback")
 var current_tool: Enum.Tool = Enum.Tool.SWORD
@@ -46,6 +48,8 @@ func get_basic_input():
 	
 	if Input.is_action_just_pressed("diagnose"):
 		diagnose.emit()
+	
+
 
 
 func move():

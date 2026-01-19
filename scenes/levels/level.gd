@@ -114,7 +114,11 @@ func level_reset():
 	##still a little buggy, goes to >4 apples sometimes
 	#if apples < 3:
 		#tree.create_apples(apples + 1)
-
+func get_inventory():
+	if Input.is_action_just_pressed("inventory"):
+		#Continue here
+		pass
+		
 
 func plant_death(coord: Vector2i):
 	used_cells.erase(coord)
