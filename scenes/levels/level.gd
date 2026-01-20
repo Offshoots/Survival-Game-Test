@@ -36,6 +36,9 @@ func _process(_delta: float) -> void:
 	$Overlay/DayTimeColor.color = color
 	if Input.is_action_just_pressed("day_change"):
 		day_restart()
+		#Survival Mode will require food to be consumed each day. Subtract 1 apple each day:
+		#need to remove an apple from the player.inventory array
+		remove_inventory(Enum.Item.APPLE)
 	
 	if Input.is_action_just_pressed("inventory"):
 		$Overlay/CanvasLayer/InventoryContainer.visible = not $Overlay/CanvasLayer/InventoryContainer.visible
@@ -43,7 +46,7 @@ func _process(_delta: float) -> void:
 	#Monitor the player for any items collected via "Body_entered" interactions with Area2D in other scenes.
 	if player.new_item == true:
 		var item_dropped = player.current_inventory
-		update_inventory(item_dropped)
+		add_inventory(item_dropped)
 		player.new_item = false
 
 func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
@@ -93,11 +96,11 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 					if object.apples:
 						var item_drop = Enum.Item.APPLE
 						player.inventory.append(item_drop)
-						update_inventory(item_drop)
+						add_inventory(item_drop)
 					if object.wood:
 						var item_drop = Enum.Item.WOOD
 						player.inventory.append(item_drop)
-						update_inventory(item_drop)
+						add_inventory(item_drop)
 
 #Use Bool for item pickup inside the correct scenes. If the Item is present for the event that it would be collected, then the bool is true.
 #The item will be added to the inventory via the Level scene into the ItemContainerUI, after assisinging the approiate enum to get the correct icon and properties.
@@ -108,24 +111,38 @@ func add_item(item_drop : Enum.Item):
 	item_info.setup(item_res)
 	$Overlay/CanvasLayer/InventoryContainer.add(item_info)
 
-
-func update_inventory(item_drop : Enum.Item):
+func add_inventory(item_added : Enum.Item):
 	#Setting up the variables to add items to the Inventory
+	apple = player.inventory.count(Enum.Item.APPLE)
+	wood = player.inventory.count(Enum.Item.WOOD)
+	print(player.inventory)  
 	for item in player.inventory:
 		match item:
 			Enum.Item.APPLE:
-				apple += 1
+				#apple += 1
 				if apple == 1:
-					add_item(item_drop)
+					add_item(item_added)
 			Enum.Item.WOOD:
-				wood += 1
+				#wood += 1
 				if wood == 1:
-					add_item(item_drop)
-		#Empty the inventory array (for now)
-		player.inventory.pop_back()
-	print(apple)
-	print(wood)
+					add_item(item_added)
+		#Empty the inventory array (for now) to prevent the counts of items above from getting recounted.
+		#player.inventory.pop_back()
+	#print(apple)
+	#print(wood)
+	update_invetory()
+
+func update_invetory():
+	apple = player.inventory.count(Enum.Item.APPLE)
+	wood = player.inventory.count(Enum.Item.WOOD)
 	$Overlay/CanvasLayer/InventoryContainer.update_all(apple, wood)
+
+func remove_inventory(item_removed: Enum.Item):
+	#Remove one matching item from the inventory using "erase"
+	player.inventory.erase(item_removed)
+	print(player.inventory)
+	update_invetory()
+
 
 #This will toggle the plant info bar on/off by pressing the diagnose button "N"
 func _on_player_diagnose() -> void:
@@ -153,6 +170,7 @@ func level_reset():
 	for object in get_tree().get_nodes_in_group('Objects'):
 		if 'reset' in object:
 			object.reset()
+	
 	
 	#My attempt work but did not queue free individual apples during reset
 	#var apples = tree.get_node('Apples').get_children().size()
