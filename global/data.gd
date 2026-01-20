@@ -116,3 +116,17 @@ const TOOL_STATE_ANIMATIONS = {
 	Enum.Tool.FISH: 'Fish',
 	Enum.Tool.SEED: 'Seed',
 	}
+const CRAFT_DATA = {
+	Enum.Craft.BOX: {
+		'texture': "res://graphics/objects/table.png",
+		#'icon_texture': "res://graphics/icons/wood.png",
+		'name':'Box'},
+	Enum.Craft.WALL: {
+		'texture': "res://graphics/objects/table.png",
+		#'icon_texture':"res://graphics/icons/blue.png",
+		'name':'Wall'},
+	Enum.Craft.DOOR: {
+		'texture': "res://graphics/objects/table.png",
+		#'icon_texture': "res://graphics/icons/apple.png",
+		'name':'Door'}
+}

@@ -4,6 +4,7 @@ var direction: Vector2
 var last_direction: Vector2
 var speed = 50
 var can_move: bool = true
+var placement_pos : Vector2
 
 @onready var move_state_machine = $Animation/AnimationTree.get("parameters/MoveStateMachine/playback")
 @onready var tool_state_machine = $Animation/AnimationTree.get("parameters/ToolStateMachine/playback")
@@ -52,6 +53,7 @@ func get_basic_input():
 	if Input.is_action_just_pressed("diagnose"):
 		diagnose.emit()
 	
+	
 
 
 
@@ -88,7 +90,8 @@ func animate():
 
 
 func tool_use_emit():
-	tool_use.emit(current_tool, position + last_direction * 16 + Vector2(0,4))
+	placement_pos = position + last_direction * 16 + Vector2(0,4)
+	tool_use.emit(current_tool, placement_pos)
 	#print('tool')
 
 

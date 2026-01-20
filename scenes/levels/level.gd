@@ -3,7 +3,9 @@ extends Node2D
 var plant_scene = preload("res://scenes/objects/plant.tscn")
 var plant_info_scene = preload("res://scenes/ui/plant_info.tscn")
 var item_info_scene = preload("res://scenes/ui/item_info.tscn")
+var box_scene = preload("res://scenes/objects/box.tscn")
 var used_cells: Array[Vector2i]
+var placement_pos : Vector2
 
 var apple: int
 var wood: int
@@ -21,7 +23,8 @@ var wheat: int
 #This physic function was put in the level script just for active frame debuging. 
 #However this could be a very cool "Cursor" or "Aim/Reticle" in a different game.
 func _physics_process(_delta: float) -> void:
-	var pos = player.position + player.last_direction * 16 + Vector2(0,4)
+	placement_pos = player.position + player.last_direction * 16 + Vector2(0,4)
+	var pos = placement_pos
 	var grid_coord: Vector2i = Vector2i(int(pos.x / Data.TILE_SIZE) , int(pos.y / Data.TILE_SIZE))
 	grid_coord.x += -1 if pos.x < 0 else 0
 	grid_coord.y += -1 if pos.y < 0 else 0
@@ -43,11 +46,31 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("inventory"):
 		$Overlay/CanvasLayer/InventoryContainer.visible = not $Overlay/CanvasLayer/InventoryContainer.visible
 	
+	if Input.is_action_just_pressed("build"):
+		#Can use enums to select different builds, but for now build a box
+		var craft = Enum.Craft.BOX
+		build(craft, placement_pos)
+	
 	#Monitor the player for any items collected via "Body_entered" interactions with Area2D in other scenes.
 	if player.new_item == true:
 		var item_dropped = player.current_inventory
 		add_inventory(item_dropped)
 		player.new_item = false
+
+func build(craft: Enum.Craft, pos: Vector2):
+	print("build")
+	print(placement_pos)
+	var grid_coord: Vector2i = Vector2i(int(pos.x / Data.TILE_SIZE) , int(pos.y / Data.TILE_SIZE))
+	grid_coord.x += -1 if pos.x < 0 else 0
+	grid_coord.y += -1 if pos.y < 0 else 0
+	if grid_coord not in used_cells:
+		#Need to create a new "Box" scene with collision shape and sprite
+		#preload and Instantiate that box scene
+		var box = box_scene.instantiate()
+		#add_child(box)
+		box.setup(grid_coord, $Objects)
+		used_cells.append(grid_coord)
+	
 
 func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 	var grid_coord: Vector2i = Vector2i(int(pos.x / Data.TILE_SIZE) , int(pos.y / Data.TILE_SIZE))
