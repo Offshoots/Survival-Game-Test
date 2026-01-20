@@ -167,9 +167,52 @@ autoplay = "idle_down"
 [node name="AnimationTree" type="AnimationTree" parent="Animation"]
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-debug_enabled = true
+path_desired_distance = 5.0
+target_desired_distance = 5.0
+path_postprocessing = 1
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
 autostart = true
+
+[node name="RayCastDown" type="RayCast2D" parent="."]
+target_position = Vector2(0, 20)
+collision_mask = 4
+
+[node name="RayCastDownLeft" type="RayCast2D" parent="."]
+rotation = 0.7853982
+target_position = Vector2(0, 20)
+collision_mask = 4
+
+[node name="RayCastLeft" type="RayCast2D" parent="."]
+rotation = 1.5707964
+target_position = Vector2(0, 20)
+collision_mask = 4
+
+[node name="RayCastUpLeft" type="RayCast2D" parent="."]
+rotation = 2.3561945
+scale = Vector2(0.99999994, 0.99999994)
+target_position = Vector2(0, 20)
+collision_mask = 4
+
+[node name="RayCastUp" type="RayCast2D" parent="."]
+rotation = 3.1415927
+target_position = Vector2(0, 20)
+collision_mask = 4
+
+[node name="RayCastUpRight" type="RayCast2D" parent="."]
+rotation = -2.3561945
+target_position = Vector2(0, 20)
+collision_mask = 4
+
+[node name="RayCastRight" type="RayCast2D" parent="."]
+rotation = 4.712389
+target_position = Vector2(0, 20)
+collision_mask = 4
+
+[node name="RayCastDownRight" type="RayCast2D" parent="."]
+rotation = 5.497787
+target_position = Vector2(0, 20)
+collision_mask = 4
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

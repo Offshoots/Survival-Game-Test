@@ -4,6 +4,7 @@ var plant_scene = preload("res://scenes/objects/plant.tscn")
 var plant_info_scene = preload("res://scenes/ui/plant_info.tscn")
 var item_info_scene = preload("res://scenes/ui/item_info.tscn")
 var box_scene = preload("res://scenes/objects/box.tscn")
+var tree_scene = preload("res://scenes/objects/tree.tscn")
 var used_cells: Array[Vector2i]
 var placement_pos : Vector2
 
@@ -19,6 +20,21 @@ var wheat: int
 @onready var tree = $Objects/Tree
 @onready var inv = $Overlay/CanvasLayer/InventoryContainer
 @export var daytime_color: Gradient
+
+func _ready() -> void:
+	var rand_num = randi_range(0,8)
+	print(rand_num)
+	spawn_trees(rand_num)
+
+
+#Populate trees in random position via markers on the map
+func spawn_trees(num: int):
+	var tree_markers = $Objects/TreeSpawnPositions.get_children().duplicate(true)
+	for i in num:
+		var pos_marker = tree_markers.pop_at(randf_range(0, tree_markers.size()-1))
+		var new_tree = tree_scene.instantiate()
+		$Objects.add_child(new_tree)
+		new_tree.position = pos_marker.position
 
 #This physic function was put in the level script just for active frame debuging. 
 #However this could be a very cool "Cursor" or "Aim/Reticle" in a different game.
@@ -48,8 +64,10 @@ func _process(_delta: float) -> void:
 	
 	if Input.is_action_just_pressed("build"):
 		#Can use enums to select different builds, but for now build a box
-		var craft = Enum.Craft.BOX
-		build(craft, placement_pos)
+		if wood >= 1:
+			var craft = Enum.Craft.BOX
+			build(craft, placement_pos)
+			remove_inventory(Enum.Item.WOOD)
 	
 	#Monitor the player for any items collected via "Body_entered" interactions with Area2D in other scenes.
 	if player.new_item == true:
@@ -68,9 +86,18 @@ func build(craft: Enum.Craft, pos: Vector2):
 		#add_child(box)
 		box.setup(grid_coord, $Objects)
 		used_cells.append(grid_coord)
-		#Test out setting the tileset to a new layer that does not have navigation.
-		$Layers/SoilWaterLayer.set_cells_terrain_connect([grid_coord], 0, 0)
-	
+		#Test out removing the layer with navigation and placing a tile without navigation.
+		$Layers/GrassLayer.erase_cell(grid_coord)
+		$Layers/SoilLayer.set_cells_terrain_connect([grid_coord], 0, 0)
+		print(grid_coord)
+		#Test removing the grid cells up, down, left, and right of the box
+		#$Layers/GrassLayer.erase_cell(Vector2i(grid_coord.x - 1, grid_coord.y))
+		#$Layers/GrassLayer.erase_cell(Vector2i(grid_coord.x + 1, grid_coord.y))
+		#$Layers/GrassLayer.erase_cell(Vector2i(grid_coord.x, grid_coord.y - 1))
+		#$Layers/GrassLayer.erase_cell(Vector2i(grid_coord.x, grid_coord.y + 1))
+		
+		#Test painting a new property layer for tileset that will have a box place on it
+		#I have found some success with removing the corners from the navigation tiles
 
 func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 	var grid_coord: Vector2i = Vector2i(int(pos.x / Data.TILE_SIZE) , int(pos.y / Data.TILE_SIZE))
@@ -83,6 +110,7 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 			#"If cell" checks if is a valid grass tile (or null) first. The "and" statement then confirmed if it is a a valid farmable tile.
 			if cell and cell.get_custom_data('farmable') == true:
 				$Layers/SoilLayer.set_cells_terrain_connect([grid_coord], 0, 0)
+				
 				
 		Enum.Tool.WATER:
 			#This is my version of the watering tool soil code. Clear Code says it works but is "Overkill"
@@ -111,8 +139,11 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 				var plant_info = plant_info_scene.instantiate()
 				plant_info.setup(plant_res)
 				$Overlay/CanvasLayer/PlantInfoContainer.add(plant_info)
-
-		Enum.Tool.AXE, Enum.Tool.SWORD:
+		Enum.Tool.SWORD:
+			for object in get_tree().get_nodes_in_group('Objects'):
+				if object.position.distance_to(pos)< 20:
+					object.hit(tool)
+		Enum.Tool.AXE:
 			for object in get_tree().get_nodes_in_group('Objects'):
 				if object.position.distance_to(pos)< 20:
 					object.hit(tool)

@@ -9,6 +9,16 @@ var distance_remaining
 @onready var player = get_tree().get_first_node_in_group('Player')
 @onready var nav_agent := $NavigationAgent2D as NavigationAgent2D
 
+@onready var ray_cast_down: RayCast2D = $RayCastDown
+@onready var ray_cast_down_left: RayCast2D = $RayCastDownLeft
+@onready var ray_cast_left: RayCast2D = $RayCastLeft
+@onready var ray_cast_up_left: RayCast2D = $RayCastUpLeft
+@onready var ray_cast_up: RayCast2D = $RayCastUp
+@onready var ray_cast_up_right: RayCast2D = $RayCastUpRight
+@onready var ray_cast_right: RayCast2D = $RayCastRight
+@onready var ray_cast_down_right: RayCast2D = $RayCastDownRight
+
+
 var health := 3:
 	set(value):
 		health = value
@@ -26,11 +36,28 @@ func _physics_process(_delta: float) -> void:
 		#speed =  20
 	#else:
 		#speed = 0
+	direction = to_local(nav_agent.get_next_path_position()).normalized()
+	#Code to change direction of the blob if it gets too close to obstacles with collision shapes, using raycast.
+	#if ray_cast_down.is_colliding():
+		#direction = direction *  -1
+	#if ray_cast_down_left.is_colliding():
+		#direction = direction *  -1
+	#if ray_cast_left.is_colliding():
+		#direction = direction *  -1
+	#if ray_cast_up_left.is_colliding():
+		#direction = direction *  -1
+	#if ray_cast_up_left.is_colliding():
+		#direction = direction *  -1
+	#if ray_cast_up_right.is_colliding():
+		#direction = direction *  -1
+	#if ray_cast_right.is_colliding():
+		#direction = direction *  -1
+	#if ray_cast_down_right.is_colliding():
+		#direction = direction *  -1
+	
 	distance_remaining = player.position.distance_to(position)
 	#direction = (player.position - position).normalized()
-	direction = to_local(nav_agent.get_next_path_position()).normalized()
 	velocity = direction * speed + push_direction
-	print(distance_remaining)
 	move_and_slide()
 
 func pathfind():
