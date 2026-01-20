@@ -5,14 +5,13 @@ var last_direction: Vector2
 var speed = 50
 var can_move: bool = true
 
-@export var inv : Inv
-
 @onready var move_state_machine = $Animation/AnimationTree.get("parameters/MoveStateMachine/playback")
 @onready var tool_state_machine = $Animation/AnimationTree.get("parameters/ToolStateMachine/playback")
 var current_tool: Enum.Tool = Enum.Tool.SWORD
 var current_seed: Enum.Seed = Enum.Seed.TOMATO
-var current_inventory: Enum.Item = Enum.Item.APPLE
-var inventory : Array
+var current_inventory: Enum.Item 
+var new_item : bool = false
+var inventory : Array[Enum.Item]
 
 signal tool_use(tool: Enum.Tool, pos: Vector2)
 signal diagnose
@@ -22,6 +21,10 @@ func _physics_process(_delta: float) -> void:
 		get_basic_input()
 		move()
 		animate()
+
+#Storing items in an array for now, don't know if I'll use
+	if new_item == true:
+		inventory.append(current_inventory)
 	
 	#Retain the last direction we traveled so that it can be used for calculating the correct grid coordinate for the tool use animation.
 	if direction:

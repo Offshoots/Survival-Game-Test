@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://gth410vtrg87"]
+[gd_scene load_steps=2 format=3 uid="uid://gth410vtrg87"]
 
 [ext_resource type="Script" uid="uid://dl6u03t04m3ja" path="res://scenes/ui/inventory_container.gd" id="1_3u08g"]
-[ext_resource type="PackedScene" uid="uid://dav64kvys2pab" path="res://scenes/ui/item_info.tscn" id="2_3orkr"]
 
 [node name="InventoryContainer" type="Control"]
 layout_mode = 3
@@ -26,7 +25,4 @@ theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
-layout_mode = 2
-
-[node name="ItemInfo" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_3orkr")]
 layout_mode = 2

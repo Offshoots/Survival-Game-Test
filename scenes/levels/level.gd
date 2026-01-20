@@ -4,8 +4,18 @@ var plant_scene = preload("res://scenes/objects/plant.tscn")
 var plant_info_scene = preload("res://scenes/ui/plant_info.tscn")
 var item_info_scene = preload("res://scenes/ui/item_info.tscn")
 var used_cells: Array[Vector2i]
+
+var apple: int
+var wood: int
+var stone: int
+var tomato: int
+var corn: int
+var pumpkin: int
+var wheat: int
+
 @onready var player = $Objects/Player
 @onready var tree = $Objects/Tree
+@onready var inv = $Overlay/CanvasLayer/InventoryContainer
 @export var daytime_color: Gradient
 
 #This physic function was put in the level script just for active frame debuging. 
@@ -26,6 +36,15 @@ func _process(_delta: float) -> void:
 	$Overlay/DayTimeColor.color = color
 	if Input.is_action_just_pressed("day_change"):
 		day_restart()
+	
+	if Input.is_action_just_pressed("inventory"):
+		$Overlay/CanvasLayer/InventoryContainer.visible = not $Overlay/CanvasLayer/InventoryContainer.visible
+	
+	#Monitor the player for any items collected via "Body_entered" interactions with Area2D in other scenes.
+	if player.new_item == true:
+		var item_dropped = player.current_inventory
+		update_inventory(item_dropped)
+		player.new_item = false
 
 func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 	var grid_coord: Vector2i = Vector2i(int(pos.x / Data.TILE_SIZE) , int(pos.y / Data.TILE_SIZE))
@@ -66,24 +85,51 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 				var plant_info = plant_info_scene.instantiate()
 				plant_info.setup(plant_res)
 				$Overlay/CanvasLayer/PlantInfoContainer.add(plant_info)
-				
 
-				
 		Enum.Tool.AXE, Enum.Tool.SWORD:
 			for object in get_tree().get_nodes_in_group('Objects'):
 				if object.position.distance_to(pos)< 20:
 					object.hit(tool)
-					#Setting up the variables to add items to the Inventory
-					var item_res = MapResource.new()
-					item_res.setup(player.current_inventory)
-					var item_info = item_info_scene.instantiate()
-					item_info.setup(item_res)
-					$Overlay/CanvasLayer/InventoryContainer.add(item_info)
+					if object.apples:
+						var item_drop = Enum.Item.APPLE
+						player.inventory.append(item_drop)
+						update_inventory(item_drop)
+					if object.wood:
+						var item_drop = Enum.Item.WOOD
+						player.inventory.append(item_drop)
+						update_inventory(item_drop)
+
+#Use Bool for item pickup inside the correct scenes. If the Item is present for the event that it would be collected, then the bool is true.
+#The item will be added to the inventory via the Level scene into the ItemContainerUI, after assisinging the approiate enum to get the correct icon and properties.
+func add_item(item_drop : Enum.Item):
+	var item_res = ItemResource.new()
+	item_res.setup(item_drop)
+	var item_info = item_info_scene.instantiate()
+	item_info.setup(item_res)
+	$Overlay/CanvasLayer/InventoryContainer.add(item_info)
+
+
+func update_inventory(item_drop : Enum.Item):
+	#Setting up the variables to add items to the Inventory
+	for item in player.inventory:
+		match item:
+			Enum.Item.APPLE:
+				apple += 1
+				if apple == 1:
+					add_item(item_drop)
+			Enum.Item.WOOD:
+				wood += 1
+				if wood == 1:
+					add_item(item_drop)
+		#Empty the inventory array (for now)
+		player.inventory.pop_back()
+	print(apple)
+	print(wood)
+	$Overlay/CanvasLayer/InventoryContainer.update_all(apple, wood)
 
 #This will toggle the plant info bar on/off by pressing the diagnose button "N"
 func _on_player_diagnose() -> void:
 	$Overlay/CanvasLayer/PlantInfoContainer.visible = not $Overlay/CanvasLayer/PlantInfoContainer.visible
-	#$Overlay/CanvasLayer/InventoryContainer.visible = not $Overlay/CanvasLayer/InventoryContainer.visible
 
 func day_restart():
 	var tween = create_tween()
@@ -114,11 +160,6 @@ func level_reset():
 	##still a little buggy, goes to >4 apples sometimes
 	#if apples < 3:
 		#tree.create_apples(apples + 1)
-func get_inventory():
-	if Input.is_action_just_pressed("inventory"):
-		#Continue here
-		pass
-		
 
 func plant_death(coord: Vector2i):
 	used_cells.erase(coord)

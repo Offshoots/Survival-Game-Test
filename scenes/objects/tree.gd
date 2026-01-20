@@ -3,16 +3,25 @@ extends StaticBody2D
 
 
 const apple_texture = preload("res://graphics/plants/apple.png")
+
+#Use Bool for item pickup. If the Item is present for the event that it would be collected, then the bool is true.
+#The item will be added to the inventory via the Level scene into the ItemContainerUI, after assisinging the approiate enum to get the correct icon and properties.
+var apples : bool = false
+var wood : bool = false
 var health := 4:
 	set(value):
 		health = value
-		if health <= 0:
+		if health == 0:
+			#Changed to when health == 0 so that the below code is only executed once
 			$FlashSprite2D.hide()
 			$Stump.show()
 			var shape = RectangleShape2D.new()
 			shape.size = Vector2(12,6)
 			$CollisionShape2D.shape = shape
 			$CollisionShape2D.position.y = 6
+			wood = true
+		else:
+			wood = false
 		
 
 #To Do list:
@@ -49,9 +58,11 @@ func create_apples(num: int):
 func get_apples():
 	#if $Apples.get_children exists (if there are any apples on the tree)
 	if $Apples.get_children():
+		apples = true
 		$Apples.get_children().pick_random().queue_free()
 		print('get apple')
-		return Enum.Item.APPLE
+	else:
+		apples = false
 
 
 func reset():

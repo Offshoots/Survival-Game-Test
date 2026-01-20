@@ -1,4 +1,4 @@
-class_name MapResource extends Resource
+class_name ItemResource extends Resource
 #Manages resoure data for trees and boulders for lumber and stone (or other mineral) rewards to player
 
 @export var texture: Texture2D
