@@ -5,8 +5,9 @@ var direction: Vector2
 var speed = 20
 var push_distance = 130
 var push_direction: Vector2
+var distance_remaining
 @onready var player = get_tree().get_first_node_in_group('Player')
-
+@onready var nav_agent := $NavigationAgent2D as NavigationAgent2D
 
 var health := 3:
 	set(value):
@@ -25,10 +26,15 @@ func _physics_process(_delta: float) -> void:
 		#speed =  20
 	#else:
 		#speed = 0
-	
-	direction = (player.position - position).normalized()
+	distance_remaining = player.position.distance_to(position)
+	#direction = (player.position - position).normalized()
+	direction = to_local(nav_agent.get_next_path_position()).normalized()
 	velocity = direction * speed + push_direction
+	print(distance_remaining)
 	move_and_slide()
+
+func pathfind():
+	nav_agent.target_position = player.position
 
 func death():
 	speed = 0
@@ -46,3 +52,7 @@ func hit(tool: Enum.Tool):
 		$FlashSprite2D.flash()
 		health -= 1
 		push()
+
+
+func _on_timer_timeout() -> void:
+	pathfind()

@@ -58,8 +58,6 @@ func _process(_delta: float) -> void:
 		player.new_item = false
 
 func build(craft: Enum.Craft, pos: Vector2):
-	print("build")
-	print(placement_pos)
 	var grid_coord: Vector2i = Vector2i(int(pos.x / Data.TILE_SIZE) , int(pos.y / Data.TILE_SIZE))
 	grid_coord.x += -1 if pos.x < 0 else 0
 	grid_coord.y += -1 if pos.y < 0 else 0
@@ -70,6 +68,8 @@ func build(craft: Enum.Craft, pos: Vector2):
 		#add_child(box)
 		box.setup(grid_coord, $Objects)
 		used_cells.append(grid_coord)
+		#Test out setting the tileset to a new layer that does not have navigation.
+		$Layers/SoilWaterLayer.set_cells_terrain_connect([grid_coord], 0, 0)
 	
 
 func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
