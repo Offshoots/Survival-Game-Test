@@ -963,6 +963,17 @@ position = Vector2(228, 494)
 [node name="Marker2D9" type="Marker2D" parent="Objects/TreeSpawnPositions"]
 position = Vector2(225, 524)
 
+[node name="EnemySpawnPositions" type="Node2D" parent="Objects"]
+
+[node name="Marker2D" type="Marker2D" parent="Objects/EnemySpawnPositions"]
+position = Vector2(257, 354)
+
+[node name="Marker2D2" type="Marker2D" parent="Objects/EnemySpawnPositions"]
+position = Vector2(200, 390)
+
+[node name="Marker2D3" type="Marker2D" parent="Objects/EnemySpawnPositions"]
+position = Vector2(241, 382)
+
 [node name="Overlay" type="Node2D" parent="."]
 
 [node name="DayTimeColor" type="CanvasModulate" parent="Overlay"]

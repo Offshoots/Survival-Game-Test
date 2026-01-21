@@ -133,7 +133,7 @@ _data = {
 &"idle_up": SubResource("Animation_pjcp6")
 }
 
-[node name="Blob" type="CharacterBody2D" groups=["Objects"]]
+[node name="Blob" type="CharacterBody2D" groups=["Enemy"]]
 collision_layer = 4
 collision_mask = 4
 motion_mode = 1

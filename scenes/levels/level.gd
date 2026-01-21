@@ -5,6 +5,7 @@ var plant_info_scene = preload("res://scenes/ui/plant_info.tscn")
 var item_info_scene = preload("res://scenes/ui/item_info.tscn")
 var box_scene = preload("res://scenes/objects/box.tscn")
 var tree_scene = preload("res://scenes/objects/tree.tscn")
+var enemy_scene = preload("res://scenes/characters/blob.tscn")
 var used_cells: Array[Vector2i]
 var placement_pos : Vector2
 
@@ -25,16 +26,7 @@ func _ready() -> void:
 	var rand_num = randi_range(4,8)
 	print(rand_num)
 	spawn_trees(rand_num)
-
-
-#Populate trees in random position via markers on the map
-func spawn_trees(num: int):
-	var tree_markers = $Objects/TreeSpawnPositions.get_children().duplicate(true)
-	for i in num:
-		var pos_marker = tree_markers.pop_at(randf_range(0, tree_markers.size()-1))
-		var new_tree = tree_scene.instantiate()
-		$Objects.add_child(new_tree)
-		new_tree.position = pos_marker.position
+	spawn_enemies(randi_range(0,2))
 
 #This physic function was put in the level script just for active frame debuging. 
 #However this could be a very cool "Cursor" or "Aim/Reticle" in a different game.
@@ -75,6 +67,24 @@ func _process(_delta: float) -> void:
 		add_inventory(item_dropped)
 		player.new_item = false
 
+#Populate trees in random position via markers on the map (called in ready function)
+func spawn_trees(num: int):
+	var tree_markers = $Objects/TreeSpawnPositions.get_children().duplicate(true)
+	for i in num:
+		var pos_marker = tree_markers.pop_at(randf_range(0, tree_markers.size()-1))
+		var new_tree = tree_scene.instantiate()
+		$Objects.add_child(new_tree)
+		new_tree.position = pos_marker.position
+
+func spawn_enemies(num: int):
+	var enemy_markers = $Objects/EnemySpawnPositions.get_children().duplicate(true)
+	for i in num:
+		var pos_marker = enemy_markers.pop_at(randf_range(0, enemy_markers.size()-1))
+		var new_enemy = enemy_scene.instantiate()
+		$Objects.add_child(new_enemy)
+		new_enemy.position = pos_marker.position
+
+#Build when 'B' Input map action is pressed (called in process function)
 func build(craft: Enum.Craft, pos: Vector2):
 	var grid_coord: Vector2i = Vector2i(int(pos.x / Data.TILE_SIZE) , int(pos.y / Data.TILE_SIZE))
 	grid_coord.x += -1 if pos.x < 0 else 0
@@ -99,6 +109,11 @@ func build(craft: Enum.Craft, pos: Vector2):
 		#Test painting a new property layer for tileset that will have a box place on it
 		#I have found some success with removing the corners from the navigation tiles
 
+#This will toggle the plant info bar on/off by pressing the diagnose button "N"
+func _on_player_diagnose() -> void:
+	$Overlay/CanvasLayer/PlantInfoContainer.visible = not $Overlay/CanvasLayer/PlantInfoContainer.visible
+
+#Tool use comes from the player scene script. Actions of tool use are completed in the Level scene and script.
 func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 	var grid_coord: Vector2i = Vector2i(int(pos.x / Data.TILE_SIZE) , int(pos.y / Data.TILE_SIZE))
 	grid_coord.x += -1 if pos.x < 0 else 0
@@ -110,8 +125,6 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 			#"If cell" checks if is a valid grass tile (or null) first. The "and" statement then confirmed if it is a a valid farmable tile.
 			if cell and cell.get_custom_data('farmable') == true:
 				$Layers/SoilLayer.set_cells_terrain_connect([grid_coord], 0, 0)
-				
-				
 		Enum.Tool.WATER:
 			#This is my version of the watering tool soil code. Clear Code says it works but is "Overkill"
 			#$Layers/SoilWaterLayer.set_cells_terrain_connect([grid_coord], 0, 0)
@@ -140,7 +153,7 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 				plant_info.setup(plant_res)
 				$Overlay/CanvasLayer/PlantInfoContainer.add(plant_info)
 		Enum.Tool.SWORD:
-			for object in get_tree().get_nodes_in_group('Objects'):
+			for object in get_tree().get_nodes_in_group('Enemy'):
 				if object.position.distance_to(pos)< 20:
 					object.hit(tool)
 		Enum.Tool.AXE:
@@ -156,6 +169,7 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 						player.inventory.append(item_drop)
 						add_inventory(item_drop)
 
+#region Inventory Add, Remove, and Update
 #Use Bool for item pickup inside the correct scenes. If the Item is present for the event that it would be collected, then the bool is true.
 #The item will be added to the inventory via the Level scene into the ItemContainerUI, after assisinging the approiate enum to get the correct icon and properties.
 func add_item(item_drop : Enum.Item):
@@ -187,12 +201,10 @@ func remove_inventory(item_removed: Enum.Item):
 	player.inventory.erase(item_removed)
 	print(player.inventory)
 	update_invetory()
+#endregion
 
 
-#This will toggle the plant info bar on/off by pressing the diagnose button "N"
-func _on_player_diagnose() -> void:
-	$Overlay/CanvasLayer/PlantInfoContainer.visible = not $Overlay/CanvasLayer/PlantInfoContainer.visible
-
+#region Day Restart and Level Reset
 func day_restart():
 	var tween = create_tween()
 	#adjust the shader parameter that creates the circle transistion
@@ -201,29 +213,19 @@ func day_restart():
 	tween.tween_callback(level_reset)
 	tween.tween_property($Overlay/CanvasLayer/DayTransitionLayer.material, "shader_parameter/progress", 0.0, 1.0)
 
-
 func level_reset():
-	
 	for plant in get_tree().get_nodes_in_group('Plants'):
 		#If there is water on the tile, then plant function grow can be completed
 		plant.grow(plant.coord in $Layers/SoilWaterLayer.get_used_cells())
 	$Overlay/CanvasLayer/PlantInfoContainer.update_all()
 	$Layers/SoilWaterLayer.clear()
 	$Timers/DayTimer.start()
-	#print(player.inventory)
 	#This code will search for all object (Trees or other) that have a reset function and will execute the reset.
 	for object in get_tree().get_nodes_in_group('Objects'):
 		if 'reset' in object:
 			object.reset()
-	
-	
-	#My attempt work but did not queue free individual apples during reset
-	#var apples = tree.get_node('Apples').get_children().size()
-	#print(apples)
-	##still a little buggy, goes to >4 apples sometimes
-	#if apples < 3:
-		#tree.create_apples(apples + 1)
+#endregion
 
+#After a plany dies, delete cells used by that plant from the used_cells array
 func plant_death(coord: Vector2i):
 	used_cells.erase(coord)
-	#print(used_cells)
