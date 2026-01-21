@@ -17,12 +17,12 @@ var pumpkin: int
 var wheat: int
 
 @onready var player = $Objects/Player
-@onready var tree = $Objects/Tree
+#@onready var tree = $Objects/Tree
 @onready var inv = $Overlay/CanvasLayer/InventoryContainer
 @export var daytime_color: Gradient
 
 func _ready() -> void:
-	var rand_num = randi_range(0,8)
+	var rand_num = randi_range(4,8)
 	print(rand_num)
 	spawn_trees(rand_num)
 
@@ -169,21 +169,12 @@ func add_inventory(item_added : Enum.Item):
 	#Setting up the variables to add items to the Inventory
 	apple = player.inventory.count(Enum.Item.APPLE)
 	wood = player.inventory.count(Enum.Item.WOOD)
-	print(player.inventory)  
-	for item in player.inventory:
-		match item:
-			Enum.Item.APPLE:
-				#apple += 1
-				if apple == 1:
-					add_item(item_added)
-			Enum.Item.WOOD:
-				#wood += 1
-				if wood == 1:
-					add_item(item_added)
-		#Empty the inventory array (for now) to prevent the counts of items above from getting recounted.
-		#player.inventory.pop_back()
-	#print(apple)
-	#print(wood)
+	print(player.inventory) 
+	#Must meet condition that only 1 item of the type is present, then add the Item_info to the ItemContainerUI
+	if apple == 1 and item_added == Enum.Item.APPLE:
+		add_item(item_added)
+	if wood == 1 and item_added == Enum.Item.WOOD:
+		add_item(item_added)
 	update_invetory()
 
 func update_invetory():
