@@ -9,11 +9,13 @@ func setup(new_res: ItemResource):
 	$HBoxContainer/ItemLabel.text = res.name
 	
 
-func update(apple: int, wood: int):
-	if res.name == "Wood":
-		$HBoxContainer/CountLabel.text = str(wood)
-	if res.name == "Apple":
-		$HBoxContainer/CountLabel.text = str(apple)
+func update(count: int, item_updated: Enum.Item):
+	if res.name == Data.INVENTORY_DATA[item_updated]['name']:
+		$HBoxContainer/CountLabel.text = str(count)
+	#if res.name == "Wood":
+		#$HBoxContainer/CountLabel.text = str(count)
+	#if res.name == "Apple":
+		#$HBoxContainer/CountLabel.text = str(count)
 
 func remove():
 	queue_free()

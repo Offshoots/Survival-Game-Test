@@ -56,7 +56,7 @@ func _process(_delta: float) -> void:
 	
 	if Input.is_action_just_pressed("build"):
 		#Can use enums to select different builds, but for now build a box
-		if wood >= 1:
+		if player.inventory.count(Enum.Item.WOOD) >= 1:
 			var craft = Enum.Craft.BOX
 			build(craft, placement_pos)
 			remove_inventory(Enum.Item.WOOD)
@@ -153,10 +153,12 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 				plant_info.setup(plant_res)
 				$Overlay/CanvasLayer/PlantInfoContainer.add(plant_info)
 		Enum.Tool.SWORD:
+			#For now group for blob has been changed from 'Objects' to new group 'Enemy'.
 			for object in get_tree().get_nodes_in_group('Enemy'):
 				if object.position.distance_to(pos)< 20:
 					object.hit(tool)
 		Enum.Tool.AXE:
+			#Currently all trees are in group 'Objects'.
 			for object in get_tree().get_nodes_in_group('Objects'):
 				if object.position.distance_to(pos)< 20:
 					object.hit(tool)
@@ -180,27 +182,38 @@ func add_item(item_drop : Enum.Item):
 	$Overlay/CanvasLayer/InventoryContainer.add(item_info)
 
 func add_inventory(item_added : Enum.Item):
-	#Setting up the variables to add items to the Inventory
-	apple = player.inventory.count(Enum.Item.APPLE)
-	wood = player.inventory.count(Enum.Item.WOOD)
-	print(player.inventory) 
-	#Must meet condition that only 1 item of the type is present, then add the Item_info to the ItemContainerUI
-	if apple == 1 and item_added == Enum.Item.APPLE:
+	##Setting up the variables to add items to the Inventory
+	#apple = player.inventory.count(Enum.Item.APPLE)
+	#wood = player.inventory.count(Enum.Item.WOOD)
+	#print(player.inventory) 
+	##Must meet condition that only 1 item of the type is present, then add the Item_info to the ItemContainerUI
+	#if apple == 1 and item_added == Enum.Item.APPLE:
+		#add_item(item_added)
+	#if wood == 1 and item_added == Enum.Item.WOOD:
+		#add_item(item_added)
+	#update_invetory()
+	
+	#Created simplified code for any item (no need to check which item it is anymore):
+	if player.inventory.count(item_added) == 1:
 		add_item(item_added)
-	if wood == 1 and item_added == Enum.Item.WOOD:
-		add_item(item_added)
-	update_invetory()
+	update_invetory(item_added)
 
-func update_invetory():
-	apple = player.inventory.count(Enum.Item.APPLE)
-	wood = player.inventory.count(Enum.Item.WOOD)
-	$Overlay/CanvasLayer/InventoryContainer.update_all(apple, wood)
+#Update inventory function take the Enum.Item being added or removed and updates it
+func update_invetory(item_updated : Enum.Item):
+	#create new var count for the number of that item found in the player.inventory array, and pass that information into the "update_all" function
+	var count = player.inventory.count(item_updated)
+	$Overlay/CanvasLayer/InventoryContainer.update_all(count, item_updated)
+	
+	#Original version for apple and wood shown below. Wanted to simplify
+	#apple = player.inventory.count(Enum.Item.APPLE)
+	#wood = player.inventory.count(Enum.Item.WOOD)
+	#$Overlay/CanvasLayer/InventoryContainer.update_all(apple, wood)
 
 func remove_inventory(item_removed: Enum.Item):
 	#Remove one matching item from the inventory using "erase"
 	player.inventory.erase(item_removed)
 	print(player.inventory)
-	update_invetory()
+	update_invetory(item_removed)
 #endregion
 
 
