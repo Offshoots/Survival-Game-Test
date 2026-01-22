@@ -6,7 +6,8 @@ const TOOL_TEXTURES = {
 	Enum.Tool.WATER: preload("res://graphics/icons/water.png"),
 	Enum.Tool.SWORD: preload("res://graphics/icons/sword.png"),
 	Enum.Tool.FISH: preload("res://graphics/icons/fish.png"),
-	Enum.Tool.SEED: preload("res://graphics/icons/wheat.png")}
+	Enum.Tool.SEED: preload("res://graphics/icons/wheat.png"),
+	Enum.Tool.PICKAXE: preload("res://graphics/icons/pickaxe.png")}
 const SEED_TEXTURES = {
 	Enum.Seed.CORN: preload("res://graphics/icons/corn.png"),
 	Enum.Seed.PUMPKIN: preload("res://graphics/icons/pumpkin.png"),
@@ -25,7 +26,8 @@ func _ready() -> void:
 	
 func texture_setup(enum_list: Array, textures: Dictionary, container: HBoxContainer):
 	if textures == TOOL_TEXTURES:
-		for enum_id in enum_list:
+		#Size - 4 allows for only Sword, Axe, Pickaxe to be featured.
+		for enum_id in enum_list.size()-4:
 			var tool_texture = tool_texture_scene.instantiate()
 			#preloaded the Texture UI scene and now using the setup func, passing in each tool via enum_id in this for loop, and textures dictionary indexed for that enum_id
 			tool_texture.setup_tool(enum_id, textures[enum_id])

@@ -5,6 +5,7 @@ var plant_info_scene = preload("res://scenes/ui/plant_info.tscn")
 var item_info_scene = preload("res://scenes/ui/item_info.tscn")
 var box_scene = preload("res://scenes/objects/box.tscn")
 var tree_scene = preload("res://scenes/objects/tree.tscn")
+var rock_scene = preload("res://scenes/objects/rock.tscn")
 var enemy_scene = preload("res://scenes/characters/blob.tscn")
 var used_cells: Array[Vector2i]
 var placement_pos : Vector2
@@ -21,12 +22,17 @@ var wheat: int
 #@onready var tree = $Objects/Tree
 @onready var inv = $Overlay/CanvasLayer/InventoryContainer
 @export var daytime_color: Gradient
+@onready var main_ui: Control = $Overlay/CanvasLayer/MainUI
+
 
 func _ready() -> void:
-	var rand_num = randi_range(4,8)
-	print(rand_num)
-	spawn_trees(rand_num)
-	spawn_enemies(randi_range(0,2))
+	var rand_tree = randi_range(30,50)
+	var rand_rock = randi_range(6,8)
+	var rand_enemy = randi_range(2,3)
+	spawn_trees(rand_tree)
+	spawn_rocks(rand_rock)
+	spawn_enemies(rand_enemy)
+	
 
 #This physic function was put in the level script just for active frame debuging. 
 #However this could be a very cool "Cursor" or "Aim/Reticle" in a different game.
@@ -43,6 +49,8 @@ func _process(_delta: float) -> void:
 	#Create a ratio of how much of the day has passed from 0 to 1.
 	var daytime_point = 1 - ($Timers/DayTimer.time_left / $Timers/DayTimer.wait_time)
 	var color = daytime_color.sample(daytime_point)
+	var time = $Timers/DayTimer.time_left
+	main_ui.update_time(time)
 	#print(daytime_point)
 	$Overlay/DayTimeColor.color = color
 	if Input.is_action_just_pressed("day_change"):
@@ -75,6 +83,14 @@ func spawn_trees(num: int):
 		var new_tree = tree_scene.instantiate()
 		$Objects.add_child(new_tree)
 		new_tree.position = pos_marker.position
+
+func spawn_rocks(num: int):
+	var rock_markers = $Objects/RockSpawnPositions.get_children().duplicate(true)
+	for i in num:
+		var pos_marker = rock_markers.pop_at(randf_range(0, rock_markers.size()-1))
+		var new_rock = rock_scene.instantiate()
+		$Objects.add_child(new_rock)
+		new_rock.position = pos_marker.position
 
 func spawn_enemies(num: int):
 	var enemy_markers = $Objects/EnemySpawnPositions.get_children().duplicate(true)
@@ -152,11 +168,24 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 				var plant_info = plant_info_scene.instantiate()
 				plant_info.setup(plant_res)
 				$Overlay/CanvasLayer/PlantInfoContainer.add(plant_info)
+		Enum.Tool.PICKAXE:
+			#For now group for Rock has been changed from 'Objects' to new group 'Rock'.
+			for object in get_tree().get_nodes_in_group('Rock'):
+				if object.position.distance_to(pos)< 20:
+					object.hit(tool)
+					if object.stone:
+						var item_drop = Enum.Item.STONE
+						player.inventory.append(item_drop)
+						add_inventory(item_drop)
 		Enum.Tool.SWORD:
 			#For now group for blob has been changed from 'Objects' to new group 'Enemy'.
 			for object in get_tree().get_nodes_in_group('Enemy'):
 				if object.position.distance_to(pos)< 20:
 					object.hit(tool)
+					if object.gold:
+						var item_drop = Enum.Item.GOLD
+						player.inventory.append(item_drop)
+						add_inventory(item_drop)
 		Enum.Tool.AXE:
 			#Currently all trees are in group 'Objects'.
 			for object in get_tree().get_nodes_in_group('Objects'):
@@ -182,17 +211,6 @@ func add_item(item_drop : Enum.Item):
 	$Overlay/CanvasLayer/InventoryContainer.add(item_info)
 
 func add_inventory(item_added : Enum.Item):
-	##Setting up the variables to add items to the Inventory
-	#apple = player.inventory.count(Enum.Item.APPLE)
-	#wood = player.inventory.count(Enum.Item.WOOD)
-	#print(player.inventory) 
-	##Must meet condition that only 1 item of the type is present, then add the Item_info to the ItemContainerUI
-	#if apple == 1 and item_added == Enum.Item.APPLE:
-		#add_item(item_added)
-	#if wood == 1 and item_added == Enum.Item.WOOD:
-		#add_item(item_added)
-	#update_invetory()
-	
 	#Created simplified code for any item (no need to check which item it is anymore):
 	if player.inventory.count(item_added) == 1:
 		add_item(item_added)
@@ -203,11 +221,6 @@ func update_invetory(item_updated : Enum.Item):
 	#create new var count for the number of that item found in the player.inventory array, and pass that information into the "update_all" function
 	var count = player.inventory.count(item_updated)
 	$Overlay/CanvasLayer/InventoryContainer.update_all(count, item_updated)
-	
-	#Original version for apple and wood shown below. Wanted to simplify
-	#apple = player.inventory.count(Enum.Item.APPLE)
-	#wood = player.inventory.count(Enum.Item.WOOD)
-	#$Overlay/CanvasLayer/InventoryContainer.update_all(apple, wood)
 
 func remove_inventory(item_removed: Enum.Item):
 	#Remove one matching item from the inventory using "erase"

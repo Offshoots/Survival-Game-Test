@@ -48,8 +48,12 @@ const INVENTORY_DATA = {
 		'name':'Wood'},
 	Enum.Item.STONE: {
 		#'texture': "res://graphics/plants/tomato.png",
-		'icon_texture':"res://graphics/icons/blue.png",
+		'icon_texture':"res://graphics/icons/stone.png",
 		'name':'Stone'},
+	Enum.Item.GOLD: {
+		#'texture': "res://graphics/plants/tomato.png",
+		'icon_texture':"res://graphics/icons/gold.png",
+		'name':'Gold'},
 	Enum.Item.APPLE: {
 		#'texture': "res://graphics/plants/tomato.png",
 		'icon_texture': "res://graphics/icons/apple.png",
@@ -115,6 +119,7 @@ const TOOL_STATE_ANIMATIONS = {
 	Enum.Tool.SWORD: 'Sword',
 	Enum.Tool.FISH: 'Fish',
 	Enum.Tool.SEED: 'Seed',
+	Enum.Tool.PICKAXE: 'Pickaxe'
 	}
 const CRAFT_DATA = {
 	Enum.Craft.BOX: {

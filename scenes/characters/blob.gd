@@ -6,6 +6,11 @@ var speed = 20
 var push_distance = 130
 var push_direction: Vector2
 var distance_remaining
+
+#Use Bool for item pickup. If the Item is present for the event that it would be collected, then the bool is true.
+#The item will be added to the inventory via the Level scene into the ItemContainerUI, after assisinging the approiate enum to get the correct icon and properties.
+var gold : bool = false
+
 @onready var player = get_tree().get_first_node_in_group('Player')
 @onready var nav_agent := $NavigationAgent2D as NavigationAgent2D
 
@@ -23,10 +28,13 @@ var health := 3:
 	set(value):
 		health = value
 		print(value)
-		if health <= 0:
+		if health == 0:
 			death()
+			gold = true
 			$CollisionShape2D.queue_free()
 			#Need to queue free the blob collosion node to prevent it from pusing me around.
+		else:
+			gold = false
 
 
 func _physics_process(_delta: float) -> void:

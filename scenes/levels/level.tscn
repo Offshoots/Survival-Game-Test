@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=4 uid="uid://dkaf0otbgtrp5"]
+[gd_scene load_steps=30 format=4 uid="uid://dkaf0otbgtrp5"]
 
 [ext_resource type="Texture2D" uid="uid://b1cmu3aai85qc" path="res://graphics/tilesets/grass.png" id="1_bovvr"]
 [ext_resource type="Script" uid="uid://crdbsib38ohef" path="res://scenes/levels/level.gd" id="1_urvlt"]
@@ -11,10 +11,11 @@
 [ext_resource type="Shader" uid="uid://2dfugyjih0oe" path="res://shaders/circle_transition.gdshader" id="10_rmjfq"]
 [ext_resource type="PackedScene" uid="uid://gxfhn8vu2d0l" path="res://scenes/ui/plant_info_container.tscn" id="11_7pb6i"]
 [ext_resource type="PackedScene" uid="uid://gth410vtrg87" path="res://scenes/ui/inventory_container.tscn" id="12_xfk5q"]
+[ext_resource type="PackedScene" uid="uid://dtwtasyc1tvtl" path="res://scenes/ui/main_ui.tscn" id="13_qogh7"]
 
 [sub_resource type="Gradient" id="Gradient_icy5c"]
-offsets = PackedFloat32Array(0, 0.23302752, 0.7798165, 1)
-colors = PackedColorArray(0.92941177, 0.8627451, 0.8156863, 1, 1, 1, 1, 1, 0.36862746, 0.46666667, 1, 1, 0.92941177, 0.8627451, 0.8156863, 1)
+offsets = PackedFloat32Array(0, 0.4299517, 0.8599034)
+colors = PackedColorArray(0.9737398, 0.8204431, 0.45016474, 1, 1, 1, 1, 1, 0.36862746, 0.46666667, 1, 1)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d4w6o"]
 texture = ExtResource("1_xb4v1")
@@ -937,42 +938,234 @@ style = 0
 [node name="TreeSpawnPositions" type="Node2D" parent="Objects"]
 
 [node name="Marker2D" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(129, 456)
+position = Vector2(259, 227)
 
 [node name="Marker2D2" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(131, 492)
+position = Vector2(208, 230)
 
 [node name="Marker2D3" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(133, 525)
+position = Vector2(254, 267)
 
 [node name="Marker2D4" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(182, 455)
+position = Vector2(327, 388)
 
 [node name="Marker2D5" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(183, 490)
+position = Vector2(348, 465)
 
 [node name="Marker2D6" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(183, 521)
+position = Vector2(395, 405)
 
 [node name="Marker2D7" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(226, 457)
+position = Vector2(567, 540)
 
 [node name="Marker2D8" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(228, 494)
+position = Vector2(657, 479)
 
 [node name="Marker2D9" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(225, 524)
+position = Vector2(734, 471)
+
+[node name="Marker2D10" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(733, 406)
+
+[node name="Marker2D11" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(814, 445)
+
+[node name="Marker2D12" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(799, 373)
+
+[node name="Marker2D13" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(735, 309)
+
+[node name="Marker2D14" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(666, 268)
+
+[node name="Marker2D15" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(490, 220)
+
+[node name="Marker2D16" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(389, 224)
+
+[node name="Marker2D17" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(330, 177)
+
+[node name="Marker2D18" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(239, 177)
+
+[node name="Marker2D19" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(130, 274)
+
+[node name="Marker2D20" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(67, 223)
+
+[node name="Marker2D21" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(0, 230)
+
+[node name="Marker2D22" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(-76, 257)
+
+[node name="Marker2D23" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(-80, 309)
+
+[node name="Marker2D24" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(-29, 352)
+
+[node name="Marker2D25" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(-28, 416)
+
+[node name="Marker2D26" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(-35, 472)
+
+[node name="Marker2D27" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(-52, 524)
+
+[node name="Marker2D28" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(-52, 595)
+
+[node name="Marker2D29" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(-17, 651)
+
+[node name="Marker2D30" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(55, 654)
+
+[node name="Marker2D31" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(144, 619)
+
+[node name="Marker2D32" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(141, 668)
+
+[node name="Marker2D33" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(120, 534)
+
+[node name="Marker2D34" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(-110, 605)
+
+[node name="Marker2D35" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(213, 504)
+
+[node name="Marker2D36" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(245, 605)
+
+[node name="Marker2D37" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(301, 673)
+
+[node name="Marker2D38" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(361, 584)
+
+[node name="Marker2D39" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(321, 561)
+
+[node name="Marker2D40" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(441, 588)
+
+[node name="Marker2D41" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(444, 661)
+
+[node name="Marker2D42" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(491, 532)
+
+[node name="Marker2D43" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(440, 513)
+
+[node name="Marker2D44" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(464, 420)
+
+[node name="Marker2D45" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(342, 435)
+
+[node name="Marker2D46" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(291, 455)
+
+[node name="Marker2D47" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(224, 455)
+
+[node name="Marker2D48" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(155, 455)
+
+[node name="Marker2D49" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(72, 496)
+
+[node name="Marker2D50" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(40, 383)
+
+[node name="Marker2D51" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(95, 328)
+
+[node name="Marker2D52" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(56, 312)
+
+[node name="Marker2D53" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(172, 295)
+
+[node name="Marker2D54" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(330, 295)
+
+[node name="Marker2D55" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(427, 338)
+
+[node name="Marker2D56" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(466, 346)
+
+[node name="Marker2D57" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(535, 391)
+
+[node name="Marker2D58" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(506, 577)
+
+[node name="Marker2D59" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(710, 530)
+
+[node name="Marker2D60" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(697, 429)
+
+[node name="Marker2D61" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(794, 497)
+
+[node name="Marker2D62" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(569, 256)
 
 [node name="EnemySpawnPositions" type="Node2D" parent="Objects"]
+position = Vector2(431, -16)
 
 [node name="Marker2D" type="Marker2D" parent="Objects/EnemySpawnPositions"]
-position = Vector2(257, 354)
+position = Vector2(233, 353)
 
 [node name="Marker2D2" type="Marker2D" parent="Objects/EnemySpawnPositions"]
-position = Vector2(200, 390)
+position = Vector2(275, 379)
 
 [node name="Marker2D3" type="Marker2D" parent="Objects/EnemySpawnPositions"]
-position = Vector2(241, 382)
+position = Vector2(221, 398)
+
+[node name="RockSpawnPositions" type="Node2D" parent="Objects"]
+
+[node name="Marker2D" type="Marker2D" parent="Objects/RockSpawnPositions"]
+position = Vector2(638, 317)
+
+[node name="Marker2D2" type="Marker2D" parent="Objects/RockSpawnPositions"]
+position = Vector2(-67, 417)
+
+[node name="Marker2D3" type="Marker2D" parent="Objects/RockSpawnPositions"]
+position = Vector2(-100, 551)
+
+[node name="Marker2D4" type="Marker2D" parent="Objects/RockSpawnPositions"]
+position = Vector2(16, 552)
+
+[node name="Marker2D5" type="Marker2D" parent="Objects/RockSpawnPositions"]
+position = Vector2(200, 666)
+
+[node name="Marker2D6" type="Marker2D" parent="Objects/RockSpawnPositions"]
+position = Vector2(639, 538)
+
+[node name="Marker2D7" type="Marker2D" parent="Objects/RockSpawnPositions"]
+position = Vector2(62, 436)
+
+[node name="Marker2D8" type="Marker2D" parent="Objects/RockSpawnPositions"]
+position = Vector2(-22, 275)
+
+[node name="Marker2D9" type="Marker2D" parent="Objects/RockSpawnPositions"]
+position = Vector2(321, 233)
+
+[node name="Marker2D10" type="Marker2D" parent="Objects/RockSpawnPositions"]
+position = Vector2(494, 345)
 
 [node name="Overlay" type="Node2D" parent="."]
 
@@ -993,10 +1186,12 @@ color = Color(0.0885599, 0.0885599, 0.0885599, 1)
 
 [node name="InventoryContainer" parent="Overlay/CanvasLayer" instance=ExtResource("12_xfk5q")]
 
+[node name="MainUI" parent="Overlay/CanvasLayer" instance=ExtResource("13_qogh7")]
+
 [node name="Timers" type="Node" parent="."]
 
 [node name="DayTimer" type="Timer" parent="Timers"]
-wait_time = 180.0
+wait_time = 30.0
 one_shot = true
 autostart = true
 
