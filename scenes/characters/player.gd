@@ -17,6 +17,17 @@ var inventory : Array[Enum.Item]
 signal tool_use(tool: Enum.Tool, pos: Vector2)
 signal diagnose
 
+var death : bool = false
+
+var health := 3:
+	set(value):
+		health = value
+		print(value)
+		if health == 0:
+			death = true
+			print('You are Dead')
+
+
 func _physics_process(_delta: float) -> void:
 	if can_move:
 		get_basic_input()

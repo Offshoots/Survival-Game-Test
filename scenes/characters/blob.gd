@@ -27,12 +27,9 @@ var gold : bool = false
 var health := 3:
 	set(value):
 		health = value
-		print(value)
 		if health == 0:
 			death()
 			gold = true
-			$CollisionShape2D.queue_free()
-			#Need to queue free the blob collosion node to prevent it from pusing me around.
 		else:
 			gold = false
 
@@ -73,6 +70,7 @@ func pathfind():
 
 func death():
 	speed = 0
+	$CollisionShape2D.queue_free()
 	$Animation/AnimationPlayer.current_animation = 'explode'
 
 func push():

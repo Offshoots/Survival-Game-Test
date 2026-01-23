@@ -10,6 +10,11 @@ var enemy_scene = preload("res://scenes/characters/blob.tscn")
 var used_cells: Array[Vector2i]
 var placement_pos : Vector2
 
+var day: int = 1
+var day_timer: bool = true
+
+
+#May not need any of these item variables. I simplified all iventory functions to use Enums
 var apple: int
 var wood: int
 var stone: int
@@ -17,6 +22,8 @@ var tomato: int
 var corn: int
 var pumpkin: int
 var wheat: int
+
+
 
 @onready var player = $Objects/Player
 #@onready var tree = $Objects/Tree
@@ -28,10 +35,11 @@ var wheat: int
 func _ready() -> void:
 	var rand_tree = randi_range(30,50)
 	var rand_rock = randi_range(6,8)
-	var rand_enemy = randi_range(2,3)
 	spawn_trees(rand_tree)
 	spawn_rocks(rand_rock)
-	spawn_enemies(rand_enemy)
+	
+	#var rand_enemy = randi_range(2,3)
+	#spawn_enemies(rand_enemy)
 	
 
 #This physic function was put in the level script just for active frame debuging. 
@@ -49,15 +57,15 @@ func _process(_delta: float) -> void:
 	#Create a ratio of how much of the day has passed from 0 to 1.
 	var daytime_point = 1 - ($Timers/DayTimer.time_left / $Timers/DayTimer.wait_time)
 	var color = daytime_color.sample(daytime_point)
-	var time = $Timers/DayTimer.time_left
-	main_ui.update_time(time)
+	var day_time = $Timers/DayTimer.time_left
+	var night_time = $Timers/NightTimer.time_left
+	main_ui.update_time(day_time, night_time, day_timer)
 	#print(daytime_point)
 	$Overlay/DayTimeColor.color = color
-	if Input.is_action_just_pressed("day_change"):
-		day_restart()
-		#Survival Mode will require food to be consumed each day. Subtract 1 apple each day:
-		#need to remove an apple from the player.inventory array
-		remove_inventory(Enum.Item.APPLE)
+	
+	#"Tab" is input for day change by button press. Commenting out for now.
+	#if Input.is_action_just_pressed("day_change"):
+		#day_restart()
 	
 	if Input.is_action_just_pressed("inventory"):
 		$Overlay/CanvasLayer/InventoryContainer.visible = not $Overlay/CanvasLayer/InventoryContainer.visible
@@ -225,15 +233,20 @@ func update_invetory(item_updated : Enum.Item):
 func remove_inventory(item_removed: Enum.Item):
 	#Remove one matching item from the inventory using "erase"
 	player.inventory.erase(item_removed)
-	print(player.inventory)
+	#print(player.inventory)
 	update_invetory(item_removed)
 #endregion
 
 
 #region Day Restart and Level Reset
+#"Day_restart" function calls the "Level_reset" via callback in the middle of the circle transistion/animation for the day change
 func day_restart():
-	var tween = create_tween()
+	#Survival Mode will require food to be consumed each day. Subtract 1 apple each day:
+	#need to remove an apple from the player.inventory array
+	remove_inventory(Enum.Item.APPLE)
+	
 	#adjust the shader parameter that creates the circle transistion
+	var tween = create_tween()
 	tween.tween_property($Overlay/CanvasLayer/DayTransitionLayer.material, "shader_parameter/progress", 1.0, 1.0)
 	tween.tween_interval(0.5)
 	tween.tween_callback(level_reset)
@@ -243,9 +256,14 @@ func level_reset():
 	for plant in get_tree().get_nodes_in_group('Plants'):
 		#If there is water on the tile, then plant function grow can be completed
 		plant.grow(plant.coord in $Layers/SoilWaterLayer.get_used_cells())
+	for enemy in get_tree().get_nodes_in_group('Enemy'):
+		enemy.death()
 	$Overlay/CanvasLayer/PlantInfoContainer.update_all()
 	$Layers/SoilWaterLayer.clear()
 	$Timers/DayTimer.start()
+	day_timer = true
+	day += 1
+	main_ui.update_day(day)
 	#This code will search for all object (Trees or other) that have a reset function and will execute the reset.
 	for object in get_tree().get_nodes_in_group('Objects'):
 		if 'reset' in object:
@@ -255,3 +273,14 @@ func level_reset():
 #After a plany dies, delete cells used by that plant from the used_cells array
 func plant_death(coord: Vector2i):
 	used_cells.erase(coord)
+
+
+func _on_day_timer_timeout() -> void:
+	#Spawn increasing amounts of enemies every day
+	var rand_enemy = randi_range(3, day + 3)
+	day_timer = false
+	spawn_enemies(rand_enemy)
+	$Timers/NightTimer.start()
+
+func _on_night_timer_timeout() -> void:
+	day_restart()

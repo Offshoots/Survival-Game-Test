@@ -1135,6 +1135,60 @@ position = Vector2(275, 379)
 [node name="Marker2D3" type="Marker2D" parent="Objects/EnemySpawnPositions"]
 position = Vector2(221, 398)
 
+[node name="Marker2D4" type="Marker2D" parent="Objects/EnemySpawnPositions"]
+position = Vector2(128, 307)
+
+[node name="Marker2D5" type="Marker2D" parent="Objects/EnemySpawnPositions"]
+position = Vector2(161, 315)
+
+[node name="Marker2D6" type="Marker2D" parent="Objects/EnemySpawnPositions"]
+position = Vector2(139, 338)
+
+[node name="Marker2D7" type="Marker2D" parent="Objects/EnemySpawnPositions"]
+position = Vector2(170, 504)
+
+[node name="Marker2D8" type="Marker2D" parent="Objects/EnemySpawnPositions"]
+position = Vector2(203, 512)
+
+[node name="Marker2D9" type="Marker2D" parent="Objects/EnemySpawnPositions"]
+position = Vector2(181, 535)
+
+[node name="Marker2D10" type="Marker2D" parent="Objects/EnemySpawnPositions"]
+position = Vector2(318, 446)
+
+[node name="Marker2D11" type="Marker2D" parent="Objects/EnemySpawnPositions"]
+position = Vector2(351, 454)
+
+[node name="Marker2D12" type="Marker2D" parent="Objects/EnemySpawnPositions"]
+position = Vector2(329, 477)
+
+[node name="Marker2D13" type="Marker2D" parent="Objects/EnemySpawnPositions"]
+position = Vector2(-259, 710)
+
+[node name="Marker2D14" type="Marker2D" parent="Objects/EnemySpawnPositions"]
+position = Vector2(-226, 718)
+
+[node name="Marker2D15" type="Marker2D" parent="Objects/EnemySpawnPositions"]
+position = Vector2(-248, 741)
+
+[node name="Marker2D16" type="Marker2D" parent="Objects/EnemySpawnPositions"]
+position = Vector2(-104, 657)
+
+[node name="Marker2D17" type="Marker2D" parent="Objects/EnemySpawnPositions"]
+position = Vector2(-71, 665)
+
+[node name="Marker2D18" type="Marker2D" parent="Objects/EnemySpawnPositions"]
+position = Vector2(-93, 688)
+
+[node name="Marker2D19" type="Marker2D" parent="Objects/EnemySpawnPositions"]
+position = Vector2(-32, 630)
+
+[node name="Marker2D20" type="Marker2D" parent="Objects/EnemySpawnPositions"]
+position = Vector2(1, 638)
+
+[node name="Marker2D21" type="Marker2D" parent="Objects/EnemySpawnPositions"]
+position = Vector2(-21, 661)
+
 [node name="RockSpawnPositions" type="Node2D" parent="Objects"]
 
 [node name="Marker2D" type="Marker2D" parent="Objects/RockSpawnPositions"]
@@ -1191,9 +1245,16 @@ color = Color(0.0885599, 0.0885599, 0.0885599, 1)
 [node name="Timers" type="Node" parent="."]
 
 [node name="DayTimer" type="Timer" parent="Timers"]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="NightTimer" type="Timer" parent="Timers"]
 wait_time = 30.0
 one_shot = true
 autostart = true
 
 [connection signal="diagnose" from="Objects/Player" to="." method="_on_player_diagnose"]
 [connection signal="tool_use" from="Objects/Player" to="." method="_on_player_tool_use"]
+[connection signal="timeout" from="Timers/DayTimer" to="." method="_on_day_timer_timeout"]
+[connection signal="timeout" from="Timers/NightTimer" to="." method="_on_night_timer_timeout"]
