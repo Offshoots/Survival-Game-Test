@@ -60,15 +60,22 @@ func get_apples():
 	if $Apples.get_children():
 		apples = true
 		$Apples.get_children().pick_random().queue_free()
-		print('get apple')
 	else:
 		apples = false
 
 
 func reset():
 	if health > 0:
-		for apple in $Apples.get_children():
-			apple.queue_free()
-		create_apples(randi_range(0,3))
+		#Restore the tree's health
 		health = 5
+		
+		#This version would clear all the apples and then create a random number of apples up to 3:
+		#for apple in $Apples.get_children():
+			#apple.queue_free()
+		#create_apples(randi_range(0,3))
+		
+		#This version will check if there are less then 3 apples and add 0 or 1.
+		if $Apples.get_child_count() < 3:
+			create_apples(randi_range(0,1))
+	
 	

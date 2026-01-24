@@ -34,13 +34,17 @@ var health := 3:
 			gold = false
 
 
+var normal_speed := 20:
+	set(value):
+		normal_speed = value
+
 func _physics_process(_delta: float) -> void:
 	#Custom code to get blob to stop before reaching the player
-	#var dist = player.position.distance_to(position)
-	#if dist > 20:
-		#speed =  20
-	#else:
-		#speed = 0
+	var dist = player.position.distance_to(position)
+	if dist > 300:
+		speed =  200
+	else:
+		speed = normal_speed
 	direction = to_local(nav_agent.get_next_path_position()).normalized()
 	#Code to change direction of the blob if it gets too close to obstacles with collision shapes, using raycast.
 	#if ray_cast_down.is_colliding():
@@ -90,7 +94,6 @@ func death():
 	$Animation/AnimationPlayer.current_animation = 'explode'
 
 func push(target):
-	print(target)
 	var tween = get_tree().create_tween()
 	tween.tween_property(self, "push_direction", target, 0.1)
 	tween.tween_property(self, "push_direction", Vector2.ZERO, 0.2)

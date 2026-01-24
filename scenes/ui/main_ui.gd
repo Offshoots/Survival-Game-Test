@@ -14,10 +14,8 @@ func update_time(day_time: int, night_time: int, timer:bool):
 		
 	else:
 		day_time_label.text = "Night Time Remaining: " + str(night_time)
-		var message : String = "Survive the Night!"
-		update_message(message)
 
-	
+
 func update_day(day: int):
 	day_label.text = "Day: " + str(day)
 

@@ -121,8 +121,9 @@ layout_mode = 2
 [node name="MessageLabel" type="Label" parent="MarginContainer2/HBoxContainer/PanelContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-text = "Survive the Night!"
 
 [node name="MessageTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
 
 [connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]
