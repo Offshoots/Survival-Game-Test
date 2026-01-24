@@ -6,6 +6,8 @@ var speed = 50
 var can_move: bool = true
 var placement_pos : Vector2
 
+var death_scene = preload("res://scenes/ui/death_screen.tscn")
+
 @onready var move_state_machine = $Animation/AnimationTree.get("parameters/MoveStateMachine/playback")
 @onready var tool_state_machine = $Animation/AnimationTree.get("parameters/ToolStateMachine/playback")
 var current_tool: Enum.Tool = Enum.Tool.AXE
@@ -14,12 +16,16 @@ var current_inventory: Enum.Item
 var new_item : bool = false
 var inventory : Array[Enum.Item]
 
+@onready var death_timer: Timer = $DeathTimer
+
 signal tool_use(tool: Enum.Tool, pos: Vector2)
 signal diagnose
 
 var death : bool = false
+var damage : bool = false
 
-var health := 3:
+var max_health : int = 10
+var health := max_health:
 	set(value):
 		health = value
 		print(value)
@@ -27,6 +33,9 @@ var health := 3:
 			death = true
 			print('You are Dead')
 
+
+func _ready() -> void:
+	pass
 
 func _physics_process(_delta: float) -> void:
 	if can_move:
@@ -106,9 +115,17 @@ func tool_use_emit():
 	#print('tool')
 
 
-func _on_animation_tree_animation_started(anim_name: StringName) -> void:
+func _on_animation_tree_animation_started(_anim_name: StringName) -> void:
 	can_move = false
 
 
-func _on_animation_tree_animation_finished(anim_name: StringName) -> void:
+func _on_animation_tree_animation_finished(_anim_name: StringName) -> void:
 	can_move = true
+
+
+func _on_death_timer_timeout() -> void:
+	pass
+	
+	
+
+	

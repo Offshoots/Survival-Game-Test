@@ -913,7 +913,7 @@ tile_set = SubResource("TileSet_rmjfq")
 y_sort_enabled = true
 
 [node name="Player" parent="Objects" instance=ExtResource("2_b2cq8")]
-position = Vector2(186, 342)
+position = Vector2(118, 705)
 
 [node name="SimpleObject" parent="Objects" instance=ExtResource("9_icy5c")]
 position = Vector2(418, 467)
@@ -947,85 +947,85 @@ position = Vector2(208, 230)
 position = Vector2(254, 267)
 
 [node name="Marker2D4" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(327, 388)
+position = Vector2(306, 246)
 
 [node name="Marker2D5" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(348, 465)
+position = Vector2(380, 191)
 
 [node name="Marker2D6" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(395, 405)
+position = Vector2(175, 215)
 
 [node name="Marker2D7" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(567, 540)
+position = Vector2(389, 271)
 
 [node name="Marker2D8" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(657, 479)
+position = Vector2(159, 247)
 
 [node name="Marker2D9" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(734, 471)
+position = Vector2(441, 269)
 
 [node name="Marker2D10" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(733, 406)
+position = Vector2(286, 290)
 
 [node name="Marker2D11" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(814, 445)
+position = Vector2(504, 284)
 
 [node name="Marker2D12" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(799, 373)
+position = Vector2(465, 297)
 
 [node name="Marker2D13" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(735, 309)
+position = Vector2(107, 229)
 
 [node name="Marker2D14" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(666, 268)
+position = Vector2(200, 272)
 
 [node name="Marker2D15" type="Marker2D" parent="Objects/TreeSpawnPositions"]
 position = Vector2(490, 220)
 
 [node name="Marker2D16" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(389, 224)
+position = Vector2(804, 349)
 
 [node name="Marker2D17" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(330, 177)
+position = Vector2(753, 334)
 
 [node name="Marker2D18" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(239, 177)
+position = Vector2(801, 398)
 
 [node name="Marker2D19" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(130, 274)
+position = Vector2(777, 447)
 
 [node name="Marker2D20" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(67, 223)
+position = Vector2(763, 393)
 
 [node name="Marker2D21" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(0, 230)
+position = Vector2(715, 303)
 
 [node name="Marker2D22" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(-76, 257)
+position = Vector2(689, 272)
 
 [node name="Marker2D23" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(-80, 309)
+position = Vector2(709, 366)
 
 [node name="Marker2D24" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(-29, 352)
+position = Vector2(718, 472)
 
 [node name="Marker2D25" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(-28, 416)
+position = Vector2(720, 560)
 
 [node name="Marker2D26" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(-35, 472)
+position = Vector2(673, 489)
 
 [node name="Marker2D27" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(-52, 524)
+position = Vector2(735, 424)
 
 [node name="Marker2D28" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(-52, 595)
+position = Vector2(658, 380)
 
 [node name="Marker2D29" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(-17, 651)
+position = Vector2(654, 313)
 
 [node name="Marker2D30" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(55, 654)
+position = Vector2(619, 260)
 
 [node name="Marker2D31" type="Marker2D" parent="Objects/TreeSpawnPositions"]
 position = Vector2(144, 619)
@@ -1034,94 +1034,256 @@ position = Vector2(144, 619)
 position = Vector2(141, 668)
 
 [node name="Marker2D33" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(120, 534)
+position = Vector2(43, 688)
 
 [node name="Marker2D34" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(-110, 605)
+position = Vector2(80, 653)
 
 [node name="Marker2D35" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(213, 504)
+position = Vector2(193, 705)
 
 [node name="Marker2D36" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(245, 605)
+position = Vector2(182, 657)
 
 [node name="Marker2D37" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(301, 673)
+position = Vector2(250, 724)
 
 [node name="Marker2D38" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(361, 584)
+position = Vector2(243, 677)
 
 [node name="Marker2D39" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(321, 561)
+position = Vector2(328, 667)
 
 [node name="Marker2D40" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(441, 588)
+position = Vector2(272, 636)
 
 [node name="Marker2D41" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(444, 661)
+position = Vector2(222, 630)
 
 [node name="Marker2D42" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(491, 532)
+position = Vector2(313, 623)
 
 [node name="Marker2D43" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(440, 513)
+position = Vector2(243, 593)
 
 [node name="Marker2D44" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(464, 420)
+position = Vector2(191, 585)
 
 [node name="Marker2D45" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(342, 435)
+position = Vector2(154, 576)
 
 [node name="Marker2D46" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(291, 455)
+position = Vector2(111, 589)
 
 [node name="Marker2D47" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(224, 455)
+position = Vector2(70, 585)
 
 [node name="Marker2D48" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(155, 455)
+position = Vector2(26, 593)
 
 [node name="Marker2D49" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(72, 496)
+position = Vector2(-4, 656)
 
 [node name="Marker2D50" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(40, 383)
+position = Vector2(367, 678)
 
 [node name="Marker2D51" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(95, 328)
+position = Vector2(-137, 627)
 
 [node name="Marker2D52" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(56, 312)
+position = Vector2(-72, 641)
 
 [node name="Marker2D53" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(172, 295)
+position = Vector2(-109, 602)
 
 [node name="Marker2D54" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(330, 295)
+position = Vector2(-135, 582)
 
 [node name="Marker2D55" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(427, 338)
+position = Vector2(-38, 599)
 
 [node name="Marker2D56" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(466, 346)
+position = Vector2(-60, 562)
 
 [node name="Marker2D57" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(535, 391)
+position = Vector2(-119, 529)
 
 [node name="Marker2D58" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(506, 577)
+position = Vector2(-33, 528)
 
 [node name="Marker2D59" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(710, 530)
+position = Vector2(-81, 491)
 
 [node name="Marker2D60" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(697, 429)
+position = Vector2(-36, 470)
 
 [node name="Marker2D61" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(794, 497)
+position = Vector2(-82, 450)
 
 [node name="Marker2D62" type="Marker2D" parent="Objects/TreeSpawnPositions"]
-position = Vector2(569, 256)
+position = Vector2(-45, 416)
+
+[node name="Marker2D63" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(-26, 379)
+
+[node name="Marker2D64" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(-74, 362)
+
+[node name="Marker2D65" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(-95, 327)
+
+[node name="Marker2D66" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(-47, 319)
+
+[node name="Marker2D67" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(-40, 283)
+
+[node name="Marker2D68" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(-111, 267)
+
+[node name="Marker2D69" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(-71, 231)
+
+[node name="Marker2D70" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(-32, 250)
+
+[node name="Marker2D71" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(25, 261)
+
+[node name="Marker2D72" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(34, 301)
+
+[node name="Marker2D73" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(31, 338)
+
+[node name="Marker2D74" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(71, 276)
+
+[node name="Marker2D75" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(269, 547)
+
+[node name="Marker2D76" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(128, 283)
+
+[node name="Marker2D77" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(182, 434)
+
+[node name="Marker2D78" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(188, 331)
+
+[node name="Marker2D79" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(168, 368)
+
+[node name="Marker2D80" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(98, 359)
+
+[node name="Marker2D81" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(72, 418)
+
+[node name="Marker2D82" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(574, 340)
+
+[node name="Marker2D83" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(553, 379)
+
+[node name="Marker2D84" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(526, 359)
+
+[node name="Marker2D85" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(502, 390)
+
+[node name="Marker2D86" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(497, 347)
+
+[node name="Marker2D87" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(232, 412)
+
+[node name="Marker2D88" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(309, 447)
+
+[node name="Marker2D89" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(356, 480)
+
+[node name="Marker2D90" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(312, 493)
+
+[node name="Marker2D91" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(247, 500)
+
+[node name="Marker2D92" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(174, 500)
+
+[node name="Marker2D93" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(125, 472)
+
+[node name="Marker2D94" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(84, 496)
+
+[node name="Marker2D95" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(25, 468)
+
+[node name="Marker2D96" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(42, 533)
+
+[node name="Marker2D97" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(147, 526)
+
+[node name="Marker2D98" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(280, 353)
+
+[node name="Marker2D99" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(359, 404)
+
+[node name="Marker2D100" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(459, 428)
+
+[node name="Marker2D101" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(456, 508)
+
+[node name="Marker2D102" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(405, 543)
+
+[node name="Marker2D103" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(393, 570)
+
+[node name="Marker2D104" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(398, 601)
+
+[node name="Marker2D105" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(431, 598)
+
+[node name="Marker2D106" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(460, 595)
+
+[node name="Marker2D107" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(495, 579)
+
+[node name="Marker2D108" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(516, 548)
+
+[node name="Marker2D109" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(588, 533)
+
+[node name="Marker2D110" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(577, 564)
+
+[node name="Marker2D111" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(558, 595)
+
+[node name="Marker2D112" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(471, 651)
+
+[node name="Marker2D113" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(471, 688)
+
+[node name="Marker2D114" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(426, 671)
+
+[node name="Marker2D115" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(471, 555)
+
+[node name="Marker2D116" type="Marker2D" parent="Objects/TreeSpawnPositions"]
+position = Vector2(548, 499)
 
 [node name="EnemySpawnPositions" type="Node2D" parent="Objects"]
 position = Vector2(431, -16)
@@ -1226,6 +1388,14 @@ position = Vector2(494, 345)
 [node name="DayTimeColor" type="CanvasModulate" parent="Overlay"]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Overlay"]
+
+[node name="FadeTransition" type="ColorRect" parent="Overlay/CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
 [node name="DayTransitionLayer" type="ColorRect" parent="Overlay/CanvasLayer"]
 material = SubResource("ShaderMaterial_7pb6i")

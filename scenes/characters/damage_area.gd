@@ -7,6 +7,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if damage == false:
 		timer.start()
 		body.health -= 1
+		body.damage = true
 		damage = true
 		
 

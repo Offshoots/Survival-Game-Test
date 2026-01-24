@@ -138,8 +138,8 @@ radius = 6.0827627
 radius = 8.0
 
 [node name="Blob" type="CharacterBody2D" groups=["Enemy"]]
-collision_layer = 4
-collision_mask = 4
+collision_layer = 8
+collision_mask = 0
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_xa0uo")
@@ -176,43 +176,51 @@ wait_time = 0.1
 autostart = true
 
 [node name="RayCastDown" type="RayCast2D" parent="."]
-target_position = Vector2(0, 20)
+position = Vector2(0, 2)
+target_position = Vector2(0, 12)
 collision_mask = 4
 
 [node name="RayCastDownLeft" type="RayCast2D" parent="."]
+position = Vector2(0, 2)
 rotation = 0.7853982
-target_position = Vector2(0, 20)
+target_position = Vector2(0, 12)
 collision_mask = 4
 
 [node name="RayCastLeft" type="RayCast2D" parent="."]
+position = Vector2(0, 2)
 rotation = 1.5707964
-target_position = Vector2(0, 20)
+target_position = Vector2(0, 12)
 collision_mask = 4
 
 [node name="RayCastUpLeft" type="RayCast2D" parent="."]
+position = Vector2(0, 2)
 rotation = 2.3561945
 scale = Vector2(0.99999994, 0.99999994)
-target_position = Vector2(0, 20)
+target_position = Vector2(0, 12)
 collision_mask = 4
 
 [node name="RayCastUp" type="RayCast2D" parent="."]
+position = Vector2(0, 2)
 rotation = 3.1415927
-target_position = Vector2(0, 20)
+target_position = Vector2(0, 12)
 collision_mask = 4
 
 [node name="RayCastUpRight" type="RayCast2D" parent="."]
+position = Vector2(0, 2)
 rotation = -2.3561945
-target_position = Vector2(0, 20)
+target_position = Vector2(0, 12)
 collision_mask = 4
 
 [node name="RayCastRight" type="RayCast2D" parent="."]
+position = Vector2(0, 2)
 rotation = 4.712389
-target_position = Vector2(0, 20)
+target_position = Vector2(0, 12)
 collision_mask = 4
 
 [node name="RayCastDownRight" type="RayCast2D" parent="."]
+position = Vector2(0, 2)
 rotation = 5.497787
-target_position = Vector2(0, 20)
+target_position = Vector2(0, 12)
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

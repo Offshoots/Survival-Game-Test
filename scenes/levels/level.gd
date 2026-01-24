@@ -30,17 +30,26 @@ var wheat: int
 @onready var inv = $Overlay/CanvasLayer/InventoryContainer
 @export var daytime_color: Gradient
 @onready var main_ui: Control = $Overlay/CanvasLayer/MainUI
+@onready var fade_transition: ColorRect = $Overlay/CanvasLayer/FadeTransition
+
 
 
 func _ready() -> void:
+	Engine.time_scale = 1.0
 	var rand_tree = randi_range(30,50)
 	var rand_rock = randi_range(6,8)
 	spawn_trees(rand_tree)
 	spawn_rocks(rand_rock)
-	
+	fade_transition.modulate.a = 0.0
+	update_health()
 	#var rand_enemy = randi_range(2,3)
 	#spawn_enemies(rand_enemy)
 	
+
+func fade_out():
+	var tween := create_tween()
+	tween.tween_property(fade_transition, "modulate:a", 1.0 , 1.0)
+	await tween.finished
 
 #This physic function was put in the level script just for active frame debuging. 
 #However this could be a very cool "Cursor" or "Aim/Reticle" in a different game.
@@ -77,11 +86,34 @@ func _process(_delta: float) -> void:
 			build(craft, placement_pos)
 			remove_inventory(Enum.Item.WOOD)
 	
+	if Input.is_action_just_pressed("Heal"):
+		if player.health < player.max_health:
+			if Enum.Item.APPLE > 0:
+				remove_inventory(Enum.Item.APPLE)
+				player.health += 1
+			else:
+				var message:String = "Not enough food"
+				print(message)
+				main_ui.update_message(message)
+			
+	
 	#Monitor the player for any items collected via "Body_entered" interactions with Area2D in other scenes.
 	if player.new_item == true:
 		var item_dropped = player.current_inventory
 		add_inventory(item_dropped)
 		player.new_item = false
+	
+	if player.death == true:
+		player_dead()
+		
+	if player.damage == true:
+		update_health()
+
+
+func update_health():
+	var health = player.health 
+	var max_health = player.max_health
+	main_ui.update_health(max_health, health)
 
 #Populate trees in random position via markers on the map (called in ready function)
 func spawn_trees(num: int):
@@ -237,6 +269,15 @@ func remove_inventory(item_removed: Enum.Item):
 	update_invetory(item_removed)
 #endregion
 
+#Create the transition to the gameover screen
+func player_dead():
+	#Engine.time_scale = 0.5
+	fade_out()
+	death_screen()
+
+func death_screen():
+	#Engine.time_scale = 1.0
+	get_tree().change_scene_to_file("res://scenes/ui/death_screen.tscn")
 
 #region Day Restart and Level Reset
 #"Day_restart" function calls the "Level_reset" via callback in the middle of the circle transistion/animation for the day change
@@ -257,7 +298,8 @@ func level_reset():
 		#If there is water on the tile, then plant function grow can be completed
 		plant.grow(plant.coord in $Layers/SoilWaterLayer.get_used_cells())
 	for enemy in get_tree().get_nodes_in_group('Enemy'):
-		enemy.death()
+		if enemy.health > 0:
+			enemy.death()
 	$Overlay/CanvasLayer/PlantInfoContainer.update_all()
 	$Layers/SoilWaterLayer.clear()
 	$Timers/DayTimer.start()
@@ -277,7 +319,7 @@ func plant_death(coord: Vector2i):
 
 func _on_day_timer_timeout() -> void:
 	#Spawn increasing amounts of enemies every day
-	var rand_enemy = randi_range(3, day + 3)
+	var rand_enemy = randi_range(day + 3, day + 3)
 	day_timer = false
 	spawn_enemies(rand_enemy)
 	$Timers/NightTimer.start()

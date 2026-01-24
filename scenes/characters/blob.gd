@@ -44,21 +44,37 @@ func _physics_process(_delta: float) -> void:
 	direction = to_local(nav_agent.get_next_path_position()).normalized()
 	#Code to change direction of the blob if it gets too close to obstacles with collision shapes, using raycast.
 	#if ray_cast_down.is_colliding():
-		#direction = direction *  -1
+		#push_distance = 20
+		#var target = direction * -1 * push_distance
+		#push(target)
 	#if ray_cast_down_left.is_colliding():
-		#direction = direction *  -1
+		#push_distance = 20
+		#var target = direction * -1 * push_distance
+		#push(target)
 	#if ray_cast_left.is_colliding():
-		#direction = direction *  -1
+		#push_distance = 20
+		#var target = direction * -1 * push_distance
+		#push(target)
 	#if ray_cast_up_left.is_colliding():
-		#direction = direction *  -1
+		#push_distance = 20
+		#var target = direction * -1 * push_distance
+		#push(target)
 	#if ray_cast_up_left.is_colliding():
-		#direction = direction *  -1
+		#push_distance = 20
+		#var target = direction * -1 * push_distance
+		#push(target)
 	#if ray_cast_up_right.is_colliding():
-		#direction = direction *  -1
+		#push_distance = 20
+		#var target = direction * -1 * push_distance
+		#push(target)
 	#if ray_cast_right.is_colliding():
-		#direction = direction *  -1
+		#push_distance = 20
+		#var target = direction * -1 * push_distance
+		#push(target)
 	#if ray_cast_down_right.is_colliding():
-		#direction = direction *  -1
+		#push_distance = 20
+		#var target = direction * -1 * push_distance
+		#push(target)
 	
 	distance_remaining = player.position.distance_to(position)
 	#direction = (player.position - position).normalized()
@@ -73,9 +89,9 @@ func death():
 	$CollisionShape2D.queue_free()
 	$Animation/AnimationPlayer.current_animation = 'explode'
 
-func push():
+func push(target):
+	print(target)
 	var tween = get_tree().create_tween()
-	var target = (player.position - position).normalized() * -1 * push_distance
 	tween.tween_property(self, "push_direction", target, 0.1)
 	tween.tween_property(self, "push_direction", Vector2.ZERO, 0.2)
 
@@ -84,8 +100,13 @@ func hit(tool: Enum.Tool):
 	if tool == Enum.Tool.SWORD:
 		$FlashSprite2D.flash()
 		health -= 1
-		push()
-
+		push_distance = 130
+		var target = (player.position - position).normalized() * -1 * push_distance
+		push(target)
+	if tool != Enum.Tool.SWORD:
+		push_distance = 100
+		var target = (player.position - position).normalized() * -1 * push_distance
+		push(target)
 
 func _on_timer_timeout() -> void:
 	pathfind()

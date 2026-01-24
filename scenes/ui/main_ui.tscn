@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://dtwtasyc1tvtl"]
+[gd_scene load_steps=5 format=3 uid="uid://dtwtasyc1tvtl"]
 
 [ext_resource type="Script" uid="uid://cesn7iibjykrg" path="res://scenes/ui/main_ui.gd" id="1_hnesk"]
+[ext_resource type="Theme" uid="uid://rhcgh2v8xs3h" path="res://scenes/ui/game_theme.tres" id="2_travt"]
+[ext_resource type="Texture2D" uid="uid://d08bmvic0kxol" path="res://graphics/icons/Heart.PNG" id="3_46cp5"]
+[ext_resource type="Texture2D" uid="uid://k4r0km103lsj" path="res://graphics/ui/v_bar.png" id="4_b1beo"]
 
 [node name="MainUI" type="Control"]
 layout_mode = 3
@@ -18,34 +21,80 @@ anchor_right = 1.0
 offset_bottom = 23.0
 grow_horizontal = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="Spacer3" type="Control" parent="MarginContainer/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Spacer3" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="DayLabel" type="Label" parent="MarginContainer/HBoxContainer/PanelContainer2"]
+[node name="DayLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Day: 1"
 
-[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer"]
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="DayTimeLabel" type="Label" parent="MarginContainer/HBoxContainer/PanelContainer"]
+[node name="DayTimeLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Time"
 
-[node name="Spacer2" type="Control" parent="MarginContainer/HBoxContainer"]
+[node name="Spacer2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Spacer3" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme = ExtResource("2_travt")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer"]
+layout_mode = 2
+
+[node name="IconTexture" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+texture = ExtResource("3_46cp5")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NameLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Health"
+
+[node name="HealthBar" type="TextureProgressBar" parent="MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+value = 25.0
+nine_patch_stretch = true
+texture_under = ExtResource("4_b1beo")
+texture_progress = ExtResource("4_b1beo")
+tint_under = Color(0.09019608, 0.09019608, 0.09019608, 1)
+tint_progress = Color(0.66358083, 0.11797046, 0.09934955, 1)
+
+[node name="Spacer2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -73,3 +122,7 @@ layout_mode = 2
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Survive the Night!"
+
+[node name="MessageTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]
