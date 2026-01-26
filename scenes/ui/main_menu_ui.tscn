@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://djyycmtepngxl"]
 
 [ext_resource type="Script" uid="uid://b481cfo7n566m" path="res://scenes/ui/main_menu_ui.gd" id="1_3bauu"]
-[ext_resource type="Texture2D" uid="uid://br778kxuu7pqi" path="res://graphics/backgrounds/viking shipwreck.png" id="2_b8bkt"]
+[ext_resource type="Texture2D" uid="uid://bxd4nels50f5g" path="res://graphics/backgrounds/Shipwreck Background.png" id="2_3bauu"]
 
 [node name="MainMenuUI" type="Control"]
 layout_mode = 3
@@ -19,7 +19,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_b8bkt")
+texture = ExtResource("2_3bauu")
+stretch_mode = 5
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1

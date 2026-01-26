@@ -141,7 +141,7 @@ func spawn_enemies(num: int):
 		new_enemy.position = pos_marker.position
 		#increase the speed of the blobs every day
 		for object in get_tree().get_nodes_in_group('Enemy'):
-			object.normal_speed = 20 + day*5
+			object.normal_speed = 20 + day * 1
 
 
 #Build when 'B' Input map action is pressed (called in process function)

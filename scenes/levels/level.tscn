@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=4 uid="uid://dkaf0otbgtrp5"]
+[gd_scene load_steps=31 format=4 uid="uid://dkaf0otbgtrp5"]
 
 [ext_resource type="Texture2D" uid="uid://b1cmu3aai85qc" path="res://graphics/tilesets/grass.png" id="1_bovvr"]
 [ext_resource type="Script" uid="uid://crdbsib38ohef" path="res://scenes/levels/level.gd" id="1_urvlt"]
@@ -11,6 +11,7 @@
 [ext_resource type="Shader" uid="uid://2dfugyjih0oe" path="res://shaders/circle_transition.gdshader" id="10_rmjfq"]
 [ext_resource type="PackedScene" uid="uid://gxfhn8vu2d0l" path="res://scenes/ui/plant_info_container.tscn" id="11_7pb6i"]
 [ext_resource type="PackedScene" uid="uid://gth410vtrg87" path="res://scenes/ui/inventory_container.tscn" id="12_xfk5q"]
+[ext_resource type="PackedScene" uid="uid://ckuy0b447rmke" path="res://scenes/objects/ship.tscn" id="13_8iyoh"]
 [ext_resource type="PackedScene" uid="uid://dtwtasyc1tvtl" path="res://scenes/ui/main_ui.tscn" id="13_qogh7"]
 
 [sub_resource type="Gradient" id="Gradient_icy5c"]
@@ -1423,6 +1424,9 @@ autostart = true
 wait_time = 30.0
 one_shot = true
 autostart = true
+
+[node name="Ship" parent="." instance=ExtResource("13_8iyoh")]
+position = Vector2(-42, 695)
 
 [connection signal="diagnose" from="Objects/Player" to="." method="_on_player_diagnose"]
 [connection signal="tool_use" from="Objects/Player" to="." method="_on_player_tool_use"]

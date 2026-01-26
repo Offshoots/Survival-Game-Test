@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://br778kxuu7pqi"
-path="res://.godot/imported/viking shipwreck.png-45d2cd669bbbdfed22e98ae830bd52a9.ctex"
+uid="uid://bh3v3h1a3dknd"
+path="res://.godot/imported/Shipwreck scene.png-34d021d6d0847c89552af440d09701f9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://graphics/backgrounds/viking shipwreck.png"
-dest_files=["res://.godot/imported/viking shipwreck.png-45d2cd669bbbdfed22e98ae830bd52a9.ctex"]
+source_file="res://graphics/backgrounds/Shipwreck scene.png"
+dest_files=["res://.godot/imported/Shipwreck scene.png-34d021d6d0847c89552af440d09701f9.ctex"]
 
 [params]
 

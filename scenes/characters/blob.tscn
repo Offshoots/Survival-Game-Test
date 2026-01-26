@@ -144,11 +144,6 @@ motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_xa0uo")
 
-[node name="Blob" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(361, 10)
-texture = ExtResource("1_n17ut")
-
 [node name="FlashSprite2D" parent="." instance=ExtResource("2_xa0uo")]
 material = SubResource("ShaderMaterial_pjcp6")
 texture = ExtResource("1_n17ut")
