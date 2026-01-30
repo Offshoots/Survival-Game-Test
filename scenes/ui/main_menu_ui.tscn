@@ -1,7 +1,43 @@
-[gd_scene load_steps=3 format=3 uid="uid://djyycmtepngxl"]
+[gd_scene load_steps=8 format=3 uid="uid://djyycmtepngxl"]
 
 [ext_resource type="Script" uid="uid://b481cfo7n566m" path="res://scenes/ui/main_menu_ui.gd" id="1_3bauu"]
-[ext_resource type="Texture2D" uid="uid://bxd4nels50f5g" path="res://graphics/backgrounds/Shipwreck Background.png" id="2_3bauu"]
+[ext_resource type="Texture2D" uid="uid://ddt7fsrfyd5pi" path="res://graphics/backgrounds/Arrival small.png" id="2_3bauu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b8bkt"]
+atlas = ExtResource("2_3bauu")
+region = Rect2(0, 0, 214, 198)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qegi1"]
+atlas = ExtResource("2_3bauu")
+region = Rect2(214, 0, 214, 198)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_02l8k"]
+atlas = ExtResource("2_3bauu")
+region = Rect2(0, 198, 214, 198)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oq2e2"]
+atlas = ExtResource("2_3bauu")
+region = Rect2(214, 198, 214, 198)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1xem4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b8bkt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qegi1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_02l8k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oq2e2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 0.5
+}]
 
 [node name="MainMenuUI" type="Control"]
 layout_mode = 3
@@ -12,15 +48,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_3bauu")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_3bauu")
-stretch_mode = 5
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(306, 381)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_1xem4")
+autoplay = "default"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -36,6 +68,16 @@ layout_mode = 2
 [node name="Spacer2" type="Control" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer2"]
+visible = false
+layout_mode = 2
+size_flags_stretch_ratio = 5.0
+texture = ExtResource("2_3bauu")
+stretch_mode = 5
 
 [node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2

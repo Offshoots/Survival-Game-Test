@@ -4,7 +4,9 @@ var direction: Vector2
 var last_direction: Vector2
 var speed = 50
 var can_move: bool = true
+var player_input: bool = false
 var placement_pos : Vector2
+var player_destination: Vector2
 
 var death_scene = preload("res://scenes/ui/death_screen.tscn")
 
@@ -39,9 +41,12 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	if can_move:
+		
 		get_basic_input()
-		move()
+		#keyboard_move()
+		mouse_move()
 		animate()
+		
 
 #Storing items in an array for now, don't know if I'll use
 	if new_item == true:
@@ -61,8 +66,14 @@ func get_basic_input():
 	if Input.is_action_just_pressed("action"):
 		tool_state_machine.travel(Data.TOOL_STATE_ANIMATIONS[current_tool])
 		$Animation/AnimationTree.set("parameters/ToolOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
-		
-		
+	
+	#Create tool action based on mouse click and distance to target
+	if Input.is_action_pressed("click"):
+		if position.distance_to(player_destination) < 20:
+			tool_state_machine.travel(Data.TOOL_STATE_ANIMATIONS[current_tool])
+			$Animation/AnimationTree.set("parameters/ToolOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	
+	
 	if Input.is_action_just_pressed("seed_forward"):
 		var dir2 = Input.get_action_strength("seed_forward")
 		current_seed = posmod((current_seed + int(dir2)), Enum.Seed.size()) as Enum.Seed
@@ -75,12 +86,36 @@ func get_basic_input():
 	
 	
 
+#Use Input Event to create mouse click registered movement
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("click"):
+		player_destination = get_global_mouse_position()
+		player_input = true
 
-
-func move():
+	#Write code for "keysboard keys" arrow movement
+func keyboard_move():
+	#if Input.is_action_just_pressed("left") or Input.is_action_just_pressed("right") or Input.is_action_just_pressed("up") or Input.is_action_just_pressed("down"): 
+		#pass
 	direction = Input.get_vector("left","right","up","down")
 	velocity = direction * speed
 	move_and_slide()
+
+
+func mouse_move():
+	if player_input == true:
+		direction = position.direction_to(player_destination)
+		velocity = direction * speed
+	else:
+		direction = Vector2.ZERO
+		velocity = Vector2.ZERO
+	#smooth out movement by having "move and slide" called at greatest distance to target
+	if position.distance_to(player_destination) > 10:
+		move_and_slide()
+	
+	#When player reaches destination, have diction and velocity go to 0,0 for "Idel" animations
+	if position.distance_to(player_destination) < 10:
+		direction = Vector2.ZERO
+		velocity = Vector2.ZERO
 
 func animate():
 	

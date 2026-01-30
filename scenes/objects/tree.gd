@@ -1,6 +1,6 @@
 extends StaticBody2D
 
-
+signal chop
 
 const apple_texture = preload("res://graphics/plants/apple.png")
 
@@ -78,4 +78,13 @@ func reset():
 		if $Apples.get_child_count() < 3:
 			create_apples(randi_range(0,1))
 	
-	
+
+#func _input_event(viewport, event, shape_idx):
+	#if event is InputEventMouseButton and event.pressed:
+		#emit_signal("chop", self)
+
+func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if event.is_action_pressed('click'):
+		chop.emit()
+		print('chop')
+		

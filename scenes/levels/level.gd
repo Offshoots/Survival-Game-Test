@@ -26,7 +26,7 @@ var wheat: int
 
 
 @onready var player = $Objects/Player
-#@onready var tree = $Objects/Tree
+@onready var tree = $Objects/Tree
 @onready var inv = $Overlay/CanvasLayer/InventoryContainer
 @export var daytime_color: Gradient
 @onready var main_ui: Control = $Overlay/CanvasLayer/MainUI
@@ -121,6 +121,7 @@ func spawn_trees(num: int):
 	for i in num:
 		var pos_marker = tree_markers.pop_at(randf_range(0, tree_markers.size()-1))
 		var new_tree = tree_scene.instantiate()
+		new_tree.chop.connect(_on_tree_chop)
 		$Objects.add_child(new_tree)
 		new_tree.position = pos_marker.position
 
@@ -172,6 +173,9 @@ func build(craft: Enum.Craft, pos: Vector2):
 #This will toggle the plant info bar on/off by pressing the diagnose button "N"
 func _on_player_diagnose() -> void:
 	$Overlay/CanvasLayer/PlantInfoContainer.visible = not $Overlay/CanvasLayer/PlantInfoContainer.visible
+
+func _on_chop():
+	player.current_tool = Enum.Tool.AXE
 
 #Tool use comes from the player scene script. Actions of tool use are completed in the Level scene and script.
 func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
@@ -333,3 +337,8 @@ func _on_day_timer_timeout() -> void:
 
 func _on_night_timer_timeout() -> void:
 	day_restart()
+
+
+func _on_tree_chop():
+	player.current_tool = Enum.Tool.AXE
+	print(player.current_tool)
