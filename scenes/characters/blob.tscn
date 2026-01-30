@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d158imc22rl57"]
+[gd_scene format=3 uid="uid://d158imc22rl57"]
 
 [ext_resource type="Texture2D" uid="uid://b466fqj7w4mne" path="res://graphics/characters/blob.png" id="1_n17ut"]
 [ext_resource type="Script" uid="uid://ddmq08koxrnac" path="res://scenes/characters/blob.gd" id="1_xa0uo"]
@@ -6,7 +6,7 @@
 [ext_resource type="Shader" uid="uid://b6nm5dtkeitqy" path="res://shaders/flash.tres" id="3_50kq6"]
 [ext_resource type="PackedScene" uid="uid://dhanaqn5qlg8e" path="res://scenes/characters/damage_area.tscn" id="5_50kq6"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_pjcp6"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_50kq6"]
 resource_local_to_scene = true
 shader = ExtResource("3_50kq6")
 shader_parameter/Color = Color(1, 1, 1, 1)
@@ -137,7 +137,7 @@ radius = 6.0827627
 [sub_resource type="CircleShape2D" id="CircleShape2D_50kq6"]
 radius = 8.0
 
-[node name="Blob" type="CharacterBody2D" groups=["Enemy"]]
+[node name="Blob" type="CharacterBody2D" unique_id=856675163 groups=["Enemy"]]
 collision_layer = 8
 collision_mask = 8
 input_pickable = true
@@ -145,88 +145,87 @@ motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_xa0uo")
 
-[node name="FlashSprite2D" parent="." instance=ExtResource("2_xa0uo")]
-material = SubResource("ShaderMaterial_pjcp6")
+[node name="FlashSprite2D" parent="." unique_id=158028710 instance=ExtResource("2_xa0uo")]
+material = SubResource("ShaderMaterial_50kq6")
 texture = ExtResource("1_n17ut")
 hframes = 14
 vframes = 4
 
-[node name="Animation" type="Node" parent="."]
+[node name="Animation" type="Node" parent="." unique_id=857676676]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Animation"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Animation" unique_id=936440545]
 root_node = NodePath("../..")
-libraries = {
-&"": SubResource("AnimationLibrary_1oscj")
-}
-autoplay = "idle_down"
+libraries/ = SubResource("AnimationLibrary_1oscj")
+autoplay = &"idle_down"
 
-[node name="AnimationTree" type="AnimationTree" parent="Animation"]
+[node name="AnimationTree" type="AnimationTree" parent="Animation" unique_id=861668268]
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1169830082]
 path_desired_distance = 5.0
 target_desired_distance = 5.0
 path_postprocessing = 1
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=96639282]
 wait_time = 0.1
 autostart = true
 
-[node name="RayCastDown" type="RayCast2D" parent="."]
+[node name="RayCastDown" type="RayCast2D" parent="." unique_id=340102522]
 position = Vector2(0, 2)
 target_position = Vector2(0, 12)
 collision_mask = 4
 
-[node name="RayCastDownLeft" type="RayCast2D" parent="."]
+[node name="RayCastDownLeft" type="RayCast2D" parent="." unique_id=1132704516]
 position = Vector2(0, 2)
 rotation = 0.7853982
 target_position = Vector2(0, 12)
 collision_mask = 4
 
-[node name="RayCastLeft" type="RayCast2D" parent="."]
+[node name="RayCastLeft" type="RayCast2D" parent="." unique_id=1132565359]
 position = Vector2(0, 2)
 rotation = 1.5707964
 target_position = Vector2(0, 12)
 collision_mask = 4
 
-[node name="RayCastUpLeft" type="RayCast2D" parent="."]
+[node name="RayCastUpLeft" type="RayCast2D" parent="." unique_id=690113191]
 position = Vector2(0, 2)
 rotation = 2.3561945
 scale = Vector2(0.99999994, 0.99999994)
 target_position = Vector2(0, 12)
 collision_mask = 4
 
-[node name="RayCastUp" type="RayCast2D" parent="."]
+[node name="RayCastUp" type="RayCast2D" parent="." unique_id=187885324]
 position = Vector2(0, 2)
 rotation = 3.1415927
 target_position = Vector2(0, 12)
 collision_mask = 4
 
-[node name="RayCastUpRight" type="RayCast2D" parent="."]
+[node name="RayCastUpRight" type="RayCast2D" parent="." unique_id=520279469]
 position = Vector2(0, 2)
 rotation = -2.3561945
 target_position = Vector2(0, 12)
 collision_mask = 4
 
-[node name="RayCastRight" type="RayCast2D" parent="."]
+[node name="RayCastRight" type="RayCast2D" parent="." unique_id=650312639]
 position = Vector2(0, 2)
 rotation = 4.712389
 target_position = Vector2(0, 12)
 collision_mask = 4
 
-[node name="RayCastDownRight" type="RayCast2D" parent="."]
+[node name="RayCastDownRight" type="RayCast2D" parent="." unique_id=1432595419]
 position = Vector2(0, 2)
 rotation = 5.497787
 target_position = Vector2(0, 12)
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1933089268]
 position = Vector2(0, 2)
 shape = SubResource("CircleShape2D_nlap5")
 
-[node name="DamageArea" parent="." instance=ExtResource("5_50kq6")]
+[node name="DamageArea" parent="." unique_id=608577442 instance=ExtResource("5_50kq6")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea" unique_id=48267857]
 position = Vector2(0, 2)
 shape = SubResource("CircleShape2D_50kq6")
 
+[connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

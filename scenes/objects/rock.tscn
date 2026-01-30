@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://jqew5vp1y1do"]
+[gd_scene format=3 uid="uid://jqew5vp1y1do"]
 
 [ext_resource type="Texture2D" uid="uid://bxsysay51a72s" path="res://graphics/tilesets/decoration.png" id="1_2dker"]
 [ext_resource type="Script" uid="uid://c84imk17oyxqm" path="res://scenes/objects/rock.gd" id="1_7c88i"]
@@ -8,24 +8,26 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_7c88i"]
 radius = 6.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0cy6w"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xnkle"]
 resource_local_to_scene = true
 shader = ExtResource("4_1nmxg")
 shader_parameter/Color = Color(1, 1, 1, 1)
 shader_parameter/Progress = 0.0
 
-[node name="Rock" type="StaticBody2D" groups=["Rock"]]
+[node name="Rock" type="StaticBody2D" unique_id=1884207360 groups=["Rock"]]
 collision_layer = 4
 collision_mask = 0
 input_pickable = true
 script = ExtResource("1_7c88i")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=680953792]
 shape = SubResource("CircleShape2D_7c88i")
 
-[node name="FlashSprite2D" parent="." instance=ExtResource("3_xnkle")]
-material = SubResource("ShaderMaterial_0cy6w")
+[node name="FlashSprite2D" parent="." unique_id=1498468475 instance=ExtResource("3_xnkle")]
+material = SubResource("ShaderMaterial_xnkle")
 texture = ExtResource("1_2dker")
 hframes = 4
 vframes = 2
 frame = 7
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

@@ -1,11 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://dtwtasyc1tvtl"]
+[gd_scene format=3 uid="uid://dtwtasyc1tvtl"]
 
 [ext_resource type="Script" uid="uid://cesn7iibjykrg" path="res://scenes/ui/main_ui.gd" id="1_hnesk"]
 [ext_resource type="Theme" uid="uid://rhcgh2v8xs3h" path="res://scenes/ui/game_theme.tres" id="2_travt"]
 [ext_resource type="Texture2D" uid="uid://d08bmvic0kxol" path="res://graphics/icons/Heart.PNG" id="3_46cp5"]
 [ext_resource type="Texture2D" uid="uid://k4r0km103lsj" path="res://graphics/ui/v_bar.png" id="4_b1beo"]
 
-[node name="MainUI" type="Control"]
+[node name="MainUI" type="Control" unique_id=693042930]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,77 +14,78 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hnesk")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=215482175]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 23.0
 grow_horizontal = 2
+mouse_filter = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1761781877]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1759437184]
 layout_mode = 2
 
-[node name="Spacer3" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Spacer3" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1211861028]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=611648541]
 layout_mode = 2
 
-[node name="DayLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2"]
+[node name="DayLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2" unique_id=342598655]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Day: 1"
 
-[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1779546656]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1482668112]
 layout_mode = 2
 
-[node name="DayTimeLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer"]
+[node name="DayTimeLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer" unique_id=1904088183]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Time"
 
-[node name="Spacer2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Spacer2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=748486238]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=912077117]
 layout_mode = 2
 
-[node name="Spacer3" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="Spacer3" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1324954861]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1024446455]
 layout_mode = 2
 theme = ExtResource("2_travt")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer" unique_id=1999118322]
 layout_mode = 2
 
-[node name="IconTexture" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer"]
+[node name="IconTexture" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer" unique_id=2023634272]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 texture = ExtResource("3_46cp5")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer" unique_id=1734786980]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="NameLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/VBoxContainer"]
+[node name="NameLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/VBoxContainer" unique_id=1082844324]
 layout_mode = 2
 text = "Health"
 
-[node name="HealthBar" type="TextureProgressBar" parent="MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/VBoxContainer"]
+[node name="HealthBar" type="TextureProgressBar" parent="MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/VBoxContainer" unique_id=910290613]
 custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
 value = 25.0
@@ -94,11 +95,16 @@ texture_progress = ExtResource("4_b1beo")
 tint_under = Color(0.09019608, 0.09019608, 0.09019608, 1)
 tint_progress = Color(0.66358083, 0.11797046, 0.09934955, 1)
 
-[node name="Spacer2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="HealButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=2053463502]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "HEAL"
+
+[node name="Spacer2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1310165368]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MarginContainer2" type="MarginContainer" parent="."]
+[node name="MarginContainer2" type="MarginContainer" parent="." unique_id=982144908]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -112,18 +118,19 @@ offset_bottom = -135.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2" unique_id=1172176774]
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer2/HBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer2/HBoxContainer" unique_id=508189539]
 layout_mode = 2
 
-[node name="MessageLabel" type="Label" parent="MarginContainer2/HBoxContainer/PanelContainer"]
+[node name="MessageLabel" type="Label" parent="MarginContainer2/HBoxContainer/PanelContainer" unique_id=1263190649]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 
-[node name="MessageTimer" type="Timer" parent="."]
+[node name="MessageTimer" type="Timer" parent="." unique_id=1815698796]
 wait_time = 3.0
 one_shot = true
 
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/HealButton" to="." method="_on_heal_button_pressed"]
 [connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]

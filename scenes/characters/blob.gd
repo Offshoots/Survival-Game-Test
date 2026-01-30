@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+signal slice
 
 var direction: Vector2
 var speed = 20
@@ -113,3 +114,8 @@ func hit(tool: Enum.Tool):
 
 func _on_timer_timeout() -> void:
 	pathfind()
+
+func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	if event.is_action_pressed('click'):
+		slice.emit()
+		print('slice')

@@ -1,11 +1,14 @@
 extends Control
 
+signal heal
+
 @onready var day_time_label: Label = $MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/DayTimeLabel
 @onready var day_label: Label = $MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2/DayLabel
 @onready var message_label: Label = $MarginContainer2/HBoxContainer/PanelContainer/MessageLabel
 
 func _ready() -> void:
 	message_label.hide()
+	$MarginContainer/VBoxContainer/HBoxContainer2/HealButton.hide()
 
 
 func update_time(day_time: int, night_time: int, timer:bool):
@@ -30,3 +33,13 @@ func update_message(message : String):
 
 func _on_message_timer_timeout() -> void:
 	message_label.hide()
+
+
+func _on_heal_button_pressed() -> void:
+	heal.emit()
+	
+func show_heal():
+	$MarginContainer/VBoxContainer/HBoxContainer2/HealButton.show()
+
+func hide_heal():
+	$MarginContainer/VBoxContainer/HBoxContainer2/HealButton.hide()

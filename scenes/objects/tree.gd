@@ -77,13 +77,9 @@ func reset():
 		#This version will check if there are less then 3 apples and add 0 or 1.
 		if $Apples.get_child_count() < 3:
 			create_apples(randi_range(0,1))
-	
 
-#func _input_event(viewport, event, shape_idx):
-	#if event is InputEventMouseButton and event.pressed:
-		#emit_signal("chop", self)
 
-func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event.is_action_pressed('click'):
 		chop.emit()
 		print('chop')

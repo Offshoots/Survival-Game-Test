@@ -85,7 +85,12 @@ func _process(_delta: float) -> void:
 			var craft = Enum.Craft.BOX
 			build(craft, placement_pos)
 			remove_inventory(Enum.Item.WOOD)
-	
+
+	if player.health < player.max_health:
+		main_ui.show_heal()
+	else:
+		main_ui.hide_heal()
+
 	if Input.is_action_just_pressed("Heal"):
 		if player.health < player.max_health:
 			if player.inventory.count(Enum.Item.APPLE) > 0:
@@ -130,6 +135,7 @@ func spawn_rocks(num: int):
 	for i in num:
 		var pos_marker = rock_markers.pop_at(randf_range(0, rock_markers.size()-1))
 		var new_rock = rock_scene.instantiate()
+		new_rock.smash.connect(_on_rock_smash)
 		$Objects.add_child(new_rock)
 		new_rock.position = pos_marker.position
 
@@ -138,6 +144,7 @@ func spawn_enemies(num: int):
 	for i in num:
 		var pos_marker = enemy_markers.pop_at(randf_range(0, enemy_markers.size()-1))
 		var new_enemy = enemy_scene.instantiate()
+		new_enemy.slice.connect(_on_blob_slice)
 		$Objects.add_child(new_enemy)
 		new_enemy.position = pos_marker.position
 		#increase the speed of the blobs every day
@@ -330,7 +337,6 @@ func _on_day_timer_timeout() -> void:
 	var rand_enemy = randi_range(day + 3, day + 3)
 	day_timer = false
 	var message : String = "Survive the Night!"
-	
 	main_ui.update_message(message)
 	spawn_enemies(rand_enemy)
 	$Timers/NightTimer.start()
@@ -342,3 +348,29 @@ func _on_night_timer_timeout() -> void:
 func _on_tree_chop():
 	player.current_tool = Enum.Tool.AXE
 	print(player.current_tool)
+
+func _on_rock_smash():
+	player.current_tool = Enum.Tool.PICKAXE
+	print(player.current_tool)
+	
+func _on_blob_slice():
+	player.current_tool = Enum.Tool.SWORD
+	print(player.current_tool)
+
+
+func _on_main_ui_heal() -> void:
+	player.heal_click =  true
+	$Timers/HealTimer.start()
+	if player.health < player.max_health:
+		if player.inventory.count(Enum.Item.APPLE) > 0:
+			remove_inventory(Enum.Item.APPLE)
+			player.health += 1
+		else:
+			var message:String = "Not enough food"
+			print(message)
+			main_ui.update_message(message)
+
+
+
+func _on_heal_timer_timeout() -> void:
+	player.heal_click =  false

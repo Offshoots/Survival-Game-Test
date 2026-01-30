@@ -1,5 +1,7 @@
 extends StaticBody2D
 
+signal smash
+
 #Use Bool for item pickup. If the Item is present for the event that it would be collected, then the bool is true.
 #The item will be added to the inventory via the Level scene into the ItemContainerUI, after assisinging the approiate enum to get the correct icon and properties.
 var stone : bool = false
@@ -29,4 +31,8 @@ func hit(tool: Enum.Tool):
 func reset():
 	if health > 0:
 		health = 5
-	
+
+func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	if event.is_action_pressed('click'):
+		smash.emit()
+		print('smash')

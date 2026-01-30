@@ -7,6 +7,7 @@ var can_move: bool = true
 var player_input: bool = false
 var placement_pos : Vector2
 var player_destination: Vector2
+var heal_click: bool = false
 
 var death_scene = preload("res://scenes/ui/death_screen.tscn")
 
@@ -88,7 +89,7 @@ func get_basic_input():
 
 #Use Input Event to create mouse click registered movement
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("click"):
+	if event.is_action_pressed("click") and heal_click == false:
 		player_destination = get_global_mouse_position()
 		player_input = true
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://d2530w2lrixv4"]
+[gd_scene format=3 uid="uid://d2530w2lrixv4"]
 
 [ext_resource type="Script" uid="uid://0cgt02efei0p" path="res://scenes/objects/tree.gd" id="1_5qchx"]
 [ext_resource type="Texture2D" uid="uid://d3pi6mohcmq4p" path="res://graphics/plants/tree.png" id="1_r6wkp"]
@@ -16,50 +16,50 @@ shader_parameter/Progress = 0.0
 radius = 6.0
 height = 22.0
 
-[node name="Tree" type="StaticBody2D" groups=["Objects"]]
+[node name="Tree" type="StaticBody2D" unique_id=30791313 groups=["Objects"]]
 collision_layer = 4
 collision_mask = 0
 input_pickable = true
 script = ExtResource("1_5qchx")
 
-[node name="Stump" type="Sprite2D" parent="."]
+[node name="Stump" type="Sprite2D" parent="." unique_id=805518261]
 position = Vector2(0, 11)
 texture = ExtResource("2_mbbxw")
 
-[node name="FlashSprite2D" parent="." instance=ExtResource("2_5qchx")]
+[node name="FlashSprite2D" parent="." unique_id=448338754 instance=ExtResource("2_5qchx")]
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_mbbxw")
 texture = ExtResource("1_r6wkp")
 hframes = 2
 frame = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1160258444]
 position = Vector2(0, 6)
 shape = SubResource("CapsuleShape2D_5qchx")
 
-[node name="AppleSpawnPositions" type="Node2D" parent="."]
+[node name="AppleSpawnPositions" type="Node2D" parent="." unique_id=1069517618]
 
-[node name="Marker2D" type="Marker2D" parent="AppleSpawnPositions"]
+[node name="Marker2D" type="Marker2D" parent="AppleSpawnPositions" unique_id=1386801206]
 position = Vector2(5, 3)
 
-[node name="Marker2D2" type="Marker2D" parent="AppleSpawnPositions"]
+[node name="Marker2D2" type="Marker2D" parent="AppleSpawnPositions" unique_id=1795344330]
 position = Vector2(-8, 3)
 
-[node name="Marker2D3" type="Marker2D" parent="AppleSpawnPositions"]
+[node name="Marker2D3" type="Marker2D" parent="AppleSpawnPositions" unique_id=2066806852]
 position = Vector2(-5, -6)
 
-[node name="Marker2D4" type="Marker2D" parent="AppleSpawnPositions"]
+[node name="Marker2D4" type="Marker2D" parent="AppleSpawnPositions" unique_id=697996973]
 position = Vector2(3, -5)
 
-[node name="Marker2D5" type="Marker2D" parent="AppleSpawnPositions"]
+[node name="Marker2D5" type="Marker2D" parent="AppleSpawnPositions" unique_id=1445319281]
 position = Vector2(12, -4)
 
-[node name="Marker2D6" type="Marker2D" parent="AppleSpawnPositions"]
+[node name="Marker2D6" type="Marker2D" parent="AppleSpawnPositions" unique_id=1440977680]
 position = Vector2(-12, -2)
 
-[node name="Marker2D7" type="Marker2D" parent="AppleSpawnPositions"]
+[node name="Marker2D7" type="Marker2D" parent="AppleSpawnPositions" unique_id=555214036]
 position = Vector2(1, -10)
 
-[node name="Apples" type="Node2D" parent="."]
+[node name="Apples" type="Node2D" parent="." unique_id=646205153]
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
