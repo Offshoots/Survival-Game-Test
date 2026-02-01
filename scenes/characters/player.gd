@@ -44,7 +44,7 @@ func _physics_process(_delta: float) -> void:
 	if can_move:
 		
 		get_basic_input()
-		#keyboard_move()
+		keyboard_move()
 		mouse_move()
 		animate()
 		
