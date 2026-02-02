@@ -4,6 +4,7 @@ var plant_scene = preload("res://scenes/objects/plant.tscn")
 var plant_info_scene = preload("res://scenes/ui/plant_info.tscn")
 var item_info_scene = preload("res://scenes/ui/item_info.tscn")
 var box_scene = preload("res://scenes/objects/box.tscn")
+var pyre_scene = preload("res://scenes/objects/pyre.tscn")
 var tree_scene = preload("res://scenes/objects/tree.tscn")
 var rock_scene = preload("res://scenes/objects/rock.tscn")
 var enemy_scene = preload("res://scenes/characters/blob.tscn")
@@ -81,10 +82,15 @@ func _process(_delta: float) -> void:
 	
 	if Input.is_action_just_pressed("build"):
 		#Can use enums to select different builds, but for now build a box
-		if player.inventory.count(Enum.Item.WOOD) >= 1:
-			var craft = Enum.Craft.BOX
+		#if player.inventory.count(Enum.Item.WOOD) >= 1:
+			#var craft = Enum.Craft.BOX
+			#build(craft, placement_pos)
+			#remove_inventory(Enum.Item.WOOD)
+		if player.inventory.count(Enum.Item.STONE) >= 1:
+			var craft = Enum.Craft.PYRE
 			build(craft, placement_pos)
-			remove_inventory(Enum.Item.WOOD)
+			remove_inventory(Enum.Item.STONE)
+
 
 	if player.health < player.max_health:
 		main_ui.show_heal()
@@ -107,6 +113,7 @@ func _process(_delta: float) -> void:
 		var item_dropped = player.current_inventory
 		add_inventory(item_dropped)
 		player.new_item = false
+
 	
 	if player.death == true:
 		player_dead()
@@ -158,24 +165,35 @@ func build(craft: Enum.Craft, pos: Vector2):
 	grid_coord.x += -1 if pos.x < 0 else 0
 	grid_coord.y += -1 if pos.y < 0 else 0
 	if grid_coord not in used_cells:
-		#Need to create a new "Box" scene with collision shape and sprite
-		#preload and Instantiate that box scene
-		var box = box_scene.instantiate()
-		#add_child(box)
-		box.setup(grid_coord, $Objects)
-		used_cells.append(grid_coord)
-		#Test out removing the layer with navigation and placing a tile without navigation.
-		$Layers/GrassLayer.erase_cell(grid_coord)
-		$Layers/SoilLayer.set_cells_terrain_connect([grid_coord], 0, 0)
-		print(grid_coord)
-		#Test removing the grid cells up, down, left, and right of the box
-		#$Layers/GrassLayer.erase_cell(Vector2i(grid_coord.x - 1, grid_coord.y))
-		#$Layers/GrassLayer.erase_cell(Vector2i(grid_coord.x + 1, grid_coord.y))
-		#$Layers/GrassLayer.erase_cell(Vector2i(grid_coord.x, grid_coord.y - 1))
-		#$Layers/GrassLayer.erase_cell(Vector2i(grid_coord.x, grid_coord.y + 1))
-		
-		#Test painting a new property layer for tileset that will have a box place on it
-		#I have found some success with removing the corners from the navigation tiles
+		if craft == Enum.Craft.BOX:
+			#Need to create a new "Box" scene with collision shape and sprite
+			#preload and Instantiate that box scene
+			var box = box_scene.instantiate()
+			#add_child(box)
+			box.setup(grid_coord, $Objects)
+			used_cells.append(grid_coord)
+			#Test out removing the layer with navigation and placing a tile without navigation.
+			$Layers/GrassLayer.erase_cell(grid_coord)
+			$Layers/SoilLayer.set_cells_terrain_connect([grid_coord], 0, 0)
+			print(grid_coord)
+			#Test removing the grid cells up, down, left, and right of the box
+			#$Layers/GrassLayer.erase_cell(Vector2i(grid_coord.x - 1, grid_coord.y))
+			#$Layers/GrassLayer.erase_cell(Vector2i(grid_coord.x + 1, grid_coord.y))
+			#$Layers/GrassLayer.erase_cell(Vector2i(grid_coord.x, grid_coord.y - 1))
+			#$Layers/GrassLayer.erase_cell(Vector2i(grid_coord.x, grid_coord.y + 1))
+			
+			#Test painting a new property layer for tileset that will have a box place on it
+			#I have found some success with removing the corners from the navigation tiles
+		if craft == Enum.Craft.PYRE:
+			#preload and Instantiate the Pyre Scene
+			var pyre = pyre_scene.instantiate()
+			#add_child(box)
+			pyre.entered_pyre.connect(_on_pyre_entered_pyre)
+			pyre.setup(grid_coord, $Objects)
+			used_cells.append(grid_coord)
+			#Test out removing the layer with navigation and placing a tile without navigation.
+			$Layers/GrassLayer.erase_cell(grid_coord)
+			$Layers/SoilLayer.set_cells_terrain_connect([grid_coord], 0, 0)
 
 #This will toggle the plant info bar on/off by pressing the diagnose button "N"
 func _on_player_diagnose() -> void:
@@ -242,6 +260,14 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 						player.inventory.append(item_drop)
 						add_inventory(item_drop)
 		Enum.Tool.AXE:
+			#For now group for blob has been changed from 'Objects' to new group 'Enemy'.
+			for object in get_tree().get_nodes_in_group('Enemy'):
+				if object.position.distance_to(pos)< 20:
+					object.hit(tool)
+					if object.gold:
+						var item_drop = Enum.Item.GOLD
+						player.inventory.append(item_drop)
+						add_inventory(item_drop)
 			#Currently all trees are in group 'Objects'.
 			for object in get_tree().get_nodes_in_group('Objects'):
 				if object.position.distance_to(pos)< 20:
@@ -379,3 +405,11 @@ func _on_main_ui_heal() -> void:
 
 func _on_heal_timer_timeout() -> void:
 	player.heal_click =  false
+
+
+func _on_pyre_entered_pyre(body) -> void:
+	if body.is_in_group('Enemy'):
+		print('Enemy')
+		body.death()
+	else:
+		print('Friend')

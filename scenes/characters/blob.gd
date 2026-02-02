@@ -103,11 +103,13 @@ func push(target):
 func hit(tool: Enum.Tool):
 	if tool == Enum.Tool.SWORD:
 		$FlashSprite2D.flash()
-		health -= 1
-		push_distance = 130
+		health -= 2
+		push_distance = 150
 		var target = (player.position - position).normalized() * -1 * push_distance
 		push(target)
-	if tool != Enum.Tool.SWORD:
+	if tool == Enum.Tool.AXE:
+		$FlashSprite2D.flash()
+		health -= 1
 		push_distance = 100
 		var target = (player.position - position).normalized() * -1 * push_distance
 		push(target)

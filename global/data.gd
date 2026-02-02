@@ -130,8 +130,8 @@ const CRAFT_DATA = {
 		'texture': "res://graphics/objects/table.png",
 		#'icon_texture':"res://graphics/icons/blue.png",
 		'name':'Wall'},
-	Enum.Craft.DOOR: {
-		'texture': "res://graphics/objects/table.png",
-		#'icon_texture': "res://graphics/icons/apple.png",
-		'name':'Door'}
+	Enum.Craft.PYRE: {
+		'texture': "res://graphics/objects/Pyre1.png",
+		#'icon_texture': "res://graphics/objects/Pyre1.png",
+		'name':'Pyre'}
 }

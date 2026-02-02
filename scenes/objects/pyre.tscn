@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://b28skb43spsl2"]
+
+[ext_resource type="Script" uid="uid://7fa7ncy71rcp" path="res://scenes/objects/pyre.gd" id="1_7epyt"]
+[ext_resource type="Texture2D" uid="uid://bjnbhknu81iwj" path="res://graphics/objects/Pyre Sheet.png" id="1_vaprf"]
+[ext_resource type="Texture2D" uid="uid://6htihb83y05q" path="res://graphics/tilesets/light texture.PNG" id="2_ehmvm"]
+[ext_resource type="Texture2D" uid="uid://k4r0km103lsj" path="res://graphics/ui/v_bar.png" id="4_2ykkb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ehmvm"]
+atlas = ExtResource("1_vaprf")
+region = Rect2(0, 0, 65, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7epyt"]
+atlas = ExtResource("1_vaprf")
+region = Rect2(65, 0, 65, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ykkb"]
+atlas = ExtResource("1_vaprf")
+region = Rect2(130, 0, 65, 74)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ac8kh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ehmvm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7epyt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ykkb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_osgk1"]
+size = Vector2(16, 14.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ehmvm"]
+radius = 63.0
+
+[node name="Pyre" type="StaticBody2D" unique_id=619828489]
+y_sort_enabled = true
+collision_layer = 4
+collision_mask = 8
+script = ExtResource("1_7epyt")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1413525050]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_ac8kh")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1629013321]
+position = Vector2(0, 9.25)
+shape = SubResource("RectangleShape2D_osgk1")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1365646536]
+position = Vector2(0, -6)
+collision_layer = 4
+collision_mask = 14
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=565279134]
+shape = SubResource("CircleShape2D_ehmvm")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1649821778]
+position = Vector2(0, -6)
+texture = ExtResource("2_ehmvm")
+texture_scale = 0.4
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=579372879]
+offset_left = -10.0
+offset_top = -25.0
+offset_right = 10.0
+offset_bottom = -20.0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="PanelContainer" unique_id=394623701]
+layout_mode = 2
+nine_patch_stretch = true
+texture_under = ExtResource("4_2ykkb")
+texture_progress = ExtResource("4_2ykkb")
+tint_progress = Color(1, 1, 0, 1)
+
+[node name="FuelTimer" type="Timer" parent="." unique_id=791687118]
+wait_time = 60.0
+one_shot = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="FuelTimer" to="." method="_on_fuel_timer_timeout"]
