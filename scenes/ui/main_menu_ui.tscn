@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://djyycmtepngxl"]
 
-[ext_resource type="Script" uid="uid://b481cfo7n566m" path="res://scenes/ui/main_menu_ui.gd" id="1_3bauu"]
+[ext_resource type="Script" path="res://scenes/ui/main_menu_ui.gd" id="1_3bauu"]
 [ext_resource type="Texture2D" uid="uid://ddt7fsrfyd5pi" path="res://graphics/backgrounds/Arrival small.png" id="2_3bauu"]
+[ext_resource type="AudioStream" uid="uid://bxcr4fnl4dti0" path="res://audio/The Struggle Loop.ogg" id="3_b8bkt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b8bkt"]
 atlas = ExtResource("2_3bauu")
@@ -39,7 +40,7 @@ animations = [{
 "speed": 0.5
 }]
 
-[node name="MainMenuUI" type="Control"]
+[node name="MainMenuUI" type="Control" unique_id=187278526]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -48,13 +49,13 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_3bauu")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1344281405]
 position = Vector2(306, 381)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_1xem4")
 autoplay = "default"
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=840722048]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -62,70 +63,74 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=977491377]
 layout_mode = 2
 
-[node name="Spacer2" type="Control" parent="MarginContainer/HBoxContainer"]
+[node name="Spacer2" type="Control" parent="MarginContainer/HBoxContainer" unique_id=1337990359]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/HBoxContainer" unique_id=1160597694]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer2"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer2" unique_id=1836065184]
 visible = false
 layout_mode = 2
 size_flags_stretch_ratio = 5.0
 texture = ExtResource("2_3bauu")
 stretch_mode = 5
 
-[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer"]
+[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer" unique_id=313581190]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer" unique_id=1907852984]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 90
 theme_override_constants/margin_right = 90
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer" unique_id=547052499]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Spacer2" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+[node name="Spacer2" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=1974944248]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
 
-[node name="StartButton" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+[node name="StartButton" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=1341843674]
 layout_mode = 2
 text = "Start"
 
-[node name="Spacer3" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+[node name="Spacer3" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=1395182991]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="OptionsButton" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+[node name="OptionsButton" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=1702496716]
 layout_mode = 2
 text = "Options"
 
-[node name="Spacer4" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+[node name="Spacer4" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=939657784]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="QuitButton" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+[node name="QuitButton" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=165531598]
 layout_mode = 2
 text = "Quit"
 
-[node name="Spacer5" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+[node name="Spacer5" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=906090498]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
+
+[node name="StartMusic" type="AudioStreamPlayer2D" parent="." unique_id=2030764804]
+stream = ExtResource("3_b8bkt")
+autoplay = true
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]

@@ -308,6 +308,7 @@ func day_restart():
 	tween.tween_callback(level_reset)
 	tween.tween_property($Overlay/CanvasLayer/DayTransitionLayer.material, "shader_parameter/progress", 0.0, 1.0)
 
+
 func level_reset():
 	for plant in get_tree().get_nodes_in_group('Plants'):
 		#If there is water on the tile, then plant function grow can be completed
@@ -317,7 +318,9 @@ func level_reset():
 			enemy.death()
 	$Overlay/CanvasLayer/PlantInfoContainer.update_all()
 	$Layers/SoilWaterLayer.clear()
+	$Music/NightMusic.stop()
 	$Timers/DayTimer.start()
+	$Music/DayMusic.play()
 	day_timer = true
 	day += 1
 	main_ui.update_day(day)
@@ -339,7 +342,9 @@ func _on_day_timer_timeout() -> void:
 	var message : String = "Survive the Night!"
 	main_ui.update_message(message)
 	spawn_enemies(rand_enemy)
+	$Music/DayMusic.stop()
 	$Timers/NightTimer.start()
+	$Music/NightMusic.play()
 
 func _on_night_timer_timeout() -> void:
 	day_restart()

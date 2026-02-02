@@ -16,6 +16,8 @@
 [ext_resource type="PackedScene" uid="uid://gth410vtrg87" path="res://scenes/ui/inventory_container.tscn" id="12_xfk5q"]
 [ext_resource type="PackedScene" uid="uid://ckuy0b447rmke" path="res://scenes/objects/ship.tscn" id="13_8iyoh"]
 [ext_resource type="PackedScene" uid="uid://dtwtasyc1tvtl" path="res://scenes/ui/main_ui.tscn" id="13_qogh7"]
+[ext_resource type="AudioStream" uid="uid://bxcr4fnl4dti0" path="res://audio/The Struggle Loop.ogg" id="17_qhnmj"]
+[ext_resource type="AudioStream" uid="uid://bcl6wir0wvn7y" path="res://audio/Night Song.mp3" id="18_qhnmj"]
 
 [sub_resource type="Gradient" id="Gradient_icy5c"]
 offsets = PackedFloat32Array(0, 0.4299517, 0.8599034)
@@ -916,6 +918,9 @@ tile_set = SubResource("TileSet_rmjfq")
 [node name="Objects" type="Node2D" parent="." unique_id=1709508911]
 y_sort_enabled = true
 
+[node name="Ship" parent="Objects" unique_id=1064132731 instance=ExtResource("13_8iyoh")]
+position = Vector2(-69, 664)
+
 [node name="Player" parent="Objects" unique_id=1116143726 instance=ExtResource("2_b2cq8")]
 position = Vector2(21, 695)
 
@@ -1433,20 +1438,26 @@ mouse_filter = 2
 [node name="Timers" type="Node" parent="." unique_id=1507378834]
 
 [node name="DayTimer" type="Timer" parent="Timers" unique_id=1170833392]
-wait_time = 60.0
+wait_time = 5.0
 one_shot = true
 autostart = true
 
 [node name="NightTimer" type="Timer" parent="Timers" unique_id=782290827]
-wait_time = 30.0
+wait_time = 20.0
 one_shot = true
 
 [node name="HealTimer" type="Timer" parent="Timers" unique_id=720060771]
 wait_time = 0.05
 one_shot = true
 
-[node name="Ship" parent="." unique_id=1064132731 instance=ExtResource("13_8iyoh")]
-position = Vector2(-69, 664)
+[node name="Music" type="Node2D" parent="." unique_id=971539149]
+
+[node name="DayMusic" type="AudioStreamPlayer2D" parent="Music" unique_id=539706829]
+stream = ExtResource("17_qhnmj")
+autoplay = true
+
+[node name="NightMusic" type="AudioStreamPlayer2D" parent="Music" unique_id=1791065060]
+stream = ExtResource("18_qhnmj")
 
 [connection signal="diagnose" from="Objects/Player" to="." method="_on_player_diagnose"]
 [connection signal="input_event" from="Objects/Player" to="." method="_on_player_input_event"]
