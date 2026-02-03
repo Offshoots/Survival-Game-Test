@@ -1,28 +1,28 @@
-[gd_scene format=3 uid="uid://drwuirhftv0tq"]
+[gd_scene format=3 uid="uid://bdi1lvcams10m"]
 
-[ext_resource type="Script" uid="uid://bfixoflcejjfl" path="res://scenes/objects/tool.gd" id="1_h2rwj"]
-[ext_resource type="Texture2D" uid="uid://btjy01hwoemkf" path="res://graphics/icons/axe.png" id="2_icn18"]
+[ext_resource type="Script" uid="uid://duuik3ne3qxxs" path="res://scenes/objects/tools/tool_sword.gd" id="1_7rwft"]
+[ext_resource type="Texture2D" uid="uid://c4ifwd2cgn4ub" path="res://graphics/icons/sword.png" id="2_n5ygj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ekjv0"]
 radius = 6.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cfw34"]
-radius = 15.033297
+radius = 9.055386
 
-[node name="Tool" type="StaticBody2D" unique_id=1157470611]
-collision_layer = 2
+[node name="ToolSword" type="StaticBody2D" unique_id=1157470611]
+collision_layer = 4
 collision_mask = 0
-script = ExtResource("1_h2rwj")
+script = ExtResource("1_7rwft")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2141459894]
-texture = ExtResource("2_icn18")
+texture = ExtResource("2_n5ygj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1237368595]
 shape = SubResource("CircleShape2D_ekjv0")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1862380088]
-collision_layer = 15
-collision_mask = 15
+collision_layer = 4
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1458776434]
 shape = SubResource("CircleShape2D_cfw34")

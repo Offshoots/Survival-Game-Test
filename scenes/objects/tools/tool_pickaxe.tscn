@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://blhdwrywniy00"]
+
+[ext_resource type="Script" uid="uid://bb0rrnlhjakga" path="res://scenes/objects/tools/tool_pickaxe.gd" id="1_geuhi"]
+[ext_resource type="Texture2D" uid="uid://c32hqjnoborya" path="res://graphics/icons/pickaxe.png" id="2_geuhi"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ekjv0"]
+radius = 6.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cfw34"]
+radius = 9.055386
+
+[node name="ToolPickaxe" type="StaticBody2D" unique_id=1157470611]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_geuhi")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2141459894]
+texture = ExtResource("2_geuhi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1237368595]
+shape = SubResource("CircleShape2D_ekjv0")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1862380088]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1458776434]
+shape = SubResource("CircleShape2D_cfw34")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

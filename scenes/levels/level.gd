@@ -413,3 +413,7 @@ func _on_pyre_entered_pyre(body) -> void:
 		body.death()
 	else:
 		print('Friend')
+
+
+func _on_giant_pyre_entered_giant_pyre() -> void:
+	print("So many stones")

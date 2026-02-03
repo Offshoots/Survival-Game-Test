@@ -15,8 +15,11 @@
 [ext_resource type="PackedScene" uid="uid://gxfhn8vu2d0l" path="res://scenes/ui/plant_info_container.tscn" id="11_7pb6i"]
 [ext_resource type="PackedScene" uid="uid://gth410vtrg87" path="res://scenes/ui/inventory_container.tscn" id="12_xfk5q"]
 [ext_resource type="PackedScene" uid="uid://ckuy0b447rmke" path="res://scenes/objects/ship.tscn" id="13_8iyoh"]
-[ext_resource type="PackedScene" uid="uid://drwuirhftv0tq" path="res://scenes/objects/tool.tscn" id="13_jyre1"]
+[ext_resource type="PackedScene" uid="uid://drwuirhftv0tq" path="res://scenes/objects/tools/tool_axe.tscn" id="13_jyre1"]
 [ext_resource type="PackedScene" uid="uid://dtwtasyc1tvtl" path="res://scenes/ui/main_ui.tscn" id="13_qogh7"]
+[ext_resource type="PackedScene" uid="uid://bdi1lvcams10m" path="res://scenes/objects/tools/tool_sword.tscn" id="14_4ab0e"]
+[ext_resource type="PackedScene" uid="uid://blhdwrywniy00" path="res://scenes/objects/tools/tool_pickaxe.tscn" id="15_p62il"]
+[ext_resource type="PackedScene" uid="uid://8g84486pdrpt" path="res://scenes/objects/giant_pyre.tscn" id="16_p62il"]
 [ext_resource type="AudioStream" uid="uid://bxcr4fnl4dti0" path="res://audio/The Struggle Loop.ogg" id="17_qhnmj"]
 [ext_resource type="AudioStream" uid="uid://bcl6wir0wvn7y" path="res://audio/Night Song.mp3" id="18_qhnmj"]
 
@@ -1376,7 +1379,10 @@ position = Vector2(-21, 661)
 [node name="RockSpawnPositions" type="Node2D" parent="Objects" unique_id=544263505]
 
 [node name="Marker2D" type="Marker2D" parent="Objects/RockSpawnPositions" unique_id=337175407]
-position = Vector2(638, 317)
+position = Vector2(600, 309)
+
+[node name="Marker2D11" type="Marker2D" parent="Objects/RockSpawnPositions" unique_id=1741719769]
+position = Vector2(499, 250)
 
 [node name="Marker2D2" type="Marker2D" parent="Objects/RockSpawnPositions" unique_id=554698081]
 position = Vector2(-67, 417)
@@ -1404,6 +1410,17 @@ position = Vector2(321, 233)
 
 [node name="Marker2D10" type="Marker2D" parent="Objects/RockSpawnPositions" unique_id=1622135185]
 position = Vector2(494, 345)
+
+[node name="ToolSpawnPositions" type="Node2D" parent="Objects" unique_id=463013230]
+
+[node name="ToolSword" parent="Objects" unique_id=1632607794 instance=ExtResource("14_4ab0e")]
+position = Vector2(329, 554)
+
+[node name="ToolPickaxe" parent="Objects" unique_id=573434451 instance=ExtResource("15_p62il")]
+position = Vector2(559, 283)
+
+[node name="GiantPyre" parent="Objects" unique_id=619828489 instance=ExtResource("16_p62il")]
+position = Vector2(569, 232)
 
 [node name="Overlay" type="Node2D" parent="." unique_id=1983204723]
 
@@ -1469,6 +1486,7 @@ stream = ExtResource("18_qhnmj")
 [connection signal="slice" from="Objects/Blob" to="." method="_on_blob_slice"]
 [connection signal="chop" from="Objects/Tree" to="." method="_on_tree_chop"]
 [connection signal="smash" from="Objects/Rock" to="." method="_on_rock_smash"]
+[connection signal="entered_giant_pyre" from="Objects/GiantPyre" to="." method="_on_giant_pyre_entered_giant_pyre"]
 [connection signal="heal" from="Overlay/CanvasLayer/MainUI" to="." method="_on_main_ui_heal"]
 [connection signal="timeout" from="Timers/DayTimer" to="." method="_on_day_timer_timeout"]
 [connection signal="timeout" from="Timers/NightTimer" to="." method="_on_night_timer_timeout"]

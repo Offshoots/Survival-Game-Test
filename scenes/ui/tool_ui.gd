@@ -17,27 +17,38 @@ const SEED_TEXTURES = {
 #By preloading the Tool Texture UI scene, we will have access to the new script and functions in that scene (such as "setup" func used inside of "texture_setup" below)
 var tool_texture_scene = preload("res://scenes/ui/tool_ui_texture.tscn")
 var seed_texture_scene = preload("res://scenes/ui/tool_ui_texture.tscn")
+var add_tool : bool = false
 var tools : Array[Enum.Tool] 
 
 func _ready() -> void:
+	tools = get_parent().tool_inventory
 	print(tools)
+	print(Enum.Tool.values())
 	texture_setup(tools, TOOL_TEXTURES, $ToolContainer)
 	$ToolContainer.hide()
+	#print(Enum.Seed.values())
 	texture_setup(Enum.Seed.values(), SEED_TEXTURES, $SeedContainer)
 	$SeedContainer.hide()
 
 func _process(delta: float) -> void:
-	pass
+	if add_tool == true:
+		tools = get_parent().tool_inventory
+		print(tools)
+		#$ToolContainer.hide()
+		add_tool = false
+		texture_setup(tools, TOOL_TEXTURES, $ToolContainer)
 
 func texture_setup(enum_list: Array, textures: Dictionary, container: HBoxContainer):
 	if textures == TOOL_TEXTURES:
-		#Size - 4 allows for only Sword, Axe, Pickaxe to be featured.
 		for enum_id in enum_list:
-			var tool_texture = tool_texture_scene.instantiate()
-			#preloaded the Texture UI scene and now using the setup func, passing in each tool via enum_id in this for loop, and textures dictionary indexed for that enum_id
-			#Need to select the correct tool from the array to match the correct texture, using enum_list[enum_id]
-			tool_texture.setup_tool(enum_list[enum_id], textures[enum_list[enum_id]])
-			container.add_child(tool_texture)
+			print(enum_list)
+			if enum_id == get_parent().found_tool:
+				print(enum_id)
+				var tool_texture = tool_texture_scene.instantiate()
+				#preloaded the Texture UI scene and now using the setup func, passing in each tool via enum_id in this for loop, and textures dictionary indexed for that enum_id
+				#Need to select the correct tool from the array to match the correct texture, using enum_list[enum_id]
+				tool_texture.setup_tool(enum_id, textures[enum_id])
+				container.add_child(tool_texture)
 	elif textures == SEED_TEXTURES:
 		for enum_id in enum_list:
 			var seed_texture = seed_texture_scene.instantiate()
@@ -46,8 +57,8 @@ func texture_setup(enum_list: Array, textures: Dictionary, container: HBoxContai
 			container.add_child(seed_texture)
 
 #In the player scene "On ready" get the the tool_inventory
-func get_tool_inventory(tool_inv : Array):
-	tools = tool_inv
+#func get_tool_inventory(tool_inv : Array):
+	#tools = tool_inv
 	
 
 #Reveal and Hide Timer are both improvements to the visual queue of the tool GUI. 

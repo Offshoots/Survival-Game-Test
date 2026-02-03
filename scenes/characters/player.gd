@@ -13,13 +13,13 @@ var death_scene = preload("res://scenes/ui/death_screen.tscn")
 
 @onready var move_state_machine = $Animation/AnimationTree.get("parameters/MoveStateMachine/playback")
 @onready var tool_state_machine = $Animation/AnimationTree.get("parameters/ToolStateMachine/playback")
-var current_tool: Enum.Tool = Enum.Tool.AXE
-var current_seed: Enum.Seed = Enum.Seed.TOMATO
+var current_tool: Enum.Tool #= Enum.Tool.AXE
+var current_seed: Enum.Seed #= Enum.Seed.TOMATO
 var current_inventory: Enum.Item 
 var new_item : bool = false
 var new_tool : bool = false
 var inventory : Array[Enum.Item]
-var tool_inventory : Array[Enum.Tool] = [Enum.Tool.AXE, Enum.Tool.SWORD]
+var tool_inventory : Array[Enum.Tool]  #= [Enum.Tool.SWORD]
 var found_tool : Enum.Tool
 
 @onready var death_timer: Timer = $DeathTimer
@@ -42,7 +42,8 @@ var health := max_health:
 
 
 func _ready() -> void:
-	tool_ui.get_tool_inventory(tool_inventory)
+	pass
+	#tool_ui.get_tool_inventory(tool_inventory)
 
 func _physics_process(_delta: float) -> void:
 	if can_move:
@@ -54,6 +55,10 @@ func _physics_process(_delta: float) -> void:
 	
 	if new_tool == true:
 		tool_inventory.append(found_tool)
+		current_tool = found_tool
+		new_tool = false
+		tool_ui.add_tool = true
+		
 
 #Storing items in an array for now, don't know if I'll use
 	if new_item == true:
@@ -65,15 +70,21 @@ func _physics_process(_delta: float) -> void:
 
 func get_basic_input():
 	if Input.is_action_just_pressed("tool_forward") or Input.is_action_just_pressed("tool_backward"):
-		var dir = Input.get_axis("tool_backward", "tool_forward")
-		#Using tool_inventory to get the correct size
-		current_tool = posmod((current_tool + int(dir)), tool_inventory.size()) as Enum.Tool
-		#print(current_tool)
-		$ToolUI.reveal_tool()
+		if tool_inventory.size() <= 1:
+			print("Not Enough Tools")
+		else:
+			var dir = Input.get_axis("tool_backward", "tool_forward")
+			#Using tool_inventory to get the correct size
+			current_tool = posmod((current_tool + int(dir)), tool_inventory.size()) as Enum.Tool
+			#print(current_tool)
+			$ToolUI.reveal_tool()
 		
 	if Input.is_action_just_pressed("action"):
-		tool_state_machine.travel(Data.TOOL_STATE_ANIMATIONS[current_tool])
-		$Animation/AnimationTree.set("parameters/ToolOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+		if tool_inventory.is_empty():
+			print("No Tool") 
+		else:
+			tool_state_machine.travel(Data.TOOL_STATE_ANIMATIONS[current_tool])
+			$Animation/AnimationTree.set("parameters/ToolOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 	
 	#Create tool action based on mouse click and distance to target
 	if Input.is_action_pressed("click"):
