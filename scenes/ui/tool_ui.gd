@@ -17,9 +17,11 @@ const SEED_TEXTURES = {
 #By preloading the Tool Texture UI scene, we will have access to the new script and functions in that scene (such as "setup" func used inside of "texture_setup" below)
 var tool_texture_scene = preload("res://scenes/ui/tool_ui_texture.tscn")
 var seed_texture_scene = preload("res://scenes/ui/tool_ui_texture.tscn")
+var tools : Array[Enum.Tool] = [Enum.Tool.AXE, Enum.Tool.SWORD]
 
 func _ready() -> void:
-	texture_setup(Enum.Tool.values(), TOOL_TEXTURES, $ToolContainer)
+	print(tools)
+	texture_setup(tools, TOOL_TEXTURES, $ToolContainer)
 	$ToolContainer.hide()
 	texture_setup(Enum.Seed.values(), SEED_TEXTURES, $SeedContainer)
 	$SeedContainer.hide()
@@ -27,10 +29,11 @@ func _ready() -> void:
 func texture_setup(enum_list: Array, textures: Dictionary, container: HBoxContainer):
 	if textures == TOOL_TEXTURES:
 		#Size - 4 allows for only Sword, Axe, Pickaxe to be featured.
-		for enum_id in enum_list.size()-4:
+		for enum_id in enum_list:
 			var tool_texture = tool_texture_scene.instantiate()
 			#preloaded the Texture UI scene and now using the setup func, passing in each tool via enum_id in this for loop, and textures dictionary indexed for that enum_id
-			tool_texture.setup_tool(enum_id, textures[enum_id])
+			#Need to select the correct tool from the array to match the correct texture, using enum_list[enum_id]
+			tool_texture.setup_tool(enum_list[enum_id], textures[enum_list[enum_id]])
 			container.add_child(tool_texture)
 	elif textures == SEED_TEXTURES:
 		for enum_id in enum_list:
@@ -38,6 +41,11 @@ func texture_setup(enum_list: Array, textures: Dictionary, container: HBoxContai
 			#preloaded the Texture UI scene and now using the setup func, passing in each tool via enum_id in this for loop, and textures dictionary indexed for that enum_id
 			seed_texture.setup_seed(enum_id, textures[enum_id])
 			container.add_child(seed_texture)
+
+#In the player scene "On ready" get the the tool_inventory
+func get_tool_inventory(tool_inv : Array):
+	tools = tool_inv
+	
 
 #Reveal and Hide Timer are both improvements to the visual queue of the tool GUI. 
 #ToolGUI opens on button to cycle then closes 1 second later.

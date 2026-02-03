@@ -17,9 +17,13 @@ var current_tool: Enum.Tool = Enum.Tool.AXE
 var current_seed: Enum.Seed = Enum.Seed.TOMATO
 var current_inventory: Enum.Item 
 var new_item : bool = false
+var new_tool : bool = false
 var inventory : Array[Enum.Item]
+var tool_inventory : Array[Enum.Tool] = [Enum.Tool.AXE, Enum.Tool.SWORD]
+var found_tool : Enum.Tool
 
 @onready var death_timer: Timer = $DeathTimer
+@onready var tool_ui: Control = $ToolUI
 
 signal tool_use(tool: Enum.Tool, pos: Vector2)
 signal diagnose
@@ -38,7 +42,7 @@ var health := max_health:
 
 
 func _ready() -> void:
-	pass
+	tool_ui.get_tool_inventory(tool_inventory)
 
 func _physics_process(_delta: float) -> void:
 	if can_move:
@@ -47,7 +51,9 @@ func _physics_process(_delta: float) -> void:
 		keyboard_move()
 		#mouse_move()
 		animate()
-		
+	
+	if new_tool == true:
+		tool_inventory.append(found_tool)
 
 #Storing items in an array for now, don't know if I'll use
 	if new_item == true:
@@ -60,7 +66,7 @@ func _physics_process(_delta: float) -> void:
 func get_basic_input():
 	if Input.is_action_just_pressed("tool_forward") or Input.is_action_just_pressed("tool_backward"):
 		var dir = Input.get_axis("tool_backward", "tool_forward")
-		current_tool = posmod((current_tool + int(dir)), Enum.Tool.size()-4) as Enum.Tool
+		current_tool = posmod((current_tool + int(dir)), tool_inventory.size()) as Enum.Tool
 		#print(current_tool)
 		$ToolUI.reveal_tool()
 		
