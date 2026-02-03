@@ -30,6 +30,7 @@ var health := 3:
 	set(value):
 		health = value
 		if health <= 0 and is_dead == false:
+			#is_dead bool helps to prevent death function from triggering more than once
 			is_dead = true
 			death()
 			gold = true
@@ -105,7 +106,7 @@ func push(target):
 func hit(tool: Enum.Tool):
 	if tool == Enum.Tool.SWORD:
 		$FlashSprite2D.flash()
-		health -= 3
+		health -= 2
 		push_distance = 150
 		var target = (player.position - position).normalized() * -1 * push_distance
 		push(target)
