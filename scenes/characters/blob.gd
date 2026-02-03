@@ -11,6 +11,7 @@ var distance_remaining
 #Use Bool for item pickup. If the Item is present for the event that it would be collected, then the bool is true.
 #The item will be added to the inventory via the Level scene into the ItemContainerUI, after assisinging the approiate enum to get the correct icon and properties.
 var gold : bool = false
+var is_dead : bool = false
 
 @onready var player = get_tree().get_first_node_in_group('Player')
 @onready var nav_agent := $NavigationAgent2D as NavigationAgent2D
@@ -28,7 +29,8 @@ var gold : bool = false
 var health := 3:
 	set(value):
 		health = value
-		if health == 0:
+		if health <= 0 and is_dead == false:
+			is_dead = true
 			death()
 			gold = true
 		else:
@@ -103,12 +105,12 @@ func push(target):
 func hit(tool: Enum.Tool):
 	if tool == Enum.Tool.SWORD:
 		$FlashSprite2D.flash()
-		health -= 2
+		health -= 3
 		push_distance = 150
 		var target = (player.position - position).normalized() * -1 * push_distance
 		push(target)
 	if tool == Enum.Tool.AXE:
-		$FlashSprite2D.flash()
+		#$FlashSprite2D.flash()
 		health -= 1
 		push_distance = 100
 		var target = (player.position - position).normalized() * -1 * push_distance

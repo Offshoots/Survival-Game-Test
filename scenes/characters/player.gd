@@ -55,7 +55,8 @@ func _physics_process(_delta: float) -> void:
 	
 	if new_tool == true:
 		tool_inventory.append(found_tool)
-		current_tool = found_tool
+		if tool_inventory.size() == 1:
+			current_tool = found_tool
 		new_tool = false
 		tool_ui.add_tool = true
 		
