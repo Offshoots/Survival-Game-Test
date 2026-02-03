@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://gxfhn8vu2d0l" path="res://scenes/ui/plant_info_container.tscn" id="11_7pb6i"]
 [ext_resource type="PackedScene" uid="uid://gth410vtrg87" path="res://scenes/ui/inventory_container.tscn" id="12_xfk5q"]
 [ext_resource type="PackedScene" uid="uid://ckuy0b447rmke" path="res://scenes/objects/ship.tscn" id="13_8iyoh"]
+[ext_resource type="PackedScene" uid="uid://drwuirhftv0tq" path="res://scenes/objects/tool.tscn" id="13_jyre1"]
 [ext_resource type="PackedScene" uid="uid://dtwtasyc1tvtl" path="res://scenes/ui/main_ui.tscn" id="13_qogh7"]
 [ext_resource type="AudioStream" uid="uid://bxcr4fnl4dti0" path="res://audio/The Struggle Loop.ogg" id="17_qhnmj"]
 [ext_resource type="AudioStream" uid="uid://bcl6wir0wvn7y" path="res://audio/Night Song.mp3" id="18_qhnmj"]
@@ -918,6 +919,9 @@ tile_set = SubResource("TileSet_rmjfq")
 [node name="Objects" type="Node2D" parent="." unique_id=1709508911]
 y_sort_enabled = true
 
+[node name="Tool" parent="Objects" unique_id=1157470611 instance=ExtResource("13_jyre1")]
+position = Vector2(39, 654)
+
 [node name="Ship" parent="Objects" unique_id=1064132731 instance=ExtResource("13_8iyoh")]
 position = Vector2(-69, 664)
 
@@ -928,7 +932,7 @@ position = Vector2(21, 695)
 position = Vector2(-14, 214)
 
 [node name="Tree" parent="Objects" unique_id=462838339 instance=ExtResource("8_8iyoh")]
-position = Vector2(-5, 670)
+position = Vector2(39, 615)
 
 [node name="Rock" parent="Objects" unique_id=1884207360 instance=ExtResource("10_b8j7q")]
 position = Vector2(-184, 551)
@@ -1052,7 +1056,7 @@ position = Vector2(144, 619)
 position = Vector2(141, 668)
 
 [node name="Marker2D33" type="Marker2D" parent="Objects/TreeSpawnPositions" unique_id=1500942339]
-position = Vector2(43, 688)
+position = Vector2(95, 617)
 
 [node name="Marker2D34" type="Marker2D" parent="Objects/TreeSpawnPositions" unique_id=564095878]
 position = Vector2(80, 653)

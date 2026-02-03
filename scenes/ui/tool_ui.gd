@@ -17,7 +17,7 @@ const SEED_TEXTURES = {
 #By preloading the Tool Texture UI scene, we will have access to the new script and functions in that scene (such as "setup" func used inside of "texture_setup" below)
 var tool_texture_scene = preload("res://scenes/ui/tool_ui_texture.tscn")
 var seed_texture_scene = preload("res://scenes/ui/tool_ui_texture.tscn")
-var tools : Array[Enum.Tool] = [Enum.Tool.AXE, Enum.Tool.SWORD]
+var tools : Array[Enum.Tool] 
 
 func _ready() -> void:
 	print(tools)
@@ -25,7 +25,10 @@ func _ready() -> void:
 	$ToolContainer.hide()
 	texture_setup(Enum.Seed.values(), SEED_TEXTURES, $SeedContainer)
 	$SeedContainer.hide()
-	
+
+func _process(delta: float) -> void:
+	pass
+
 func texture_setup(enum_list: Array, textures: Dictionary, container: HBoxContainer):
 	if textures == TOOL_TEXTURES:
 		#Size - 4 allows for only Sword, Axe, Pickaxe to be featured.
