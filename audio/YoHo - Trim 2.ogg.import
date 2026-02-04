@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b64nunxtbgdre"
+path="res://.godot/imported/YoHo - Trim 2.ogg-34673c287bd576de6e5b6661b2b17210.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/YoHo - Trim 2.ogg"
+dest_files=["res://.godot/imported/YoHo - Trim 2.ogg-34673c287bd576de6e5b6661b2b17210.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.9
+bpm=0.0
+beat_count=0
+bar_beats=4

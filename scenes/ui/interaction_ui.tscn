@@ -62,6 +62,14 @@ text = "Yes"
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="ContinueButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1065425986]
+layout_mode = 2
+text = "Ok"
+
+[node name="Spacer4" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1426972643]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="NoButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1187940419]
 layout_mode = 2
 focus_neighbor_left = NodePath("../YesButton")
@@ -77,5 +85,6 @@ wait_time = 0.1
 one_shot = true
 
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/YesButton" to="." method="_on_yes_button_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/NoButton" to="." method="_on_no_button_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

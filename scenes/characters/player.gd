@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 var direction: Vector2
 var last_direction: Vector2
-var speed = 50
+var speed = 200
 var can_move: bool = true
 var player_input: bool = false
 var placement_pos : Vector2

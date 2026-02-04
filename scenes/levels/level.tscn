@@ -1494,6 +1494,7 @@ stream = ExtResource("18_qhnmj")
 [connection signal="entered_giant_pyre" from="Objects/GiantPyre" to="." method="_on_giant_pyre_entered_giant_pyre"]
 [connection signal="heal" from="Overlay/CanvasLayer/MainUI" to="." method="_on_main_ui_heal"]
 [connection signal="no" from="Overlay/CanvasLayer/InteractionUI" to="." method="_on_interaction_ui_no"]
+[connection signal="ok" from="Overlay/CanvasLayer/InteractionUI" to="." method="_on_interaction_ui_ok"]
 [connection signal="yes" from="Overlay/CanvasLayer/InteractionUI" to="." method="_on_interaction_ui_yes"]
 [connection signal="timeout" from="Timers/DayTimer" to="." method="_on_day_timer_timeout"]
 [connection signal="timeout" from="Timers/NightTimer" to="." method="_on_night_timer_timeout"]

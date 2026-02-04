@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://dmtq1o8txu46q"]
 
-[ext_resource type="VideoStream" uid="uid://oq8xbc02li4x" path="res://videos/Viking_Forge_Video_short.ogv" id="1_fe1kp"]
 [ext_resource type="Script" uid="uid://bri3cqg8xvu8s" path="res://scenes/Cutscenes/cutscene.gd" id="1_koiy4"]
+[ext_resource type="VideoStream" uid="uid://vqmluelsm5o7" path="res://videos/Viking_Strikes_Iron_Video_Generated short.ogv" id="2_koiy4"]
+[ext_resource type="VideoStream" uid="uid://clx0eimirvmcy" path="res://videos/Viking_Ship_Sail_Lowering_Video - Trim 2.ogv" id="3_tsjdu"]
 
 [node name="Cutscene" type="Control" unique_id=1095432920]
 layout_mode = 3
@@ -15,15 +16,40 @@ script = ExtResource("1_koiy4")
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=793635207]
 
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer" unique_id=1496606543]
-offset_left = -200.0
-offset_top = 8.0
-offset_right = 1080.0
-offset_bottom = 728.0
-stream = ExtResource("1_fe1kp")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_koiy4")
 autoplay = true
+bus = &"Video"
+
+[node name="VideoStreamPlayer2" type="VideoStreamPlayer" parent="CanvasLayer" unique_id=29663321]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("3_tsjdu")
+bus = &"Video"
 
 [node name="Timer" type="Timer" parent="." unique_id=199796788]
 wait_time = 0.1
 one_shot = true
 
+[connection signal="finished" from="CanvasLayer/VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]
+[connection signal="finished" from="CanvasLayer/VideoStreamPlayer2" to="." method="_on_video_stream_player_2_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

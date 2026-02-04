@@ -15,7 +15,7 @@ var placement_pos : Vector2
 
 var day: int = 1
 var day_timer: bool = true
-
+var giant_pyre_visited = false
 
 #May not need any of these item variables. I simplified all iventory functions to use Enums
 var apple: int
@@ -427,6 +427,14 @@ func _on_giant_pyre_entered_giant_pyre() -> void:
 	var message:String = "So many stones"
 	print(message)
 	main_ui.update_message(message)
+	if giant_pyre_visited == false:
+		await get_tree().create_timer(0.05).timeout
+		var interaction_message : String = 'Someone built this a long time ago. It looks like a great fire used to burn on top.'
+		interaction_ui.update_message(interaction_message)
+		interaction_ui.select()
+		interaction_ui.add_continue_button()
+		interaction_ui.show()
+		Engine.time_scale = 0
 
 
 func _on_ship_enter_ship() -> void:
@@ -470,4 +478,10 @@ func _on_interaction_ui_yes() -> void:
 	Engine.time_scale = 1
 	await get_tree().create_timer(1.0).timeout
 	print("You Survived The Island!")
-	get_tree().change_scene_to_file("res://scenes/Ending/score_screen.tscn")
+	get_tree().change_scene_to_file("res://scenes/Cutscenes/cutscene.tscn")
+
+
+func _on_interaction_ui_ok() -> void:
+	interaction_ui.hide()
+	giant_pyre_visited = true
+	Engine.time_scale = 1
