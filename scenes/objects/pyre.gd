@@ -4,7 +4,7 @@ var coord: Vector2i
 
 signal entered_pyre(body:Node2D)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	update_fuel($FuelTimer.wait_time, $FuelTimer.time_left)
 
 

@@ -30,7 +30,7 @@ func _ready() -> void:
 	texture_setup(Enum.Seed.values(), SEED_TEXTURES, $SeedContainer)
 	$SeedContainer.hide()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if add_tool == true:
 		tools = get_parent().tool_inventory
 		print(tools)
