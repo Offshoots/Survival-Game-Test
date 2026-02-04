@@ -1,31 +1,29 @@
 [gd_scene format=3 uid="uid://djyycmtepngxl"]
 
-[ext_resource type="Script" path="res://scenes/ui/main_menu_ui.gd" id="1_3bauu"]
+[ext_resource type="Script" uid="uid://b481cfo7n566m" path="res://scenes/ui/main_menu_ui.gd" id="1_3bauu"]
 [ext_resource type="Texture2D" uid="uid://ddt7fsrfyd5pi" path="res://graphics/backgrounds/Arrival small.png" id="2_3bauu"]
+[ext_resource type="Texture2D" uid="uid://cnu5qh08qhv1f" path="res://graphics/backgrounds/Viking Survival.png" id="2_qegi1"]
 [ext_resource type="AudioStream" uid="uid://bxcr4fnl4dti0" path="res://audio/The Struggle Loop.ogg" id="3_b8bkt"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_b8bkt"]
-atlas = ExtResource("2_3bauu")
-region = Rect2(0, 0, 214, 198)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_qegi1"]
-atlas = ExtResource("2_3bauu")
-region = Rect2(214, 0, 214, 198)
+atlas = ExtResource("2_qegi1")
+region = Rect2(0, 0, 750, 750)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_02l8k"]
-atlas = ExtResource("2_3bauu")
-region = Rect2(0, 198, 214, 198)
+atlas = ExtResource("2_qegi1")
+region = Rect2(750, 0, 750, 750)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oq2e2"]
-atlas = ExtResource("2_3bauu")
-region = Rect2(214, 198, 214, 198)
+atlas = ExtResource("2_qegi1")
+region = Rect2(0, 750, 750, 750)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1xem4"]
+atlas = ExtResource("2_qegi1")
+region = Rect2(750, 750, 750, 750)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1xem4"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_b8bkt")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qegi1")
 }, {
@@ -34,6 +32,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_oq2e2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1xem4")
 }],
 "loop": true,
 "name": &"default",
@@ -47,11 +48,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 2
 script = ExtResource("1_3bauu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1344281405]
-position = Vector2(306, 381)
-scale = Vector2(2, 2)
+position = Vector2(375, 375)
 sprite_frames = SubResource("SpriteFrames_1xem4")
 autoplay = "default"
 
@@ -100,18 +101,25 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
 
-[node name="StartButton" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=1341843674]
+[node name="OptionsButton" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=1702496716]
 layout_mode = 2
-text = "Start"
+focus_neighbor_top = NodePath("../QuitButton")
+focus_neighbor_bottom = NodePath("../StartButton")
+theme_override_font_sizes/font_size = 24
+text = "Select 
+Character"
 
 [node name="Spacer3" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=1395182991]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="OptionsButton" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=1702496716]
+[node name="StartButton" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=1341843674]
 layout_mode = 2
-text = "Options"
+focus_neighbor_top = NodePath("../OptionsButton")
+focus_neighbor_bottom = NodePath("../QuitButton")
+theme_override_font_sizes/font_size = 24
+text = "Start"
 
 [node name="Spacer4" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=939657784]
 layout_mode = 2
@@ -120,6 +128,10 @@ size_flags_vertical = 3
 
 [node name="QuitButton" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=165531598]
 layout_mode = 2
+focus_neighbor_top = NodePath("../StartButton")
+focus_neighbor_bottom = NodePath("../OptionsButton")
+theme_override_colors/icon_focus_color = Color(0.20392157, 0.5882353, 0.8156863, 1)
+theme_override_font_sizes/font_size = 24
 text = "Quit"
 
 [node name="Spacer5" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=906090498]
@@ -132,6 +144,6 @@ size_flags_stretch_ratio = 4.0
 stream = ExtResource("3_b8bkt")
 autoplay = true
 
-[connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://dmtq1o8txu46q"]
+
+[ext_resource type="VideoStream" uid="uid://oq8xbc02li4x" path="res://videos/Viking_Forge_Video_short.ogv" id="1_fe1kp"]
+[ext_resource type="Script" uid="uid://bri3cqg8xvu8s" path="res://scenes/Cutscenes/cutscene.gd" id="1_koiy4"]
+
+[node name="Cutscene" type="Control" unique_id=1095432920]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_koiy4")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=793635207]
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer" unique_id=1496606543]
+offset_left = -200.0
+offset_top = 8.0
+offset_right = 1080.0
+offset_bottom = 728.0
+stream = ExtResource("1_fe1kp")
+autoplay = true
+
+[node name="Timer" type="Timer" parent="." unique_id=199796788]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

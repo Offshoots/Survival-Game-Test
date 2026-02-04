@@ -1,5 +1,7 @@
 extends Node2D
 
+var cut_scene = preload("res://scenes/Cutscenes/cutscene.tscn")
+var interact_scene = preload("res://scenes/ui/interaction_ui.tscn")
 var plant_scene = preload("res://scenes/objects/plant.tscn")
 var plant_info_scene = preload("res://scenes/ui/plant_info.tscn")
 var item_info_scene = preload("res://scenes/ui/item_info.tscn")
@@ -25,13 +27,14 @@ var pumpkin: int
 var wheat: int
 
 
-
+@onready var ship: StaticBody2D = $Objects/Ship
 @onready var player = $Objects/Player
 @onready var tree = $Objects/Tree
 @onready var inv = $Overlay/CanvasLayer/InventoryContainer
 @export var daytime_color: Gradient
 @onready var main_ui: Control = $Overlay/CanvasLayer/MainUI
 @onready var fade_transition: ColorRect = $Overlay/CanvasLayer/FadeTransition
+@onready var interaction_ui: Control = $Overlay/CanvasLayer/InteractionUI
 
 
 
@@ -45,6 +48,7 @@ func _ready() -> void:
 	update_health()
 	#var rand_enemy = randi_range(2,3)
 	#spawn_enemies(rand_enemy)
+	interaction_ui.hide()
 	
 
 func fade_out():
@@ -295,19 +299,23 @@ func add_inventory(item_added : Enum.Item):
 	#Created simplified code for any item (no need to check which item it is anymore):
 	if player.inventory.count(item_added) == 1:
 		add_item(item_added)
-	update_invetory(item_added)
+	update_inventory(item_added)
 
 #Update inventory function take the Enum.Item being added or removed and updates it
-func update_invetory(item_updated : Enum.Item):
+func update_inventory(item_updated : Enum.Item):
 	#create new var count for the number of that item found in the player.inventory array, and pass that information into the "update_all" function
 	var count = player.inventory.count(item_updated)
 	$Overlay/CanvasLayer/InventoryContainer.update_all(count, item_updated)
+
+func remove_all(item_enum: Enum.Item):
+	while player.inventory.count(item_enum) > 0:
+		remove_inventory(item_enum)
 
 func remove_inventory(item_removed: Enum.Item):
 	#Remove one matching item from the inventory using "erase"
 	player.inventory.erase(item_removed)
 	#print(player.inventory)
-	update_invetory(item_removed)
+	update_inventory(item_removed)
 #endregion
 
 #Create the transition to the gameover screen
@@ -416,4 +424,39 @@ func _on_pyre_entered_pyre(body) -> void:
 
 
 func _on_giant_pyre_entered_giant_pyre() -> void:
-	print("So many stones")
+	var message:String = "So many stones"
+	print(message)
+	main_ui.update_message(message)
+
+
+func _on_ship_enter_ship() -> void:
+	var message:String = 'My SHIP! Oh noo!'
+	print(message)
+	main_ui.update_message(message)
+	if ship.ship_health < ship.max_ship_health and player.inventory.count(Enum.Item.WOOD) >= 1:
+		var wood_total = player.inventory.count(Enum.Item.WOOD)
+		print(wood_total)
+		ship.ship_health += wood_total
+		remove_all(Enum.Item.WOOD)
+		print('Ship Health: ' + str(ship.ship_health))
+	if ship.ship_health >= ship.max_ship_health:
+		var final_message:String = 'Repair the Ship!'
+		print(final_message)
+		if interaction_ui.grab_focus_once == false:
+			main_ui.update_message(final_message)
+			$Timers/EndTimer.start()
+		
+
+func _on_ship_exit_ship() -> void:
+	interaction_ui.grab_focus_once = false
+
+
+func _on_end_timer_timeout() -> void:
+	#Can set up a button/menu to initiate
+	var message : String = 'Repair Ship?'
+	interaction_ui.update_message(message)
+	interaction_ui.select()
+	interaction_ui.show()
+	
+	
+	

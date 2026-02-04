@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://8g84486pdrpt" path="res://scenes/objects/giant_pyre.tscn" id="16_p62il"]
 [ext_resource type="AudioStream" uid="uid://bxcr4fnl4dti0" path="res://audio/The Struggle Loop.ogg" id="17_qhnmj"]
 [ext_resource type="AudioStream" uid="uid://bcl6wir0wvn7y" path="res://audio/Night Song.mp3" id="18_qhnmj"]
+[ext_resource type="PackedScene" uid="uid://3lpeo6ap6evi" path="res://scenes/ui/interaction_ui.tscn" id="21_c3o0d"]
 
 [sub_resource type="Gradient" id="Gradient_icy5c"]
 offsets = PackedFloat32Array(0, 0.4299517, 0.8599034)
@@ -1456,6 +1457,8 @@ mouse_filter = 2
 [node name="MainUI" parent="Overlay/CanvasLayer" unique_id=832362399 instance=ExtResource("13_qogh7")]
 mouse_filter = 2
 
+[node name="InteractionUI" parent="Overlay/CanvasLayer" unique_id=1979129113 instance=ExtResource("21_c3o0d")]
+
 [node name="Timers" type="Node" parent="." unique_id=1507378834]
 
 [node name="DayTimer" type="Timer" parent="Timers" unique_id=1170833392]
@@ -1471,6 +1474,9 @@ one_shot = true
 wait_time = 0.05
 one_shot = true
 
+[node name="EndTimer" type="Timer" parent="Timers" unique_id=462425935]
+wait_time = 0.05
+
 [node name="Music" type="Node2D" parent="." unique_id=971539149]
 
 [node name="DayMusic" type="AudioStreamPlayer2D" parent="Music" unique_id=539706829]
@@ -1480,6 +1486,8 @@ autoplay = true
 [node name="NightMusic" type="AudioStreamPlayer2D" parent="Music" unique_id=1791065060]
 stream = ExtResource("18_qhnmj")
 
+[connection signal="enter_ship" from="Objects/Ship" to="." method="_on_ship_enter_ship"]
+[connection signal="exit_ship" from="Objects/Ship" to="." method="_on_ship_exit_ship"]
 [connection signal="diagnose" from="Objects/Player" to="." method="_on_player_diagnose"]
 [connection signal="input_event" from="Objects/Player" to="." method="_on_player_input_event"]
 [connection signal="tool_use" from="Objects/Player" to="." method="_on_player_tool_use"]
@@ -1491,3 +1499,4 @@ stream = ExtResource("18_qhnmj")
 [connection signal="timeout" from="Timers/DayTimer" to="." method="_on_day_timer_timeout"]
 [connection signal="timeout" from="Timers/NightTimer" to="." method="_on_night_timer_timeout"]
 [connection signal="timeout" from="Timers/HealTimer" to="." method="_on_heal_timer_timeout"]
+[connection signal="timeout" from="Timers/EndTimer" to="." method="_on_end_timer_timeout"]

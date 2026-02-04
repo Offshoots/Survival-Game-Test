@@ -26,7 +26,7 @@ var is_dead : bool = false
 @onready var ray_cast_down_right: RayCast2D = $RayCastDownRight
 
 
-var health := 3:
+var health := 12:
 	set(value):
 		health = value
 		if health <= 0 and is_dead == false:
@@ -106,13 +106,13 @@ func push(target):
 func hit(tool: Enum.Tool):
 	if tool == Enum.Tool.SWORD:
 		$FlashSprite2D.flash()
-		health -= 2
-		push_distance = 150
+		health -= 4
+		push_distance = 120
 		var target = (player.position - position).normalized() * -1 * push_distance
 		push(target)
 	if tool == Enum.Tool.AXE:
-		#$FlashSprite2D.flash()
-		health -= 1
+		$FlashSprite2D.flash()
+		health -= 3
 		push_distance = 100
 		var target = (player.position - position).normalized() * -1 * push_distance
 		push(target)

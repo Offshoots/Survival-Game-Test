@@ -1,19 +1,37 @@
 [gd_scene format=3 uid="uid://ckuy0b447rmke"]
 
 [ext_resource type="Texture2D" uid="uid://lityjoclsxj0" path="res://graphics/objects/Test Ship 3.png" id="1_a4j8e"]
+[ext_resource type="Script" uid="uid://d0cqh6n8itxbe" path="res://scenes/objects/ship.gd" id="1_x2d0j"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x2d0j"]
 radius = 15.981938
 height = 125.97775
 
-[node name="Ship" type="StaticBody2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fnfjl"]
+radius = 35.0
+height = 166.0
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Ship" type="StaticBody2D" unique_id=1719305025]
+script = ExtResource("1_x2d0j")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=76352175]
 position = Vector2(-7.125025, -10.249996)
 scale = Vector2(0.32052636, 0.2834728)
 texture = ExtResource("1_a4j8e")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1502667237]
 position = Vector2(-13, 27)
 rotation = 1.5620697
 shape = SubResource("CapsuleShape2D_x2d0j")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1031627774]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=541844073]
+position = Vector2(-9, 1)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_fnfjl")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
