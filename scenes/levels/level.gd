@@ -448,6 +448,7 @@ func _on_ship_enter_ship() -> void:
 		interaction_ui.update_message(interaction_message)
 		interaction_ui.select()
 		interaction_ui.show()
+		Engine.time_scale = 0
 		
 
 func _on_ship_exit_ship() -> void:
@@ -459,12 +460,14 @@ func _on_interaction_ui_no() -> void:
 	print("More Work To Do!")
 	interaction_ui.grab_focus_once = true
 	interaction_ui.hide()
+	Engine.time_scale = 1
 
 
 func _on_interaction_ui_yes() -> void:
 	print("Repairing the Ship!")
 	interaction_ui.grab_focus_once = true
 	interaction_ui.hide()
+	Engine.time_scale = 1
 	await get_tree().create_timer(1.0).timeout
 	print("You Survived The Island!")
 	get_tree().change_scene_to_file("res://scenes/Ending/score_screen.tscn")

@@ -1474,9 +1474,6 @@ one_shot = true
 wait_time = 0.05
 one_shot = true
 
-[node name="EndTimer" type="Timer" parent="Timers" unique_id=462425935]
-wait_time = 0.05
-
 [node name="Music" type="Node2D" parent="." unique_id=971539149]
 
 [node name="DayMusic" type="AudioStreamPlayer2D" parent="Music" unique_id=539706829]
@@ -1501,4 +1498,3 @@ stream = ExtResource("18_qhnmj")
 [connection signal="timeout" from="Timers/DayTimer" to="." method="_on_day_timer_timeout"]
 [connection signal="timeout" from="Timers/NightTimer" to="." method="_on_night_timer_timeout"]
 [connection signal="timeout" from="Timers/HealTimer" to="." method="_on_heal_timer_timeout"]
-[connection signal="timeout" from="Timers/EndTimer" to="." method="_on_end_timer_timeout"]

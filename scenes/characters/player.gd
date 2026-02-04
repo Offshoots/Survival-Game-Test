@@ -76,10 +76,19 @@ func get_basic_input():
 		else:
 			var dir = Input.get_axis("tool_backward", "tool_forward")
 			#Using tool_inventory to get the correct size
-			current_tool = posmod((current_tool + int(dir)), tool_inventory.size()) as Enum.Tool
-			#print(current_tool)
-			$ToolUI.reveal_tool()
-		
+			#I think posmod would work when the tool numbers are within 1 of each other. Need to check. Coinfimed. Need to fix for inventory scenarios of [0,2] = [sword, pickaxe]
+			print(dir)
+			var index = 0
+			for tool in tool_inventory:
+				print(tool)
+				if tool == current_tool:
+					var next_tool = posmod((index + int(dir)), tool_inventory.size())
+					current_tool = tool_inventory[next_tool]
+					#print(current_tool)
+					$ToolUI.reveal_tool()
+					break
+				index += 1
+
 	if Input.is_action_just_pressed("action"):
 		if tool_inventory.is_empty():
 			print("No Tool") 
