@@ -1,0 +1,174 @@
+[gd_scene format=3 uid="uid://dhe2rek38f68m"]
+
+[ext_resource type="Script" uid="uid://ba1bb6c2dned3" path="res://scenes/Ending/score_screen.gd" id="1_4d2gj"]
+
+[node name="ScoreScreen" type="Control" unique_id=484245641]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4d2gj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1692459508]
+position = Vector2(375, 375)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=420618151]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=353708519]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=280086701]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer5" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=244566815]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Spacer7" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=524542132]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Spacer8" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1242800835]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1048382832]
+layout_mode = 2
+
+[node name="IslandLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/PanelContainer" unique_id=427627254]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Island Survival"
+
+[node name="PanelContainer3" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=41090395]
+layout_mode = 2
+
+[node name="IslandStatsLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/PanelContainer3" unique_id=1079433551]
+layout_mode = 2
+text = "Resources:
+Apples Collected
+Crops Harvested
+Fish Caught
+Wood Collected
+Stone Collected
+Rocks Smashed
+Trees Felled"
+autowrap_mode = 3
+
+[node name="Spacer4" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=738612834]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1807593833]
+layout_mode = 2
+
+[node name="Spacer8" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=169412282]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MainMenuButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1266303382]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_right = NodePath("../QuitButton")
+text = "Main Menu"
+
+[node name="Spacer6" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=718096430]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="QuitButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=450147806]
+layout_mode = 2
+focus_neighbor_left = NodePath("../MainMenuButton")
+focus_neighbor_right = NodePath(".")
+text = "Quit Game"
+
+[node name="Spacer7" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1224931290]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Spacer6" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1279959225]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Spacer9" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=602591039]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=697948818]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer3" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer3" unique_id=736148544]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer3" unique_id=191578894]
+layout_mode = 2
+
+[node name="CombatLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer3/PanelContainer" unique_id=378061341]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Combat"
+
+[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer3" unique_id=1440822373]
+layout_mode = 2
+
+[node name="CombatStatsLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer3/PanelContainer2" unique_id=727281127]
+layout_mode = 2
+text = "Days Survived
+Apples Consumed
+Pyres Built
+Enemies Slain
+Enemies Killed by Pyre
+Enemies Killed by Daylight"
+autowrap_mode = 3
+
+[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer3" unique_id=1149966209]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer3" unique_id=1043593799]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer3/VBoxContainer2" unique_id=1936175490]
+layout_mode = 2
+
+[node name="SeaLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer3/VBoxContainer2/PanelContainer" unique_id=1080207338]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Seafaring"
+
+[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer3/VBoxContainer2" unique_id=1838539275]
+layout_mode = 2
+
+[node name="SeaStatsLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer3/VBoxContainer2/PanelContainer2" unique_id=1427084641]
+layout_mode = 2
+text = "Days Worth of Supplies:  10 apples per day
+Distance Sailed: random 1-100 nautical miles per day.
+Journey Result: Random results, Home Not Reached"
+autowrap_mode = 3
+
+[node name="Spacer2" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer3" unique_id=190762514]
+layout_mode = 2
+size_flags_vertical = 3
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

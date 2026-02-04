@@ -439,24 +439,32 @@ func _on_ship_enter_ship() -> void:
 		ship.ship_health += wood_total
 		remove_all(Enum.Item.WOOD)
 		print('Ship Health: ' + str(ship.ship_health))
-	if ship.ship_health >= ship.max_ship_health:
-		var final_message:String = 'Repair the Ship!'
+	if ship.ship_health >= ship.max_ship_health and interaction_ui.grab_focus_once == false:
+		var final_message:String = 'Enough Wood Has Been Collected!'
 		print(final_message)
-		if interaction_ui.grab_focus_once == false:
-			main_ui.update_message(final_message)
-			$Timers/EndTimer.start()
+		main_ui.update_message(final_message)
+		await get_tree().create_timer(0.05).timeout
+		var interaction_message : String = 'Repair Ship?'
+		interaction_ui.update_message(interaction_message)
+		interaction_ui.select()
+		interaction_ui.show()
 		
 
 func _on_ship_exit_ship() -> void:
+	await get_tree().create_timer(1.0).timeout
 	interaction_ui.grab_focus_once = false
 
 
-func _on_end_timer_timeout() -> void:
-	#Can set up a button/menu to initiate
-	var message : String = 'Repair Ship?'
-	interaction_ui.update_message(message)
-	interaction_ui.select()
-	interaction_ui.show()
-	
-	
-	
+func _on_interaction_ui_no() -> void:
+	print("More Work To Do!")
+	interaction_ui.grab_focus_once = true
+	interaction_ui.hide()
+
+
+func _on_interaction_ui_yes() -> void:
+	print("Repairing the Ship!")
+	interaction_ui.grab_focus_once = true
+	interaction_ui.hide()
+	await get_tree().create_timer(1.0).timeout
+	print("You Survived The Island!")
+	get_tree().change_scene_to_file("res://scenes/Ending/score_screen.tscn")
