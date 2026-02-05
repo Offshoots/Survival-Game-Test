@@ -39,6 +39,7 @@ var wheat: int
 
 
 func _ready() -> void:
+	player.get_node("Sprite2D").texture = preload("res://graphics/characters/main/main_welsey.png")
 	Engine.time_scale = 1.0
 	var rand_tree = randi_range(30,50)
 	var rand_rock = randi_range(6,8)
