@@ -13,6 +13,7 @@ var health := 4:
 			#Changed to when health == 0 so that the below code is only executed once
 			$FlashSprite2D.hide()
 			$CollisionShape2D.queue_free()
+			Scores.score_rocks_smashed += 1
 			stone = true
 		else:
 			stone = false

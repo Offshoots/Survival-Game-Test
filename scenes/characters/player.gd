@@ -29,7 +29,8 @@ signal tool_use(tool: Enum.Tool, pos: Vector2)
 signal diagnose
 
 var death : bool = false
-var damage : bool = false
+var taking_damage : bool = false
+var in_enemy_range : bool = false
 
 var max_health : int = 10
 var health := max_health:
@@ -52,6 +53,13 @@ func _physics_process(_delta: float) -> void:
 		keyboard_move()
 		#mouse_move()
 		animate()
+	
+	if in_enemy_range == true and taking_damage == false:
+		taking_damage = true
+		health -= 1
+		await get_tree().create_timer(1).timeout
+		taking_damage = false
+	
 	
 	if new_tool == true:
 		tool_inventory.append(found_tool)

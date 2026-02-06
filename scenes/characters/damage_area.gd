@@ -1,16 +1,16 @@
 extends Area2D
 
-@onready var timer: Timer = $Timer
-var damage : bool = false
+
+#Collision layer/mask is only set to layer 2 for the player
 
 func _on_body_entered(body: Node2D) -> void:
-	if damage == false:
-		timer.start()
+	body.in_enemy_range = true
+	if body.taking_damage == false:
+		body.taking_damage = true
+		print('Warning! You are taking Damage!')
 		body.health -= 1
-		body.damage = true
-		damage = true
-		
+		await get_tree().create_timer(0.5).timeout
+		body.taking_damage = false
 
-func _on_timer_timeout() -> void:
-	print('Warning! You are taking Damage!')
-	damage = false
+func _on_body_exited(body: Node2D) -> void:
+	body.in_enemy_range = false

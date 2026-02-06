@@ -2,8 +2,9 @@
 
 [ext_resource type="Script" uid="uid://dlxtxs7m7bj0" path="res://scenes/ui/death_screen.gd" id="1_j0ehl"]
 [ext_resource type="Texture2D" uid="uid://beya3ealj0xrv" path="res://graphics/backgrounds/death_scene.png" id="2_njuei"]
+[ext_resource type="PackedScene" uid="uid://dhe2rek38f68m" path="res://scenes/Ending/score_screen.tscn" id="3_w6at5"]
 
-[node name="DeathScreen" type="Control"]
+[node name="DeathScreen" type="Control" unique_id=493068748]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,16 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_j0ehl")
 
-[node name="FadeTransition" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 1)
-
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1513875506]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -30,7 +22,16 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_njuei")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="FadeTransition" type="ColorRect" parent="." unique_id=1229484881]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=582767554]
 z_index = 1
 layout_mode = 1
 anchors_preset = 15
@@ -39,43 +40,81 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=142785538]
 layout_mode = 2
 
-[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer"]
+[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer" unique_id=75278]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=2064482525]
 layout_mode = 2
 
-[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1151549452]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.0
+
+[node name="RestartButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=262931901]
+layout_mode = 2
+focus_neighbor_top = NodePath("../QuitButton")
+focus_neighbor_bottom = NodePath("../StatsButton")
+mouse_filter = 1
+text = "Restart Game"
+
+[node name="Spacer3" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=362003951]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Spacer3" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="StatsButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1448494913]
+layout_mode = 2
+focus_neighbor_top = NodePath("../RestartButton")
+focus_neighbor_bottom = NodePath("../MainMenuButton")
+text = "Stats Screen"
+
+[node name="Spacer5" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=96376784]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="MainMenuButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="MainMenuButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1898886090]
 layout_mode = 2
+focus_neighbor_top = NodePath("../StatsButton")
+focus_neighbor_bottom = NodePath("../QuitButton")
 mouse_filter = 1
 text = "Main Menu"
 
-[node name="RestartButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-mouse_filter = 1
-text = "Restart"
-
-[node name="Spacer4" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="Spacer4" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=117976596]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Spacer2" type="Control" parent="MarginContainer/HBoxContainer"]
+[node name="QuitButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=898808093]
+layout_mode = 2
+focus_neighbor_top = NodePath("../MainMenuButton")
+focus_neighbor_bottom = NodePath("../RestartButton")
+text = "Guit Game"
+
+[node name="Spacer6" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1815575306]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="Spacer2" type="Control" parent="MarginContainer/HBoxContainer" unique_id=63246138]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[node name="ScoreScreen" parent="." unique_id=484245641 instance=ExtResource("3_w6at5")]
+layout_mode = 1
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1562050567]
+bus = &"Music"
+
+[node name="SecondAudioPlayer" type="AudioStreamPlayer2D" parent="." unique_id=626263140]
+bus = &"Music 2"
+
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/StatsButton" to="." method="_on_stats_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="finished" from="AudioStreamPlayer2D" to="." method="_on_audio_stream_player_2d_finished"]

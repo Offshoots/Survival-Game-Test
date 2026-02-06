@@ -4,6 +4,10 @@ signal slice
 
 var direction: Vector2
 var speed = 20
+var leap_force_start = 50
+var leap_force = 50
+var leap_cooldown_freq_start = 20
+var leap_cooldown_freq = 20
 var push_distance = 130
 var push_direction: Vector2
 var distance_remaining
@@ -12,9 +16,13 @@ var distance_remaining
 #The item will be added to the inventory via the Level scene into the ItemContainerUI, after assisinging the approiate enum to get the correct icon and properties.
 var gold : bool = false
 var is_dead : bool = false
+var leap_cooldown : bool = false
+var leap_speed : bool = true
 
 @onready var player = get_tree().get_first_node_in_group('Player')
 @onready var nav_agent := $NavigationAgent2D as NavigationAgent2D
+@onready var flash_sprite_2d: Sprite2D = $FlashSprite2D
+
 
 @onready var ray_cast_down: RayCast2D = $RayCastDown
 @onready var ray_cast_down_left: RayCast2D = $RayCastDownLeft
@@ -33,6 +41,7 @@ var health := 12:
 			#is_dead bool helps to prevent death function from triggering more than once
 			is_dead = true
 			death()
+			Scores.score_enemies_slain += 1
 			gold = true
 		else:
 			gold = false
@@ -45,8 +54,8 @@ var normal_speed := 20:
 func _physics_process(_delta: float) -> void:
 	#Custom code to get blob to stop before reaching the player
 	var dist = player.position.distance_to(position)
-	if dist > 300:
-		speed =  200
+	if leap_speed == true:
+		speed =  leap_force
 	else:
 		speed = normal_speed
 	direction = to_local(nav_agent.get_next_path_position()).normalized()
@@ -87,7 +96,37 @@ func _physics_process(_delta: float) -> void:
 	distance_remaining = player.position.distance_to(position)
 	#direction = (player.position - position).normalized()
 	velocity = direction * speed + push_direction
+	
+	#Check for lead condition and the execute leap physics
+	if global_position.distance_to(player.global_position) < 300 and !leap_cooldown:
+		leap_visual()
+		leap_at_player()
+		start_leap_cooldown()
+	
+	#Move and slide
 	move_and_slide()
+
+func leap_visual():
+	var tween = create_tween()
+	# Move sprite up visually
+	var rand_jump_size = randf_range(0.3,0.6)
+	tween.tween_property(flash_sprite_2d, "position:y", -40 * rand_jump_size, 0.5 * rand_jump_size).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	# Come back down
+	tween.tween_property(flash_sprite_2d, "position:y", 0, 0.5 * rand_jump_size).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+
+func leap_at_player():
+	leap_speed = true
+	await get_tree().create_timer(0.5).timeout
+	leap_speed = false
+
+func start_leap_cooldown():
+	leap_cooldown = true
+	var rand_cooldown = randi_range(0,leap_cooldown_freq_start)
+	var cooldown_time = 0.25 * rand_cooldown
+	#print(cooldown_time)
+	await get_tree().create_timer(cooldown_time).timeout
+	leap_cooldown = false
+	
 
 func pathfind():
 	nav_agent.target_position = player.position

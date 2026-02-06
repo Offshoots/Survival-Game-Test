@@ -19,6 +19,7 @@ var health := 4:
 			shape.size = Vector2(12,6)
 			$CollisionShape2D.shape = shape
 			$CollisionShape2D.position.y = 6
+			Scores.score_trees_felled += 1
 			wood = true
 		else:
 			wood = false

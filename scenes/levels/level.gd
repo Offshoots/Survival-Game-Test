@@ -15,7 +15,8 @@ var placement_pos : Vector2
 
 var day: int = 1
 var day_timer: bool = true
-var giant_pyre_visited = false
+var giant_pyre_visited : bool = false
+var extra_wave : bool = false
 
 #May not need any of these item variables. I simplified all iventory functions to use Enums
 var apple: int
@@ -39,22 +40,46 @@ var wheat: int
 
 
 func _ready() -> void:
+	Scores.score_dead = false
+	#Set all global scores to zero:
+	Scores.score_trees_felled = 0
+	Scores.score_rocks_smashed = 0
+	Scores.score_apples_collected = 0
+	Scores.score_apples_eaten = 0
+	Scores.score_enemies_slain = 0
+	
+	Scores.score_gold_collected = 0
+	Scores.score_wood_collected = 0
+	Scores.score_stone_collected = 0
+	Scores.score_fish_caught = 0
+	Scores.score_plants_harvested = 0
+	
+	Scores.score_enemies_killed_by_daylight = 0
+	Scores.score_enemies_killed_by_pyre = 0
+	Scores.score_pyres_built = 0
+	
+	Scores.score_days_survived = 0
+	Scores.score_total_time  = 0
+	Scores.score_fastest_time_to_repair = 0
+	
+	
 	player.get_node("Sprite2D").texture = preload("res://graphics/characters/main/main_welsey.png")
 	Engine.time_scale = 1.0
 	var rand_tree = randi_range(30,50)
 	var rand_rock = randi_range(6,8)
 	spawn_trees(rand_tree)
 	spawn_rocks(rand_rock)
-	fade_transition.modulate.a = 0.0
+	fade_transition.color.a = 0.0
 	update_health()
 	#var rand_enemy = randi_range(2,3)
 	#spawn_enemies(rand_enemy)
 	interaction_ui.hide()
 	
+	
 
 func fade_out():
 	var tween := create_tween()
-	tween.tween_property(fade_transition, "modulate:a", 1.0 , 1.0)
+	tween.tween_property(fade_transition, "color:a", 1.0 , 0.3)
 	await tween.finished
 
 #This physic function was put in the level script just for active frame debuging. 
@@ -68,8 +93,9 @@ func _physics_process(_delta: float) -> void:
 	$Layers/DebugLayer.clear()
 	$Layers/DebugLayer.set_cell(grid_coord, 0, Vector2i(0,0))
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	#Create a ratio of how much of the day has passed from 0 to 1.
+	Scores.score_total_time += delta
 	var daytime_point = 1 - ($Timers/DayTimer.time_left / $Timers/DayTimer.wait_time)
 	var color = daytime_color.sample(daytime_point)
 	var day_time = $Timers/DayTimer.time_left
@@ -77,10 +103,19 @@ func _process(_delta: float) -> void:
 	main_ui.update_time(day_time, night_time, day_timer)
 	#print(daytime_point)
 	$Overlay/DayTimeColor.color = color
+	update_health()
 	
 	#"Tab" is input for day change by button press. Commenting out for now.
 	#if Input.is_action_just_pressed("day_change"):
 		#day_restart()
+	
+	if int(night_time) == 25 and extra_wave == false:
+		extra_wave = true
+		await get_tree().create_timer(1.0).timeout
+		spawn_rand_enemies()
+		extra_wave = false
+		#if day > 1:
+			#spawn_rand_enemies()
 	
 	if Input.is_action_just_pressed("inventory"):
 		$Overlay/CanvasLayer/InventoryContainer.visible = not $Overlay/CanvasLayer/InventoryContainer.visible
@@ -95,6 +130,7 @@ func _process(_delta: float) -> void:
 			var craft = Enum.Craft.PYRE
 			build(craft, placement_pos)
 			remove_inventory(Enum.Item.STONE)
+			Scores.score_pyres_built += 1
 
 
 	if player.health < player.max_health:
@@ -107,6 +143,7 @@ func _process(_delta: float) -> void:
 			if player.inventory.count(Enum.Item.APPLE) > 0:
 				remove_inventory(Enum.Item.APPLE)
 				player.health += 1
+				Scores.score_apples_eaten += 1
 			else:
 				var message:String = "Not enough food"
 				print(message)
@@ -119,13 +156,8 @@ func _process(_delta: float) -> void:
 		add_inventory(item_dropped)
 		player.new_item = false
 
-	
 	if player.death == true:
-		player_dead()
-		
-	if player.damage == true:
-		update_health()
-
+		player_dead() 
 
 func update_health():
 	var health = player.health 
@@ -153,6 +185,7 @@ func spawn_rocks(num: int):
 
 func spawn_enemies(num: int):
 	var enemy_markers = $Objects/EnemySpawnPositions.get_children().duplicate(true)
+	print("spawned enemies: " + str(num))
 	for i in num:
 		var pos_marker = enemy_markers.pop_at(randf_range(0, enemy_markers.size()-1))
 		var new_enemy = enemy_scene.instantiate()
@@ -161,7 +194,8 @@ func spawn_enemies(num: int):
 		new_enemy.position = pos_marker.position
 		#increase the speed of the blobs every day
 		for object in get_tree().get_nodes_in_group('Enemy'):
-			object.normal_speed = 20 + day * 1
+			object.leap_cooldown_freq = object.leap_cooldown_freq_start + 10 * day
+			object.leap_force = object.leap_force_start + 10 * day
 
 
 #Build when 'B' Input map action is pressed (called in process function)
@@ -255,6 +289,7 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 						var item_drop = Enum.Item.STONE
 						player.inventory.append(item_drop)
 						add_inventory(item_drop)
+						Scores.score_stone_collected += 1
 		Enum.Tool.SWORD:
 			#For now group for blob has been changed from 'Objects' to new group 'Enemy'.
 			for object in get_tree().get_nodes_in_group('Enemy'):
@@ -264,6 +299,7 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 						var item_drop = Enum.Item.GOLD
 						player.inventory.append(item_drop)
 						add_inventory(item_drop)
+						Scores.score_gold_collected += 1
 		Enum.Tool.AXE:
 			#For now group for blob has been changed from 'Objects' to new group 'Enemy'.
 			for object in get_tree().get_nodes_in_group('Enemy'):
@@ -273,6 +309,7 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 						var item_drop = Enum.Item.GOLD
 						player.inventory.append(item_drop)
 						add_inventory(item_drop)
+						Scores.score_gold_collected += 1
 			#Currently all trees are in group 'Objects'.
 			for object in get_tree().get_nodes_in_group('Objects'):
 				if object.position.distance_to(pos)< 20:
@@ -281,10 +318,12 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 						var item_drop = Enum.Item.APPLE
 						player.inventory.append(item_drop)
 						add_inventory(item_drop)
+						Scores.score_apples_collected += 1
 					if object.wood:
 						var item_drop = Enum.Item.WOOD
 						player.inventory.append(item_drop)
 						add_inventory(item_drop)
+						Scores.score_wood_collected += 1
 
 #region Inventory Add, Remove, and Update
 #Use Bool for item pickup inside the correct scenes. If the Item is present for the event that it would be collected, then the bool is true.
@@ -321,12 +360,19 @@ func remove_inventory(item_removed: Enum.Item):
 
 #Create the transition to the gameover screen
 func player_dead():
-	#Engine.time_scale = 0.5
+	Scores.score_dead = true
+	fade_out_audio($Music/DayMusic)
+	fade_out_audio($Music/NightMusic)
+	Engine.time_scale = 0.1
 	fade_out()
+	await get_tree().create_timer(0.3).timeout
 	death_screen()
 
+func fade_out_audio(player: AudioStreamPlayer2D):
+	var tween = create_tween()
+	tween.tween_property(player, "volume_db", -80.0, 1.0)
+
 func death_screen():
-	#Engine.time_scale = 1.0
 	get_tree().change_scene_to_file("res://scenes/ui/death_screen.tscn")
 
 #region Day Restart and Level Reset
@@ -335,6 +381,7 @@ func day_restart():
 	#Survival Mode will require food to be consumed each day. Subtract 1 apple each day:
 	#need to remove an apple from the player.inventory array
 	remove_inventory(Enum.Item.APPLE)
+	Scores.score_apples_eaten += 1
 	
 	#adjust the shader parameter that creates the circle transistion
 	var tween = create_tween()
@@ -351,6 +398,7 @@ func level_reset():
 	for enemy in get_tree().get_nodes_in_group('Enemy'):
 		if enemy.health > 0:
 			enemy.death()
+			Scores.score_enemies_killed_by_daylight += 1
 	$Overlay/CanvasLayer/PlantInfoContainer.update_all()
 	$Layers/SoilWaterLayer.clear()
 	$Music/NightMusic.stop()
@@ -358,6 +406,7 @@ func level_reset():
 	$Music/DayMusic.play()
 	day_timer = true
 	day += 1
+	Scores.score_days_survived += 1
 	main_ui.update_day(day)
 	#This code will search for all object (Trees or other) that have a reset function and will execute the reset.
 	for object in get_tree().get_nodes_in_group('Objects'):
@@ -369,14 +418,19 @@ func level_reset():
 func plant_death(coord: Vector2i):
 	used_cells.erase(coord)
 
+func spawn_rand_enemies():
+	#Spawn increasing amounts of enemies every day
+	var min_blobs = 3
+	if day > 3:
+		min_blobs = day
+	var rand_enemy = randi_range(min_blobs, day + 3)
+	spawn_enemies(rand_enemy)
 
 func _on_day_timer_timeout() -> void:
-	#Spawn increasing amounts of enemies every day
-	var rand_enemy = randi_range(day + 3, day + 3)
 	day_timer = false
 	var message : String = "Survive the Night!"
 	main_ui.update_message(message)
-	spawn_enemies(rand_enemy)
+	spawn_rand_enemies()
 	$Music/DayMusic.stop()
 	$Timers/NightTimer.start()
 	$Music/NightMusic.play()
@@ -420,6 +474,7 @@ func _on_pyre_entered_pyre(body) -> void:
 	if body.is_in_group('Enemy'):
 		print('Enemy')
 		body.death()
+		Scores.score_enemies_killed_by_pyre += 1
 	else:
 		print('Friend')
 

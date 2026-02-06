@@ -28,6 +28,7 @@ buses/default_bus_layout="uid://pwkabcu1uua2"
 Enum="*res://global/enums.gd"
 Data="*res://global/data.gd"
 AudioManager="*uid://c6jfhkj3ikm23"
+Scores="*uid://wciqvtvkna33"
 
 [display]
 
