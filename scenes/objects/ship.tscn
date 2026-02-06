@@ -1,15 +1,20 @@
 [gd_scene format=3 uid="uid://ckuy0b447rmke"]
 
-[ext_resource type="Texture2D" uid="uid://lityjoclsxj0" path="res://graphics/objects/Test Ship 3.png" id="1_a4j8e"]
 [ext_resource type="Script" uid="uid://d0cqh6n8itxbe" path="res://scenes/objects/ship.gd" id="1_x2d0j"]
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_a4j8e"]
+load_path = "res://.godot/imported/Test Ship 3.png-d5a44b4e8ea4e29d163c2b9c44892964.ctex"
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x2d0j"]
-radius = 15.981938
+radius = 11.00831
 height = 125.97775
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_x2d0j"]
+radius = 15.033297
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fnfjl"]
-radius = 35.0
-height = 166.0
+radius = 19.0
+height = 132.0
 
 [node name="Ship" type="StaticBody2D" unique_id=1719305025]
 script = ExtResource("1_x2d0j")
@@ -17,19 +22,24 @@ script = ExtResource("1_x2d0j")
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=76352175]
 position = Vector2(-7.125025, -10.249996)
 scale = Vector2(0.32052636, 0.2834728)
-texture = ExtResource("1_a4j8e")
+texture = SubResource("CompressedTexture2D_a4j8e")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1502667237]
-position = Vector2(-13, 27)
+position = Vector2(-16, 27)
 rotation = 1.5620697
 shape = SubResource("CapsuleShape2D_x2d0j")
 
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=167410749]
+position = Vector2(34, 18)
+shape = SubResource("CircleShape2D_x2d0j")
+
 [node name="Area2D" type="Area2D" parent="." unique_id=1031627774]
+position = Vector2(-10, 18)
 collision_layer = 4
-collision_mask = 2
+collision_mask = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=541844073]
-position = Vector2(-9, 1)
+position = Vector2(-1, 0)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_fnfjl")
 

@@ -8,3 +8,4 @@ enum Craft {BOX, WALL, PYRE}
 enum Seed {TOMATO, CORN, PUMPKIN, WHEAT}
 enum Item {WOOD, APPLE, TOMATO, CORN, WHEAT, PUMPKIN, FISH, STONE, GOLD}
 enum Shop {MAIN, HAT}
+enum Visit {SHIP, PYRE}

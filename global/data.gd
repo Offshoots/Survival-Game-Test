@@ -1,9 +1,9 @@
 extends Node
 
 const PLAYER_SKINS = {
-	Enum.Style.BASIC: preload("res://graphics/characters/main/main_basic.png"),
-	Enum.Style.WESLEY: preload("res://graphics/characters/main/main_welsey.png"),
-	Enum.Style.VIKING: preload("res://graphics/characters/main/main_cowboy.png"),
+	Enum.Style.BASIC: {'texture' : preload("res://graphics/characters/main/main_basic.png")},
+	Enum.Style.WESLEY:{'texture' : preload("res://graphics/characters/main/main_welsey.png")},
+	Enum.Style.VIKING:{'texture' : preload("res://graphics/characters/main/main_cowboy.png")},
 	Enum.Style.BASEBALL: preload("res://graphics/characters/main/main_blue.png"),
 	Enum.Style.COWBOY: preload("res://graphics/characters/main/main_cowboy.png"),
 	Enum.Style.ENGLISH: preload("res://graphics/characters/main/main_grey.png"),
@@ -136,4 +136,11 @@ const CRAFT_DATA = {
 		'texture': "res://graphics/objects/Pyre1.png",
 		#'icon_texture': "res://graphics/objects/Pyre1.png",
 		'name':'Pyre'}
+}
+const VISIT_DATA = {
+	Enum.Visit.SHIP: {
+		'message' : 'My ship is damaged.\nI will need to collect wood to repair it.'},
+	Enum.Visit.PYRE: {
+		'message' : 'Someone built this a long time ago.\nIt looks like a great fire used to burn on top.'
+	}
 }

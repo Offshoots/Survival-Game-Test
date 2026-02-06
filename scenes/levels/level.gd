@@ -16,6 +16,8 @@ var placement_pos : Vector2
 var day: int = 1
 var day_timer: bool = true
 var giant_pyre_visited : bool = false
+var ship_visited : bool = false
+var axe_visited : bool = false
 var extra_wave : bool = false
 
 #May not need any of these item variables. I simplified all iventory functions to use Enums
@@ -62,11 +64,12 @@ func _ready() -> void:
 	Scores.score_total_time  = 0
 	Scores.score_fastest_time_to_repair = 0
 	
-	
-	player.get_node("Sprite2D").texture = preload("res://graphics/characters/main/main_welsey.png")
+	#Get the global variable Scores.player_selected and insert that Enum.Style into the next line to get the correct spritesheet "texture"
+	var player_selected = Scores.player_selected
+	player.get_node("Sprite2D").texture = Data.PLAYER_SKINS[player_selected]['texture']
 	Engine.time_scale = 1.0
-	var rand_tree = randi_range(30,50)
-	var rand_rock = randi_range(6,8)
+	var rand_tree = randi_range(50,70)
+	var rand_rock = randi_range(8,20)
 	spawn_trees(rand_tree)
 	spawn_rocks(rand_rock)
 	fade_transition.color.a = 0.0
@@ -368,9 +371,9 @@ func player_dead():
 	await get_tree().create_timer(0.3).timeout
 	death_screen()
 
-func fade_out_audio(player: AudioStreamPlayer2D):
+func fade_out_audio(audio_player: AudioStreamPlayer2D):
 	var tween = create_tween()
-	tween.tween_property(player, "volume_db", -80.0, 1.0)
+	tween.tween_property(audio_player, "volume_db", -80.0, 1.0)
 
 func death_screen():
 	get_tree().change_scene_to_file("res://scenes/ui/death_screen.tscn")
@@ -485,16 +488,38 @@ func _on_giant_pyre_entered_giant_pyre() -> void:
 	main_ui.update_message(message)
 	if giant_pyre_visited == false:
 		await get_tree().create_timer(0.05).timeout
-		var interaction_message : String = 'Someone built this a long time ago. It looks like a great fire used to burn on top.'
-		interaction_ui.update_message(interaction_message)
-		interaction_ui.select()
-		interaction_ui.add_continue_button()
-		interaction_ui.show()
-		Engine.time_scale = 0
+		var interaction_message : String = 'Someone built this a long time ago.\nIt looks like a great fire used to burn on top.'
+		interaction_visit(interaction_message, Enum.Visit.PYRE)
 
+func interaction_visit(message : String, visit : Enum.Visit):
+	interaction_ui.update_message(message)
+	interaction_ui.select()
+	interaction_ui.add_ok_button(visit)
+	interaction_ui.show()
+	Engine.time_scale = 0
 
-func _on_ship_enter_ship() -> void:
-	var message:String = 'My SHIP! Oh noo!'
+func interaction_tool(message : String, interaction : Enum.Tool):
+	interaction_ui.update_message(message)
+	interaction_ui.select()
+	interaction_ui.add_take_button(interaction)
+	interaction_ui.show()
+	Engine.time_scale = 0
+
+func _on_ship_enter_ship(body) -> void:
+	var message:String 
+	if body.is_in_group('Enemy'):
+		print('Enemy')
+		message = 'My SHIP! Oh noo!'
+		ship.ship_health -= 1
+		#Scores.score_enemies_killed_by_pyre += 1
+	else:
+		#Need to fix the bool to work with the ship and the giant pyre
+		if ship_visited == false:
+			await get_tree().create_timer(0.05).timeout
+			var interaction_message : String = 'My ship is damaged.\nI will need to collect wood to repair it.'
+			interaction_visit(interaction_message, Enum.Visit.SHIP)
+		print('Friend')
+		message = 'Collect more wood!'
 	print(message)
 	main_ui.update_message(message)
 	if ship.ship_health < ship.max_ship_health and player.inventory.count(Enum.Item.WOOD) >= 1:
@@ -536,8 +561,39 @@ func _on_interaction_ui_yes() -> void:
 	print("You Survived The Island!")
 	get_tree().change_scene_to_file("res://scenes/Cutscenes/cutscene.tscn")
 
+func update_visit(visit):
+	if visit == Enum.Visit.SHIP:
+		ship_visited = true
+	if visit == Enum.Visit.PYRE:
+		giant_pyre_visited = true
 
-func _on_interaction_ui_ok() -> void:
+
+func _on_interaction_ui_ok(visit: Enum.Visit) -> void:
+	update_visit(visit)
 	interaction_ui.hide()
-	giant_pyre_visited = true
 	Engine.time_scale = 1
+
+func _on_interaction_ui_take(interaction: Enum.Tool) -> void:
+	interaction_ui.hide()
+	Engine.time_scale = 1
+
+func _on_tool_axe_axe_found() -> void:
+	await get_tree().create_timer(0.05).timeout
+	#var interaction_message : String = 'Who needs a sword or a bow, when you can have an AXE!'
+	var interaction_message : String = 'My AXE!\nI wonder what else has washed ashore?'
+	interaction_tool(interaction_message, Enum.Tool.AXE)
+
+
+
+func _on_tool_sword_sword_found() -> void:
+	await get_tree().create_timer(0.05).timeout
+	#var interaction_message : String = 'You have my Sword!'
+	var interaction_message : String = 'Whoa a Sword!\nThe pointy end goes in the enemy!'
+	interaction_tool(interaction_message, Enum.Tool.SWORD)
+
+
+func _on_tool_pickaxe_pickaxe_found() -> void:
+	await get_tree().create_timer(0.05).timeout
+	#var interaction_message : String = 'You have my Sword!'
+	var interaction_message : String = 'This looks useful.\nMaybe for smashing?'
+	interaction_tool(interaction_message, Enum.Tool.PICKAXE)

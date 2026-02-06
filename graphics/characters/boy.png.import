@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cq04rq2g7fyp8"
-path="res://.godot/imported/Test Ship 3.png-d5a44b4e8ea4e29d163c2b9c44892964.ctex"
+uid="uid://b7xq4wno73j2c"
+path="res://.godot/imported/boy.png-6ef5cfa332d110e658095ce95936219a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://graphics/objects/Test Ship 3.png"
-dest_files=["res://.godot/imported/Test Ship 3.png-d5a44b4e8ea4e29d163c2b9c44892964.ctex"]
+source_file="res://graphics/characters/boy.png"
+dest_files=["res://.godot/imported/boy.png-6ef5cfa332d110e658095ce95936219a.ctex"]
 
 [params]
 

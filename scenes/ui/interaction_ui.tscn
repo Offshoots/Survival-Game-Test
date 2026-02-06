@@ -43,6 +43,7 @@ theme_override_constants/separation = 10
 layout_mode = 2
 focus_neighbor_left = NodePath("../HBoxContainer/YesButton")
 text = "Message BIGGGGGGGGGGGGGGGGG"
+horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1334162433]
 layout_mode = 2
@@ -62,9 +63,13 @@ text = "Yes"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ContinueButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1065425986]
+[node name="OkButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1065425986]
 layout_mode = 2
 text = "Ok"
+
+[node name="TakeButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=733143088]
+layout_mode = 2
+text = "Take"
 
 [node name="Spacer4" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1426972643]
 layout_mode = 2
@@ -85,6 +90,7 @@ wait_time = 0.1
 one_shot = true
 
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/YesButton" to="." method="_on_yes_button_pressed"]
-[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/OkButton" to="." method="_on_ok_button_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/TakeButton" to="." method="_on_take_button_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/NoButton" to="." method="_on_no_button_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

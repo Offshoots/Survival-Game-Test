@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://djyycmtepngxl"]
 
 [ext_resource type="Script" uid="uid://b481cfo7n566m" path="res://scenes/ui/main_menu_ui.gd" id="1_3bauu"]
-[ext_resource type="Texture2D" uid="uid://ddt7fsrfyd5pi" path="res://graphics/backgrounds/Arrival small.png" id="2_3bauu"]
 [ext_resource type="Texture2D" uid="uid://cnu5qh08qhv1f" path="res://graphics/backgrounds/Viking Survival.png" id="2_qegi1"]
 [ext_resource type="AudioStream" uid="uid://bxcr4fnl4dti0" path="res://audio/The Struggle Loop.ogg" id="4_qegi1"]
 
@@ -73,13 +72,68 @@ size_flags_horizontal = 3
 
 [node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/HBoxContainer" unique_id=1160597694]
 layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer2" unique_id=1836065184]
-visible = false
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer2" unique_id=1274330368]
 layout_mode = 2
-size_flags_stretch_ratio = 5.0
-texture = ExtResource("2_3bauu")
+
+[node name="spacer" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer" unique_id=1646470228]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer" unique_id=1662673283]
+custom_minimum_size = Vector2(350, 350)
+layout_mode = 2
+expand_mode = 1
 stretch_mode = 5
+
+[node name="spacer3" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer" unique_id=1559857156]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer" unique_id=1864651916]
+layout_mode = 2
+
+[node name="spacer" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=1359028246]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VikingButton" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=1813658889]
+layout_mode = 2
+focus_neighbor_left = NodePath("../BoyButton")
+focus_neighbor_right = NodePath("../GirlButton")
+theme_override_font_sizes/font_size = 36
+text = "Viking"
+
+[node name="spacer2" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=1998345514]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GirlButton" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=541163048]
+layout_mode = 2
+focus_neighbor_left = NodePath("../VikingButton")
+focus_neighbor_right = NodePath("../BoyButton")
+theme_override_font_sizes/font_size = 36
+text = "Wesley"
+
+[node name="spacer3" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=338226448]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BoyButton" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=165928573]
+layout_mode = 2
+focus_neighbor_left = NodePath("../GirlButton")
+focus_neighbor_right = NodePath("../VikingButton")
+theme_override_font_sizes/font_size = 36
+text = "Boy"
+
+[node name="spacer4" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=1661558780]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="spacer2" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer" unique_id=1784038660]
+layout_mode = 2
+size_flags_vertical = 3
 
 [node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer" unique_id=313581190]
 layout_mode = 2
@@ -144,6 +198,12 @@ size_flags_stretch_ratio = 4.0
 stream = ExtResource("4_qegi1")
 autoplay = true
 
+[connection signal="focus_entered" from="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer/VikingButton" to="." method="_on_viking_button_focus_entered"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer/VikingButton" to="." method="_on_viking_button_pressed"]
+[connection signal="focus_entered" from="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer/GirlButton" to="." method="_on_girl_button_focus_entered"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer/GirlButton" to="." method="_on_girl_button_pressed"]
+[connection signal="focus_entered" from="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer/BoyButton" to="." method="_on_boy_button_focus_entered"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer/BoyButton" to="." method="_on_boy_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
