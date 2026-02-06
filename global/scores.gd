@@ -21,5 +21,6 @@ var score_days_survived
 var score_total_time 
 var score_longest_time_survived
 var score_fastest_time_to_repair
+var score_ship_damage_taken
 
 var player_selected : Enum.Style

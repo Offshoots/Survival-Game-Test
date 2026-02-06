@@ -1,8 +1,0 @@
-[gd_scene format=3 uid="uid://c6xf3hoxf8tde"]
-
-[ext_resource type="Texture2D" uid="uid://br778kxuu7pqi" path="res://graphics/backgrounds/viking shipwreck.png" id="1_sl1te"]
-
-[node name="MainMenu" type="Node2D"]
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_sl1te")

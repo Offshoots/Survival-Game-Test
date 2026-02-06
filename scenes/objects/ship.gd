@@ -1,7 +1,7 @@
 extends StaticBody2D
 
-var ship_health : int = 15
-var max_ship_health : int = 30
+var ship_health : int = 25
+var max_ship_health : int = 28
 
 signal enter_ship
 signal exit_ship
@@ -10,5 +10,5 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	enter_ship.emit(body)
 
 
-func _on_area_2d_body_exited(_body: Node2D) -> void:
-	exit_ship.emit()
+func _on_area_2d_body_exited(body: Node2D) -> void:
+	exit_ship.emit(body)

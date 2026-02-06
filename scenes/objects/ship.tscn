@@ -16,25 +16,25 @@ radius = 15.033297
 radius = 19.0
 height = 132.0
 
-[node name="Ship" type="StaticBody2D" unique_id=1719305025]
+[node name="Ship" type="StaticBody2D" unique_id=1719305025 groups=["Ship"]]
 script = ExtResource("1_x2d0j")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=76352175]
-position = Vector2(-7.125025, -10.249996)
+position = Vector2(-6.8749943, -18.249996)
 scale = Vector2(0.32052636, 0.2834728)
 texture = SubResource("CompressedTexture2D_a4j8e")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1502667237]
-position = Vector2(-16, 27)
+position = Vector2(-15.7499695, 19)
 rotation = 1.5620697
 shape = SubResource("CapsuleShape2D_x2d0j")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=167410749]
-position = Vector2(34, 18)
+position = Vector2(34.25003, 10)
 shape = SubResource("CircleShape2D_x2d0j")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1031627774]
-position = Vector2(-10, 18)
+position = Vector2(-9.7499695, 10)
 collision_layer = 4
 collision_mask = 10
 

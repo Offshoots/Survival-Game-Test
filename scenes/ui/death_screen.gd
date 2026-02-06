@@ -36,7 +36,7 @@ func _ready() -> void:
 	fade_in()
 	fade_in_audio(audio_stream_player_2d)
 
-func _process(delta):
+func _process(_delta):
 	if audio_stream_player_2d.playing and !warned:
 		var length = audio_stream_player_2d.stream.get_length()
 		var pos = audio_stream_player_2d.get_playback_position()

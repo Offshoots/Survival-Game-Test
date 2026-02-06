@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 signal slice
+signal ship_damaged
 
 var direction: Vector2
 var speed = 20
@@ -18,8 +19,10 @@ var gold : bool = false
 var is_dead : bool = false
 var leap_cooldown : bool = false
 var leap_speed : bool = true
+var tracking : bool = false
 
 @onready var player = get_tree().get_first_node_in_group('Player')
+@onready var ship = get_tree().get_first_node_in_group('Ship')
 @onready var nav_agent := $NavigationAgent2D as NavigationAgent2D
 @onready var flash_sprite_2d: Sprite2D = $FlashSprite2D
 
@@ -33,6 +36,9 @@ var leap_speed : bool = true
 @onready var ray_cast_right: RayCast2D = $RayCastRight
 @onready var ray_cast_down_right: RayCast2D = $RayCastDownRight
 
+var elapsed_attack_time = 0.0
+var damage_interval = 5
+var target
 
 var health := 12:
 	set(value):
@@ -51,56 +57,34 @@ var normal_speed := 20:
 	set(value):
 		normal_speed = value
 
-func _physics_process(_delta: float) -> void:
-	#Custom code to get blob to stop before reaching the player
-	var dist = player.position.distance_to(position)
+func _ready() -> void:
+	print(ship.global_position)
+	#Assign Target for blob
+	target = [player, ship].pick_random()
+	print(target)
+	#if Scores.score_days_survived > 1:
+		#target = [player, ship].pick_random()
+	#else:
+		#target = player
+
+func _physics_process(delta: float) -> void:
+	if tracking:
+		elapsed_attack_time += delta
+		if elapsed_attack_time > damage_interval:
+			elapsed_attack_time -= damage_interval
+			ship_damaged.emit()
+	
 	if leap_speed == true:
 		speed =  leap_force
 	else:
 		speed = normal_speed
 	direction = to_local(nav_agent.get_next_path_position()).normalized()
-	#Code to change direction of the blob if it gets too close to obstacles with collision shapes, using raycast.
-	#if ray_cast_down.is_colliding():
-		#push_distance = 20
-		#var target = direction * -1 * push_distance
-		#push(target)
-	#if ray_cast_down_left.is_colliding():
-		#push_distance = 20
-		#var target = direction * -1 * push_distance
-		#push(target)
-	#if ray_cast_left.is_colliding():
-		#push_distance = 20
-		#var target = direction * -1 * push_distance
-		#push(target)
-	#if ray_cast_up_left.is_colliding():
-		#push_distance = 20
-		#var target = direction * -1 * push_distance
-		#push(target)
-	#if ray_cast_up_left.is_colliding():
-		#push_distance = 20
-		#var target = direction * -1 * push_distance
-		#push(target)
-	#if ray_cast_up_right.is_colliding():
-		#push_distance = 20
-		#var target = direction * -1 * push_distance
-		#push(target)
-	#if ray_cast_right.is_colliding():
-		#push_distance = 20
-		#var target = direction * -1 * push_distance
-		#push(target)
-	#if ray_cast_down_right.is_colliding():
-		#push_distance = 20
-		#var target = direction * -1 * push_distance
-		#push(target)
-	
-	distance_remaining = player.position.distance_to(position)
-	#direction = (player.position - position).normalized()
 	velocity = direction * speed + push_direction
 	
 	#Check for lead condition and the execute leap physics
-	if global_position.distance_to(player.global_position) < 300 and !leap_cooldown:
+	if global_position.distance_to(target.global_position) < 300 and !leap_cooldown:
 		leap_visual()
-		leap_at_player()
+		leap_at_target()
 		start_leap_cooldown()
 	
 	#Move and slide
@@ -114,7 +98,7 @@ func leap_visual():
 	# Come back down
 	tween.tween_property(flash_sprite_2d, "position:y", 0, 0.5 * rand_jump_size).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 
-func leap_at_player():
+func leap_at_target():
 	leap_speed = true
 	await get_tree().create_timer(0.5).timeout
 	leap_speed = false
@@ -129,16 +113,18 @@ func start_leap_cooldown():
 	
 
 func pathfind():
-	nav_agent.target_position = player.position
+	nav_agent.target_position = target.position
 
 func death():
+	if tracking == true:
+		tracking = false
 	speed = 0
 	$CollisionShape2D.queue_free()
 	$Animation/AnimationPlayer.current_animation = 'explode'
 
-func push(target):
+func push(hit_target):
 	var tween = get_tree().create_tween()
-	tween.tween_property(self, "push_direction", target, 0.1)
+	tween.tween_property(self, "push_direction", hit_target, 0.1)
 	tween.tween_property(self, "push_direction", Vector2.ZERO, 0.2)
 
 #Tree will flash when hit via shader created called flash.tres and applied to new sprite 2d scene we created called "flash_sprite_2d" and instantiated into ther Tree node.
@@ -147,14 +133,14 @@ func hit(tool: Enum.Tool):
 		$FlashSprite2D.flash()
 		health -= 4
 		push_distance = 120
-		var target = (player.position - position).normalized() * -1 * push_distance
-		push(target)
+		var hit_target = (player.position - position).normalized() * -1 * push_distance
+		push(hit_target)
 	if tool == Enum.Tool.AXE:
 		$FlashSprite2D.flash()
 		health -= 3
 		push_distance = 100
-		var target = (player.position - position).normalized() * -1 * push_distance
-		push(target)
+		var hit_target = (player.position - position).normalized() * -1 * push_distance
+		push(hit_target)
 
 func _on_timer_timeout() -> void:
 	pathfind()

@@ -19,6 +19,7 @@ var giant_pyre_visited : bool = false
 var ship_visited : bool = false
 var axe_visited : bool = false
 var extra_wave : bool = false
+var repair_ship_message : bool = false
 
 #May not need any of these item variables. I simplified all iventory functions to use Enums
 var apple: int
@@ -32,7 +33,6 @@ var wheat: int
 
 @onready var ship: StaticBody2D = $Objects/Ship
 @onready var player = $Objects/Player
-@onready var tree = $Objects/Tree
 @onready var inv = $Overlay/CanvasLayer/InventoryContainer
 @export var daytime_color: Gradient
 @onready var main_ui: Control = $Overlay/CanvasLayer/MainUI
@@ -63,6 +63,7 @@ func _ready() -> void:
 	Scores.score_days_survived = 0
 	Scores.score_total_time  = 0
 	Scores.score_fastest_time_to_repair = 0
+	Scores.score_ship_damage_taken = 0
 	
 	#Get the global variable Scores.player_selected and insert that Enum.Style into the next line to get the correct spritesheet "texture"
 	var player_selected = Scores.player_selected
@@ -74,9 +75,11 @@ func _ready() -> void:
 	spawn_rocks(rand_rock)
 	fade_transition.color.a = 0.0
 	update_health()
+	update_ship_progress()
 	#var rand_enemy = randi_range(2,3)
 	#spawn_enemies(rand_enemy)
 	interaction_ui.hide()
+	print(ship.position)
 	
 	
 
@@ -107,18 +110,28 @@ func _process(delta: float) -> void:
 	#print(daytime_point)
 	$Overlay/DayTimeColor.color = color
 	update_health()
+	update_ship_progress()
 	
 	#"Tab" is input for day change by button press. Commenting out for now.
 	#if Input.is_action_just_pressed("day_change"):
 		#day_restart()
-	
-	if int(night_time) == 25 and extra_wave == false:
-		extra_wave = true
-		await get_tree().create_timer(1.0).timeout
-		spawn_rand_enemies()
+	if day == 1:
 		extra_wave = false
-		#if day > 1:
-			#spawn_rand_enemies()
+	else:
+		extra_wave = false
+	#This additional enemy spawn can't be in the process function as written. Need to move or fix. Currently glitches and spawns infinite blobs.
+	if int(night_time) == 10 and extra_wave == false:
+		extra_wave = true
+		$Timers/WaveTimer.start()
+
+	
+	if ship.ship_health >= ship.max_ship_health and interaction_ui.grab_focus_once == false and repair_ship_message == false:
+		repair_ship_message = true
+		var final_message:String = 'Enough Wood Has Been Collected!'
+		print(final_message)
+		main_ui.update_message(final_message)
+		repair_ship()
+
 	
 	if Input.is_action_just_pressed("inventory"):
 		$Overlay/CanvasLayer/InventoryContainer.visible = not $Overlay/CanvasLayer/InventoryContainer.visible
@@ -134,7 +147,6 @@ func _process(delta: float) -> void:
 			build(craft, placement_pos)
 			remove_inventory(Enum.Item.STONE)
 			Scores.score_pyres_built += 1
-
 
 	if player.health < player.max_health:
 		main_ui.show_heal()
@@ -167,6 +179,11 @@ func update_health():
 	var max_health = player.max_health
 	main_ui.update_health(max_health, health)
 
+func update_ship_progress():
+	var health = ship.ship_health 
+	var max_health = ship.max_ship_health
+	main_ui.update_ship_progress(max_health, health)
+
 #Populate trees in random position via markers on the map (called in ready function)
 func spawn_trees(num: int):
 	var tree_markers = $Objects/TreeSpawnPositions.get_children().duplicate(true)
@@ -193,6 +210,7 @@ func spawn_enemies(num: int):
 		var pos_marker = enemy_markers.pop_at(randf_range(0, enemy_markers.size()-1))
 		var new_enemy = enemy_scene.instantiate()
 		new_enemy.slice.connect(_on_blob_slice)
+		new_enemy.ship_damaged.connect(_on_blob_ship_damaged)
 		$Objects.add_child(new_enemy)
 		new_enemy.position = pos_marker.position
 		#increase the speed of the blobs every day
@@ -431,7 +449,11 @@ func spawn_rand_enemies():
 
 func _on_day_timer_timeout() -> void:
 	day_timer = false
-	var message : String = "Survive the Night!"
+	var message : String 
+	if day == 1:
+		message = "There eerie about this darkness."
+	else:
+		message = "Defend against the darkness!"
 	main_ui.update_message(message)
 	spawn_rand_enemies()
 	$Music/DayMusic.stop()
@@ -488,7 +510,7 @@ func _on_giant_pyre_entered_giant_pyre() -> void:
 	main_ui.update_message(message)
 	if giant_pyre_visited == false:
 		await get_tree().create_timer(0.05).timeout
-		var interaction_message : String = 'Someone built this a long time ago.\nIt looks like a great fire used to burn on top.'
+		var interaction_message : String = 'Someone built this a long time ago.\nIt looks like a great fire used to burn on top.\n\nCould I build something like this?'
 		interaction_visit(interaction_message, Enum.Visit.PYRE)
 
 func interaction_visit(message : String, visit : Enum.Visit):
@@ -509,11 +531,16 @@ func _on_ship_enter_ship(body) -> void:
 	var message:String 
 	if body.is_in_group('Enemy'):
 		print('Enemy')
+		body.tracking = true
 		message = 'My SHIP! Oh noo!'
-		ship.ship_health -= 1
-		#Scores.score_enemies_killed_by_pyre += 1
+
 	else:
-		#Need to fix the bool to work with the ship and the giant pyre
+		if ship.ship_health < ship.max_ship_health and player.inventory.count(Enum.Item.WOOD) >= 1:
+			var wood_total = player.inventory.count(Enum.Item.WOOD)
+			print(wood_total)
+			ship.ship_health += wood_total
+			remove_all(Enum.Item.WOOD)
+			print('Ship Health: ' + str(ship.ship_health))
 		if ship_visited == false:
 			await get_tree().create_timer(0.05).timeout
 			var interaction_message : String = 'My ship is damaged.\nI will need to collect wood to repair it.'
@@ -522,27 +549,24 @@ func _on_ship_enter_ship(body) -> void:
 		message = 'Collect more wood!'
 	print(message)
 	main_ui.update_message(message)
-	if ship.ship_health < ship.max_ship_health and player.inventory.count(Enum.Item.WOOD) >= 1:
-		var wood_total = player.inventory.count(Enum.Item.WOOD)
-		print(wood_total)
-		ship.ship_health += wood_total
-		remove_all(Enum.Item.WOOD)
-		print('Ship Health: ' + str(ship.ship_health))
-	if ship.ship_health >= ship.max_ship_health and interaction_ui.grab_focus_once == false:
-		var final_message:String = 'Enough Wood Has Been Collected!'
-		print(final_message)
-		main_ui.update_message(final_message)
-		await get_tree().create_timer(0.05).timeout
-		var interaction_message : String = 'Repair Ship?'
-		interaction_ui.update_message(interaction_message)
-		interaction_ui.select()
-		interaction_ui.show()
-		Engine.time_scale = 0
-		
 
-func _on_ship_exit_ship() -> void:
+
+func repair_ship():
+	await get_tree().create_timer(0.05).timeout
+	var interaction_message : String = 'Repair Ship?'
+	interaction_ui.update_message(interaction_message)
+	interaction_ui.select()
+	interaction_ui.show()
+	Engine.time_scale = 0
+
+
+func _on_ship_exit_ship(body) -> void:
+	if body.is_in_group('Enemy'):
+		print('Enemy')
+		body.tracking = false
 	await get_tree().create_timer(1.0).timeout
 	interaction_ui.grab_focus_once = false
+	repair_ship_message = false
 
 
 func _on_interaction_ui_no() -> void:
@@ -597,3 +621,13 @@ func _on_tool_pickaxe_pickaxe_found() -> void:
 	#var interaction_message : String = 'You have my Sword!'
 	var interaction_message : String = 'This looks useful.\nMaybe for smashing?'
 	interaction_tool(interaction_message, Enum.Tool.PICKAXE)
+
+#Need to Connect in the enemy_spawn function
+func _on_blob_ship_damaged() -> void:
+	Scores.score_ship_damage_taken += 1
+	ship.ship_health -= 1
+
+
+func _on_wave_timer_timeout() -> void:
+	spawn_rand_enemies()
+	extra_wave = false

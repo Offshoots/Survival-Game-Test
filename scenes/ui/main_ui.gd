@@ -6,6 +6,13 @@ signal heal
 @onready var day_label: Label = $MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2/DayLabel
 @onready var message_label: Label = $MarginContainer2/HBoxContainer/PanelContainer/MessageLabel
 
+@onready var health_label: Label = $MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/VBoxContainer/HealthLabel
+@onready var health_bar: TextureProgressBar = $MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/VBoxContainer/HealthBar
+@onready var ship_label: Label = $MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/VBoxContainer/ShipLabel
+@onready var progress_bar: TextureProgressBar = $MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/VBoxContainer/ProgressBar
+
+
+
 func _ready() -> void:
 	message_label.hide()
 	$MarginContainer/VBoxContainer/HBoxContainer2/HealButton.hide()
@@ -23,8 +30,12 @@ func update_day(day: int):
 	day_label.text = "Day: " + str(day)
 
 func update_health(max_health: int, health: int):
-	$MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/VBoxContainer/HealthBar.max_value = max_health
-	$MarginContainer/VBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/VBoxContainer/HealthBar.value = health
+	health_bar.max_value = max_health
+	health_bar.value = health
+
+func update_ship_progress(max_health: int, health: int):
+	progress_bar.max_value = max_health
+	progress_bar.value = health
 
 func update_message(message : String):
 	$MessageTimer.start()

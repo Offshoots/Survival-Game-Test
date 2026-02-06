@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://gth410vtrg87"]
+[gd_scene format=3 uid="uid://gth410vtrg87"]
 
 [ext_resource type="Script" uid="uid://dl6u03t04m3ja" path="res://scenes/ui/inventory_container.gd" id="1_3u08g"]
 
-[node name="InventoryContainer" type="Control"]
+[node name="InventoryContainer" type="Control" unique_id=627246876]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_3u08g")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=732131218]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 1
 anchors_preset = 11
@@ -20,9 +20,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 2
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 10
+theme_override_constants/margin_top = 150
+theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 50
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=361514729]
 layout_mode = 2
