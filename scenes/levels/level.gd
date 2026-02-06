@@ -115,12 +115,14 @@ func _process(delta: float) -> void:
 	#"Tab" is input for day change by button press. Commenting out for now.
 	#if Input.is_action_just_pressed("day_change"):
 		#day_restart()
+		
+	#Spawn extra waves of Enemies after Day 1. Adjust difficulty as necessary.
 	if day == 1:
-		extra_wave = false
+		extra_wave = true
 	else:
 		extra_wave = false
 	#This additional enemy spawn can't be in the process function as written. Need to move or fix. Currently glitches and spawns infinite blobs.
-	if int(night_time) == 10 and extra_wave == false:
+	if int(night_time) == 40 and extra_wave == false:
 		extra_wave = true
 		$Timers/WaveTimer.start()
 
@@ -532,7 +534,7 @@ func _on_ship_enter_ship(body) -> void:
 	if body.is_in_group('Enemy'):
 		print('Enemy')
 		body.tracking = true
-		message = 'My SHIP! Oh noo!'
+		message = 'My SHIP! They are attacking my ship!'
 
 	else:
 		if ship.ship_health < ship.max_ship_health and player.inventory.count(Enum.Item.WOOD) >= 1:

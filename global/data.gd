@@ -3,7 +3,7 @@ extends Node
 const PLAYER_SKINS = {
 	Enum.Style.BASIC: {'texture' : preload("res://graphics/characters/main/main_basic.png")},
 	Enum.Style.WESLEY:{'texture' : preload("res://graphics/characters/main/main_welsey.png")},
-	Enum.Style.VIKING:{'texture' : preload("res://graphics/characters/main/main_cowboy.png")},
+	Enum.Style.VIKING:{'texture' : preload("res://graphics/characters/main/main_viking.png")},
 	Enum.Style.BASEBALL: preload("res://graphics/characters/main/main_blue.png"),
 	Enum.Style.COWBOY: preload("res://graphics/characters/main/main_cowboy.png"),
 	Enum.Style.ENGLISH: preload("res://graphics/characters/main/main_grey.png"),

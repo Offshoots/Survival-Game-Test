@@ -11,6 +11,7 @@ var viking = preload("res://graphics/characters/Viking.png")
 func _ready() -> void:
 	start_button.grab_focus()
 	$MarginContainer/HBoxContainer/MarginContainer2.hide()
+	Scores.player_selected = Enum.Style.VIKING
 
 func _on_start_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/levels/level.tscn")

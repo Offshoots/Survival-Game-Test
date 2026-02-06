@@ -50,7 +50,8 @@ layout_mode = 2
 [node name="VictoryLabel" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer" unique_id=248079294]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
-text = "You Survived The Island!"
+text = "You Survived The Island!
+... but you perished at sea"
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=353708519]
@@ -185,11 +186,11 @@ text = "Seafaring"
 [node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/VBoxContainer2" unique_id=1838539275]
 layout_mode = 2
 
-[node name="SeaStatsLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/VBoxContainer2/PanelContainer2" unique_id=1427084641]
+[node name="SeaStatsLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/VBoxContainer2/PanelContainer2" unique_id=416058092]
 layout_mode = 2
-text = "Days Worth of Supplies:  10 apples per day
-Distance Sailed: random 1-100 nautical miles per day.
-Journey Result: Random results, Home Not Reached"
+bbcode_enabled = true
+text = "Sea"
+fit_content = true
 
 [node name="Spacer2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3" unique_id=190762514]
 layout_mode = 2

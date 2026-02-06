@@ -3,10 +3,11 @@ extends Control
 @onready var main_menu_button: Button = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/MainMenuButton
 @onready var quit_button: Button = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/QuitButton
 
+@onready var victory_label: Label = $MarginContainer/VBoxContainer/PanelContainer/VictoryLabel
 
 @onready var island_stats_label: Label = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer3/IslandStatsLabel
 @onready var combat_stats_label: Label = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/PanelContainer2/CombatStatsLabel
-@onready var sea_stats_label: Label = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/VBoxContainer2/PanelContainer2/SeaStatsLabel
+@onready var sea_stats_label: RichTextLabel = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/VBoxContainer2/PanelContainer2/SeaStatsLabel
 
 var journey_results = ["Lost at Sea", "Lost in the Storm", "Disappeared in the Maelstrom"]
 
@@ -18,7 +19,8 @@ func _ready() -> void:
 	island_stats()
 	combat_stats()
 	sea_stats()
-	
+	if Scores.score_dead == true:
+		victory_label.text = "Died in Combat"
 
 func _on_main_menu_button_pressed() -> void:
 	AudioManager.music_player.stop()
@@ -54,13 +56,13 @@ func sea_stats():
 	var journey : String
 	var distance
 	var days_worth_supplies = (Scores.score_apples_collected - Scores.score_apples_eaten)/10
+	#var days_worth_supplies = 0
 	if Scores.score_dead == true:
 		journey = "Died in Combat"
 		distance = 0
 	else:
 		journey = journey_results.pick_random()
 		distance = randi_range(1,100) * days_worth_supplies
-	sea_stats_label.text = "Days Worth of Supplies: " + str(days_worth_supplies) + "
-	Distance Sailed: " + str(distance) + "
-	Journey Result: " + journey
-	
+	sea_stats_label.text = "Days Worth of Supplies =  " + "[color=red]" + str(days_worth_supplies) + "[/color]" + "
+	Distance Sailed = " +  "[color=red]" + str(distance) + "[/color]" + "
+	Journey Result: " + "[color=red]" + journey + "[/color]"
