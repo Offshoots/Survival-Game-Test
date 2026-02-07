@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://8qax63dw8bcy"
+path="res://.godot/imported/Night Song 2.ogg-945023eea99205b675fb9e6cad00047c.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/Night Song 2.ogg"
+dest_files=["res://.godot/imported/Night Song 2.ogg-945023eea99205b675fb9e6cad00047c.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

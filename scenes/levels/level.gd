@@ -20,6 +20,7 @@ var ship_visited : bool = false
 var axe_visited : bool = false
 var extra_wave : bool = false
 var repair_ship_message : bool = false
+var game_paused : bool = false
 
 #May not need any of these item variables. I simplified all iventory functions to use Enums
 var apple: int
@@ -38,6 +39,7 @@ var wheat: int
 @onready var main_ui: Control = $Overlay/CanvasLayer/MainUI
 @onready var fade_transition: ColorRect = $Overlay/CanvasLayer/FadeTransition
 @onready var interaction_ui: Control = $Overlay/CanvasLayer/InteractionUI
+@onready var pause_menu_ui: Control = $Overlay/CanvasLayer/PauseMenuUI
 
 
 
@@ -69,6 +71,7 @@ func _ready() -> void:
 	var player_selected = Scores.player_selected
 	player.get_node("Sprite2D").texture = Data.PLAYER_SKINS[player_selected]['texture']
 	Engine.time_scale = 1.0
+	pause_menu_ui.hide()
 	var rand_tree = randi_range(50,70)
 	var rand_rock = randi_range(8,20)
 	spawn_trees(rand_tree)
@@ -115,6 +118,19 @@ func _process(delta: float) -> void:
 	#"Tab" is input for day change by button press. Commenting out for now.
 	#if Input.is_action_just_pressed("day_change"):
 		#day_restart()
+	
+	#"pause_menu" opens up the InteractionUI but for a game pause
+	if Input.is_action_just_pressed("pause_menu"):
+		if game_paused == false:
+			Engine.time_scale = 0.0
+			pause_menu_ui.show()
+			pause_menu_ui.grab_control_focus()
+			game_paused = true
+		else:
+			Engine.time_scale = 1.0
+			pause_menu_ui.hide()
+			game_paused = false
+		
 		
 	#Spawn extra waves of Enemies after Day 1. Adjust difficulty as necessary.
 	if day == 1:

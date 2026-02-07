@@ -18,7 +18,8 @@
 [ext_resource type="PackedScene" uid="uid://blhdwrywniy00" path="res://scenes/objects/tools/tool_pickaxe.tscn" id="15_p62il"]
 [ext_resource type="PackedScene" uid="uid://8g84486pdrpt" path="res://scenes/objects/giant_pyre.tscn" id="16_p62il"]
 [ext_resource type="AudioStream" uid="uid://bxcr4fnl4dti0" path="res://audio/The Struggle Loop.ogg" id="17_qhnmj"]
-[ext_resource type="AudioStream" uid="uid://bcl6wir0wvn7y" path="res://audio/Night Song.mp3" id="18_qhnmj"]
+[ext_resource type="PackedScene" uid="uid://6n54anmee8fk" path="res://scenes/ui/pause_menu_ui.tscn" id="19_4ab0e"]
+[ext_resource type="AudioStream" uid="uid://8qax63dw8bcy" path="res://audio/Night Song 2.ogg" id="20_lp2ca"]
 [ext_resource type="PackedScene" uid="uid://3lpeo6ap6evi" path="res://scenes/ui/interaction_ui.tscn" id="21_c3o0d"]
 
 [sub_resource type="Gradient" id="Gradient_icy5c"]
@@ -1504,6 +1505,8 @@ mouse_filter = 2
 
 [node name="InteractionUI" parent="Overlay/CanvasLayer" unique_id=1979129113 instance=ExtResource("21_c3o0d")]
 
+[node name="PauseMenuUI" parent="Overlay/CanvasLayer" unique_id=92325167 instance=ExtResource("19_4ab0e")]
+
 [node name="Timers" type="Node" parent="." unique_id=1507378834]
 
 [node name="DayTimer" type="Timer" parent="Timers" unique_id=1170833392]
@@ -1530,7 +1533,7 @@ stream = ExtResource("17_qhnmj")
 autoplay = true
 
 [node name="NightMusic" type="AudioStreamPlayer2D" parent="Music" unique_id=1791065060]
-stream = ExtResource("18_qhnmj")
+stream = ExtResource("20_lp2ca")
 
 [connection signal="diagnose" from="Objects/Player" to="." method="_on_player_diagnose"]
 [connection signal="input_event" from="Objects/Player" to="." method="_on_player_input_event"]

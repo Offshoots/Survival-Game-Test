@@ -1,0 +1,107 @@
+[gd_scene format=3 uid="uid://6n54anmee8fk"]
+
+[ext_resource type="Script" uid="uid://dfxi2v4dutctr" path="res://scenes/ui/pause_menu_ui.gd" id="1_jfoc7"]
+[ext_resource type="Texture2D" uid="uid://b8cg2sgkwwm01" path="res://graphics/backgrounds/Game Controls.png" id="2_31fmg"]
+
+[node name="PauseMenuUI" type="Control" unique_id=1979129113]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+script = ExtResource("1_jfoc7")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=107892545]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -162.0
+offset_top = -52.0
+offset_right = 162.0
+offset_bottom = 52.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1396374163]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1657011576]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MessageLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1243955869]
+layout_mode = 2
+text = "Game Paused"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1334162433]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Spacer3" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=617511867]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ControlsButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1401877662]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_right = NodePath("../MainMenuButton")
+text = "Game Controls"
+
+[node name="Spacer2" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1051151849]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MainMenuButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=33119306]
+layout_mode = 2
+focus_neighbor_left = NodePath("../ControlsButton")
+focus_neighbor_right = NodePath(".")
+text = "Main Menu"
+
+[node name="Spacer" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=451341023]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Timer" type="Timer" parent="." unique_id=476351607]
+wait_time = 0.1
+one_shot = true
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1007902677]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_31fmg")
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=573460009]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_right = 150
+theme_override_constants/margin_bottom = 50
+
+[node name="ReturnButton" type="Button" parent="MarginContainer" unique_id=1045664084]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "Return"
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ControlsButton" to="." method="_on_controls_button_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="MarginContainer/ReturnButton" to="." method="_on_return_button_pressed"]

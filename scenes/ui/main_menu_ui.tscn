@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cnu5qh08qhv1f" path="res://graphics/backgrounds/Viking Survival.png" id="2_qegi1"]
 [ext_resource type="VideoStream" uid="uid://gamk10cq7nd7" path="res://videos/Startin Rules 2.ogv" id="4_02l8k"]
 [ext_resource type="AudioStream" uid="uid://bxcr4fnl4dti0" path="res://audio/The Struggle Loop.ogg" id="4_qegi1"]
+[ext_resource type="Texture2D" uid="uid://b8cg2sgkwwm01" path="res://graphics/backgrounds/Game Controls.png" id="5_02l8k"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qegi1"]
 atlas = ExtResource("2_qegi1")
@@ -52,7 +53,7 @@ focus_mode = 2
 script = ExtResource("1_3bauu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1344281405]
-position = Vector2(375, 375)
+position = Vector2(960, 540)
 sprite_frames = SubResource("SpriteFrames_1xem4")
 autoplay = "default"
 
@@ -67,96 +68,162 @@ grow_vertical = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=977491377]
 layout_mode = 2
 
-[node name="Spacer2" type="Control" parent="MarginContainer/HBoxContainer" unique_id=1337990359]
+[node name="StoryContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer" unique_id=1707164505]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/HBoxContainer" unique_id=1160597694]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/StoryContainer" unique_id=867995458]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer/StoryContainer/HBoxContainer" unique_id=1649692616]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer2" unique_id=1274330368]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/StoryContainer/HBoxContainer" unique_id=28262038]
 layout_mode = 2
 
-[node name="spacer" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer" unique_id=1646470228]
+[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer/StoryContainer/HBoxContainer/VBoxContainer" unique_id=1879715515]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 5.0
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/HBoxContainer/StoryContainer/HBoxContainer/VBoxContainer" unique_id=360374459]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "The Lost Viking"
+
+[node name="Spacer2" type="Control" parent="MarginContainer/HBoxContainer/StoryContainer/HBoxContainer/VBoxContainer" unique_id=951212137]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer" unique_id=1662673283]
-custom_minimum_size = Vector2(350, 350)
+[node name="StoryLabel" type="Label" parent="MarginContainer/HBoxContainer/StoryContainer/HBoxContainer/VBoxContainer" unique_id=380976193]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "You have washed ahsore a strange island. Do whatever it takes to survive!"
+autowrap_mode = 3
+
+[node name="Spacer3" type="Control" parent="MarginContainer/HBoxContainer/StoryContainer/HBoxContainer/VBoxContainer" unique_id=262172246]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 5.0
+
+[node name="Spacer2" type="Control" parent="MarginContainer/HBoxContainer/StoryContainer/HBoxContainer" unique_id=281552080]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VideoContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer" unique_id=47633312]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VideoContainer" unique_id=493976991]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer/VideoContainer/VBoxContainer" unique_id=573489048]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/HBoxContainer/VideoContainer/VBoxContainer" unique_id=322637967]
+custom_minimum_size = Vector2(750, 750)
+layout_mode = 2
+
+[node name="Spacer3" type="Control" parent="MarginContainer/HBoxContainer/VideoContainer/VBoxContainer" unique_id=266879404]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CharacterContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer" unique_id=1160597694]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/CharacterContainer" unique_id=668778701]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer" unique_id=1214832185]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer" unique_id=1274330368]
+layout_mode = 2
+
+[node name="spacer" type="Control" parent="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer" unique_id=1646470228]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CharacterTexture" type="TextureRect" parent="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer" unique_id=1662673283]
+custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="spacer3" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer" unique_id=1559857156]
+[node name="spacer3" type="Control" parent="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer" unique_id=1559857156]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer" unique_id=1864651916]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer" unique_id=1864651916]
+custom_minimum_size = Vector2(750, 0)
 layout_mode = 2
 
-[node name="spacer" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=1359028246]
+[node name="spacer" type="Control" parent="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1359028246]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VikingButton" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=1813658889]
+[node name="VikingButton" type="Button" parent="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1813658889]
 layout_mode = 2
 focus_neighbor_left = NodePath("../BoyButton")
 focus_neighbor_right = NodePath("../GirlButton")
 theme_override_font_sizes/font_size = 36
 text = "Viking"
 
-[node name="spacer2" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=1998345514]
+[node name="spacer2" type="Control" parent="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1998345514]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="GirlButton" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=541163048]
+[node name="GirlButton" type="Button" parent="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=541163048]
 layout_mode = 2
 focus_neighbor_left = NodePath("../VikingButton")
 focus_neighbor_right = NodePath("../BoyButton")
 theme_override_font_sizes/font_size = 36
 text = "Wesley"
 
-[node name="spacer3" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=338226448]
+[node name="spacer3" type="Control" parent="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=338226448]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BoyButton" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=165928573]
+[node name="BoyButton" type="Button" parent="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=165928573]
 layout_mode = 2
 focus_neighbor_left = NodePath("../GirlButton")
 focus_neighbor_right = NodePath("../VikingButton")
 theme_override_font_sizes/font_size = 36
 text = "Boy"
 
-[node name="spacer4" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer" unique_id=1661558780]
+[node name="spacer4" type="Control" parent="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1661558780]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="spacer2" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer" unique_id=1784038660]
+[node name="spacer2" type="Control" parent="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer" unique_id=1784038660]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer" unique_id=313581190]
+[node name="Spacer2" type="Control" parent="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer" unique_id=1581747228]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer" unique_id=1907852984]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_left = 90
-theme_override_constants/margin_right = 90
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer" unique_id=547052499]
+[node name="ButtonContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer" unique_id=1907852984]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Spacer2" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=1974944248]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/ButtonContainer" unique_id=547052499]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Spacer2" type="Control" parent="MarginContainer/HBoxContainer/ButtonContainer/VBoxContainer" unique_id=1974944248]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
 
-[node name="OptionsButton" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=1702496716]
+[node name="OptionsButton" type="Button" parent="MarginContainer/HBoxContainer/ButtonContainer/VBoxContainer" unique_id=1702496716]
 layout_mode = 2
 focus_neighbor_top = NodePath("../QuitButton")
 focus_neighbor_bottom = NodePath("../StartButton")
@@ -164,36 +231,36 @@ theme_override_font_sizes/font_size = 24
 text = "Select 
 Character"
 
-[node name="Spacer3" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=1395182991]
+[node name="Spacer3" type="Control" parent="MarginContainer/HBoxContainer/ButtonContainer/VBoxContainer" unique_id=1395182991]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="StartButton" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=1341843674]
+[node name="StartButton" type="Button" parent="MarginContainer/HBoxContainer/ButtonContainer/VBoxContainer" unique_id=1341843674]
 layout_mode = 2
 focus_neighbor_top = NodePath("../OptionsButton")
 focus_neighbor_bottom = NodePath("../SettingsButton")
 theme_override_font_sizes/font_size = 24
 text = "Start"
 
-[node name="Spacer6" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=260450821]
+[node name="Spacer6" type="Control" parent="MarginContainer/HBoxContainer/ButtonContainer/VBoxContainer" unique_id=260450821]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="SettingsButton" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=1884088442]
+[node name="SettingsButton" type="Button" parent="MarginContainer/HBoxContainer/ButtonContainer/VBoxContainer" unique_id=1884088442]
 layout_mode = 2
 focus_neighbor_top = NodePath("../StartButton")
 focus_neighbor_bottom = NodePath("../QuitButton")
 theme_override_font_sizes/font_size = 24
 text = "Settings"
 
-[node name="Spacer4" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=939657784]
+[node name="Spacer4" type="Control" parent="MarginContainer/HBoxContainer/ButtonContainer/VBoxContainer" unique_id=939657784]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="QuitButton" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=165531598]
+[node name="QuitButton" type="Button" parent="MarginContainer/HBoxContainer/ButtonContainer/VBoxContainer" unique_id=165531598]
 layout_mode = 2
 focus_neighbor_top = NodePath("../StartButton")
 focus_neighbor_bottom = NodePath("../OptionsButton")
@@ -201,7 +268,7 @@ theme_override_colors/icon_focus_color = Color(0.20392157, 0.5882353, 0.8156863,
 theme_override_font_sizes/font_size = 24
 text = "Quit"
 
-[node name="Spacer5" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=906090498]
+[node name="Spacer5" type="Control" parent="MarginContainer/HBoxContainer/ButtonContainer/VBoxContainer" unique_id=906090498]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -219,50 +286,88 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -640.0
-offset_top = -360.0
+offset_top = -260.0
 offset_right = 640.0
-offset_bottom = 360.0
+offset_bottom = 460.0
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("4_02l8k")
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=666006125]
-layout_mode = 0
-offset_right = 725.0
-offset_bottom = 725.0
+[node name="ControlTexture" type="TextureRect" parent="." unique_id=666006125]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -362.5
+offset_top = -362.5
+offset_right = 362.5
+offset_bottom = 362.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_02l8k")
 
-[node name="MarginContainer2" type="MarginContainer" parent="." unique_id=1872294419]
+[node name="SettingsContainer" type="MarginContainer" parent="." unique_id=1872294419]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 25
+theme_override_constants/margin_right = 150
+theme_override_constants/margin_bottom = 50
 
-[node name="Game Rules" type="Button" parent="MarginContainer2" unique_id=755561929]
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsContainer" unique_id=250584073]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
-text = "Game Rules Video"
+theme_override_constants/separation = 10
+alignment = 1
 
-[node name="ReturnButton" type="Button" parent="MarginContainer2" unique_id=1181972134]
+[node name="ReturnButton" type="Button" parent="SettingsContainer/VBoxContainer" unique_id=1181972134]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
+focus_neighbor_top = NodePath(".")
+focus_neighbor_bottom = NodePath("../GameRules")
 text = "Return"
 
-[connection signal="focus_entered" from="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer/VikingButton" to="." method="_on_viking_button_focus_entered"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer/VikingButton" to="." method="_on_viking_button_pressed"]
-[connection signal="focus_entered" from="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer/GirlButton" to="." method="_on_girl_button_focus_entered"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer/GirlButton" to="." method="_on_girl_button_pressed"]
-[connection signal="focus_entered" from="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer/BoyButton" to="." method="_on_boy_button_focus_entered"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer/BoyButton" to="." method="_on_boy_button_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[node name="GameRules" type="Button" parent="SettingsContainer/VBoxContainer" unique_id=755561929]
+layout_mode = 2
+focus_neighbor_top = NodePath("../ReturnButton")
+focus_neighbor_bottom = NodePath(".")
+text = "Rules Video"
+
+[node name="WoodContainer" type="MarginContainer" parent="SettingsContainer" unique_id=1713414915]
+layout_mode = 2
+theme_override_constants/margin_left = 150
+theme_override_constants/margin_top = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsContainer/WoodContainer" unique_id=1609053480]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="SettingsContainer/WoodContainer/VBoxContainer" unique_id=1220451878]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Game Rules:
+1. Collect Wood. You need wood to repair your ship.
+2. Collect Food. You need food to heal and to store for the journey home.
+3. If you survive long enough, you may find more items that wash ashore to help you in your journey."
+horizontal_alignment = 1
+
+[connection signal="focus_entered" from="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer/HBoxContainer/VikingButton" to="." method="_on_viking_button_focus_entered"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer/HBoxContainer/VikingButton" to="." method="_on_viking_button_pressed"]
+[connection signal="focus_entered" from="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer/HBoxContainer/GirlButton" to="." method="_on_girl_button_focus_entered"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer/HBoxContainer/GirlButton" to="." method="_on_girl_button_pressed"]
+[connection signal="focus_entered" from="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer/HBoxContainer/BoyButton" to="." method="_on_boy_button_focus_entered"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer/HBoxContainer/BoyButton" to="." method="_on_boy_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/ButtonContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/ButtonContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/ButtonContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/ButtonContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="finished" from="VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]
-[connection signal="pressed" from="MarginContainer2/Game Rules" to="." method="_on_return_button_pressed"]
-[connection signal="pressed" from="MarginContainer2/ReturnButton" to="." method="_on_return_button_pressed"]
+[connection signal="pressed" from="SettingsContainer/VBoxContainer/ReturnButton" to="." method="_on_return_button_pressed"]
+[connection signal="pressed" from="SettingsContainer/VBoxContainer/GameRules" to="." method="_on_game_rules_pressed"]
