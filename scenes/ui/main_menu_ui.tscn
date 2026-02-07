@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b481cfo7n566m" path="res://scenes/ui/main_menu_ui.gd" id="1_3bauu"]
 [ext_resource type="Texture2D" uid="uid://cnu5qh08qhv1f" path="res://graphics/backgrounds/Viking Survival.png" id="2_qegi1"]
+[ext_resource type="VideoStream" uid="uid://gamk10cq7nd7" path="res://videos/Startin Rules 2.ogv" id="4_02l8k"]
 [ext_resource type="AudioStream" uid="uid://bxcr4fnl4dti0" path="res://audio/The Struggle Loop.ogg" id="4_qegi1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qegi1"]
@@ -171,9 +172,21 @@ size_flags_vertical = 3
 [node name="StartButton" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=1341843674]
 layout_mode = 2
 focus_neighbor_top = NodePath("../OptionsButton")
-focus_neighbor_bottom = NodePath("../QuitButton")
+focus_neighbor_bottom = NodePath("../SettingsButton")
 theme_override_font_sizes/font_size = 24
 text = "Start"
+
+[node name="Spacer6" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=260450821]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SettingsButton" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=1884088442]
+layout_mode = 2
+focus_neighbor_top = NodePath("../StartButton")
+focus_neighbor_bottom = NodePath("../QuitButton")
+theme_override_font_sizes/font_size = 24
+text = "Settings"
 
 [node name="Spacer4" type="Control" parent="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=939657784]
 layout_mode = 2
@@ -198,6 +211,48 @@ size_flags_stretch_ratio = 4.0
 stream = ExtResource("4_qegi1")
 autoplay = true
 
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=1151401172]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("4_02l8k")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=666006125]
+layout_mode = 0
+offset_right = 725.0
+offset_bottom = 725.0
+
+[node name="MarginContainer2" type="MarginContainer" parent="." unique_id=1872294419]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="Game Rules" type="Button" parent="MarginContainer2" unique_id=755561929]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "Game Rules Video"
+
+[node name="ReturnButton" type="Button" parent="MarginContainer2" unique_id=1181972134]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "Return"
+
 [connection signal="focus_entered" from="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer/VikingButton" to="." method="_on_viking_button_focus_entered"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer/VikingButton" to="." method="_on_viking_button_pressed"]
 [connection signal="focus_entered" from="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer/GirlButton" to="." method="_on_girl_button_focus_entered"]
@@ -206,4 +261,8 @@ autoplay = true
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer/BoyButton" to="." method="_on_boy_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="finished" from="VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]
+[connection signal="pressed" from="MarginContainer2/Game Rules" to="." method="_on_return_button_pressed"]
+[connection signal="pressed" from="MarginContainer2/ReturnButton" to="." method="_on_return_button_pressed"]
