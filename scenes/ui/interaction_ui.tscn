@@ -57,7 +57,9 @@ size_flags_horizontal = 3
 [node name="YesButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=555247698]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath("../NoButton")
+focus_neighbor_bottom = NodePath(".")
 theme_override_font_sizes/font_size = 36
 text = "Yes"
 
@@ -82,7 +84,9 @@ size_flags_horizontal = 3
 [node name="NoButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1187940419]
 layout_mode = 2
 focus_neighbor_left = NodePath("../YesButton")
+focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
 theme_override_font_sizes/font_size = 36
 text = "No"
 
@@ -90,12 +94,7 @@ text = "No"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Timer" type="Timer" parent="." unique_id=476351607]
-wait_time = 0.1
-one_shot = true
-
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/YesButton" to="." method="_on_yes_button_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/OkButton" to="." method="_on_ok_button_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/TakeButton" to="." method="_on_take_button_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/NoButton" to="." method="_on_no_button_pressed"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

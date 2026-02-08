@@ -3,6 +3,7 @@ extends CharacterBody2D
 var direction: Vector2
 var last_direction: Vector2
 var speed = 50
+var dash = 90
 var can_move: bool = true
 var player_input: bool = false
 var placement_pos : Vector2
@@ -22,7 +23,6 @@ var inventory : Array[Enum.Item]
 var tool_inventory : Array[Enum.Tool]  #= [Enum.Tool.SWORD]
 var found_tool : Enum.Tool
 
-@onready var death_timer: Timer = $DeathTimer
 @onready var tool_ui: Control = $ToolUI
 
 signal tool_use(tool: Enum.Tool, pos: Vector2)
@@ -31,7 +31,8 @@ signal diagnose
 var death : bool = false
 var taking_damage : bool = false
 var in_enemy_range : bool = false
-
+var dash_cooldown : bool = false
+  
 var max_health : int = 10
 var health := max_health:
 	set(value):
@@ -54,6 +55,7 @@ func _physics_process(_delta: float) -> void:
 		#mouse_move()
 		animate()
 	
+	
 	if in_enemy_range == true and taking_damage == false:
 		taking_damage = true
 		health -= 1
@@ -67,7 +69,6 @@ func _physics_process(_delta: float) -> void:
 			current_tool = found_tool
 		new_tool = false
 		tool_ui.add_tool = true
-		
 
 #Storing items in an array for now, don't know if I'll use
 	if new_item == true:
@@ -110,6 +111,8 @@ func get_basic_input():
 			tool_state_machine.travel(Data.TOOL_STATE_ANIMATIONS[current_tool])
 			$Animation/AnimationTree.set("parameters/ToolOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 	
+	if Input.is_action_just_pressed("dash"):
+		dash_speed()
 	
 	#if Input.is_action_just_pressed("seed_forward"):
 		#var dir2 = Input.get_action_strength("seed_forward")
@@ -127,14 +130,21 @@ func _input(event: InputEvent) -> void:
 		player_destination = get_global_mouse_position()
 		player_input = true
 
-	#Write code for "keysboard keys" arrow movement
+#Write code for "keysboard keys" arrow movement
 func keyboard_move():
-	#if Input.is_action_just_pressed("left") or Input.is_action_just_pressed("right") or Input.is_action_just_pressed("up") or Input.is_action_just_pressed("down"): 
-		#pass
 	direction = Input.get_vector("left","right","up","down")
 	velocity = direction * speed
 	move_and_slide()
 
+func dash_speed():
+	if dash_cooldown == false:
+		dash_cooldown = true
+		speed = dash
+		await get_tree().create_timer(0.3).timeout
+		speed = 50
+		$Timer.start()
+		#await get_tree().create_timer(0.5).timeout
+		#dash_cooldown = false
 
 func mouse_move():
 	if player_input == true:
@@ -153,49 +163,29 @@ func mouse_move():
 		velocity = Vector2.ZERO
 
 func animate():
-	
 	#Use of State Machine for movement animations
 	if direction:
 		move_state_machine.travel('Walk')
 		var direction_animation = Vector2(round(direction.x),round(direction.y))
 		$Animation/AnimationTree.set("parameters/MoveStateMachine/Idle/blend_position", direction_animation)
 		$Animation/AnimationTree.set("parameters/MoveStateMachine/Walk/blend_position", direction_animation)
-		
 		for animation in Data.TOOL_STATE_ANIMATIONS.values():
 			$Animation/AnimationTree.set("parameters/ToolStateMachine/" + animation + "/blend_position", direction_animation)
-			
-		
 	else:
 		move_state_machine.travel('Idle')
-	
-	#My code for animations based only on x/y direction (that does work).
-	#if direction.x == 1:
-		#$Animation/AnimationTree.set("parameters/MoveStateMachine/Walk/blend_position", Vector2.RIGHT)
-	#elif direction.x == -1:
-		#$Animation/AnimationTree.set("parameters/MoveStateMachine/Walk/blend_position", Vector2.LEFT)
-	#elif direction.y == 1:
-		#$Animation/AnimationTree.set("parameters/MoveStateMachine/Walk/blend_position", Vector2.DOWN)
-	#elif direction.y == -1:
-		#$Animation/AnimationTree.set("parameters/MoveStateMachine/Walk/blend_position", Vector2.UP)
-
 
 func tool_use_emit():
 	placement_pos = position + last_direction * 16 + Vector2(0,4)
 	tool_use.emit(current_tool, placement_pos)
 	#print('tool')
 
-
 func _on_animation_tree_animation_started(_anim_name: StringName) -> void:
 	can_move = false
-
 
 func _on_animation_tree_animation_finished(_anim_name: StringName) -> void:
 	can_move = true
 
 
-func _on_death_timer_timeout() -> void:
-	pass
-	
-	
-
+func _on_timer_timeout() -> void:
+	dash_cooldown = false
 	

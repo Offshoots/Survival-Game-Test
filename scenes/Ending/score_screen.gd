@@ -10,8 +10,12 @@ extends Control
 @onready var sea_stats_label: RichTextLabel = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/VBoxContainer2/PanelContainer2/SeaStatsLabel
 
 var journey_results = ["Lost at Sea", "Lost in the Storm", "Disappeared in the Maelstrom"]
-var victory_threshold = 1
+var victory_threshold = 20
+var days_worth_of_supplies = 0
 var victory_days = 0
+var victory_score = 0
+var victory_criteria 
+var distance
 
 func _ready() -> void:
 	if Scores.score_dead == true:
@@ -21,6 +25,7 @@ func _ready() -> void:
 	island_stats()
 	combat_stats()
 	sea_stats()
+	victoy_chance()
 	if Scores.score_dead == true:
 		victory_label.text = "Died in Combat"
 
@@ -56,28 +61,36 @@ func combat_stats():
 	
 func sea_stats():
 	var journey : String
-	var distance
-	var days_worth_supplies = (Scores.score_apples_collected - Scores.score_apples_eaten)/10
-	#var days_worth_supplies = 0
-	if days_worth_supplies > victory_threshold:
+	days_worth_of_supplies = (Scores.score_apples_collected - Scores.score_apples_eaten)/10 + Scores.motivation_boost
+	for day in range(days_worth_of_supplies):
+		print(day)
+		#distance += 1 #randi_range(1,100)
+	if days_worth_of_supplies > victory_threshold:
 		Scores.victory_chance = true
 	if Scores.score_dead == true:
 		journey = "Died in Combat"
 		distance = 0
 	else:
 		journey = journey_results.pick_random()
-		distance = randi_range(1,100) * days_worth_supplies
-	if days_worth_supplies > 10:
-		sea_stats_label.text = "Days Worth of Supplies =  " + "[color=yellow]" + str(days_worth_supplies) + "[/color]" + "
+		distance = randi_range(1,100) * days_worth_of_supplies
+	if days_worth_of_supplies > 10:
+		sea_stats_label.text = "Days Worth of Supplies =  " + "[color=yellow]" + str(days_worth_of_supplies) + "[/color]" + "
 		Distance Sailed = " +  "[color=yellow]" + str(distance) + "[/color]" + "
 		Journey Result: " + "[color=yellow]" + journey + "[/color]"
 	else:
-		sea_stats_label.text = "Days Worth of Supplies =  " + "[color=red]" + str(days_worth_supplies) + "[/color]" + "
+		sea_stats_label.text = "Days Worth of Supplies =  " + "[color=red]" + str(days_worth_of_supplies) + "[/color]" + "
 		Distance Sailed = " +  "[color=red]" + str(distance) + "[/color]" + "
 		Journey Result: " + "[color=red]" + journey + "[/color]"
 
 func victoy_chance():
 	if Scores.victory_chance == true:
 		#percent increase in Victory every day passed the victory threshold
-		victory_days = (Scores.score_days_survived - victory_threshold)
+		victory_days = (days_worth_of_supplies - victory_threshold)
+		victory_score = victory_days * randi_range(1,10)
+		for day in range(victory_days):
+			victory_score += randi_range(1,10)
+		victory_criteria = randi_range(9,100)
+		print('chance of victory = ' + str(victory_score) + " vs " + str(victory_criteria))
+		if victory_score >= victory_criteria:
+			print("YOU WON THE GAME!")
 		

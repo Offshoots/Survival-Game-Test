@@ -1469,6 +1469,47 @@ position = Vector2(-73, 292)
 
 [node name="ToolSpawnPositions" type="Node2D" parent="Objects" unique_id=463013230]
 
+[node name="RewardSpawnPositions" type="Node2D" parent="Objects" unique_id=1650096687]
+
+[node name="Marker2D" type="Marker2D" parent="Objects/RewardSpawnPositions" unique_id=1613039789]
+position = Vector2(848, 542)
+
+[node name="Marker2D2" type="Marker2D" parent="Objects/RewardSpawnPositions" unique_id=2059828400]
+position = Vector2(743, 573)
+
+[node name="Marker2D3" type="Marker2D" parent="Objects/RewardSpawnPositions" unique_id=1375479672]
+position = Vector2(867, 403)
+
+[node name="Marker2D4" type="Marker2D" parent="Objects/RewardSpawnPositions" unique_id=532255210]
+position = Vector2(658, 238)
+
+[node name="Marker2D5" type="Marker2D" parent="Objects/RewardSpawnPositions" unique_id=184417458]
+position = Vector2(526, 173)
+
+[node name="Marker2D6" type="Marker2D" parent="Objects/RewardSpawnPositions" unique_id=1639986676]
+position = Vector2(367, 157)
+
+[node name="Marker2D7" type="Marker2D" parent="Objects/RewardSpawnPositions" unique_id=119597486]
+position = Vector2(238, 158)
+
+[node name="Marker2D8" type="Marker2D" parent="Objects/RewardSpawnPositions" unique_id=1212176289]
+position = Vector2(110, 210)
+
+[node name="Marker2D9" type="Marker2D" parent="Objects/RewardSpawnPositions" unique_id=50231534]
+position = Vector2(-101, 206)
+
+[node name="Marker2D10" type="Marker2D" parent="Objects/RewardSpawnPositions" unique_id=1126391616]
+position = Vector2(-37, 192)
+
+[node name="Marker2D11" type="Marker2D" parent="Objects/RewardSpawnPositions" unique_id=1803308157]
+position = Vector2(-239, 498)
+
+[node name="Marker2D12" type="Marker2D" parent="Objects/RewardSpawnPositions" unique_id=1829446723]
+position = Vector2(243, 819)
+
+[node name="Marker2D13" type="Marker2D" parent="Objects/RewardSpawnPositions" unique_id=1419171386]
+position = Vector2(594, 592)
+
 [node name="Overlay" type="Node2D" parent="." unique_id=1983204723]
 
 [node name="DayTimeColor" type="CanvasModulate" parent="Overlay" unique_id=787567260]
@@ -1522,6 +1563,10 @@ one_shot = true
 wait_time = 0.05
 one_shot = true
 
+[node name="NoRepairTimer" type="Timer" parent="Timers" unique_id=1668575093]
+wait_time = 5.0
+one_shot = true
+
 [node name="WaveTimer" type="Timer" parent="Timers" unique_id=1098171421]
 wait_time = 2.0
 one_shot = true
@@ -1552,4 +1597,5 @@ stream = ExtResource("20_lp2ca")
 [connection signal="timeout" from="Timers/DayTimer" to="." method="_on_day_timer_timeout"]
 [connection signal="timeout" from="Timers/NightTimer" to="." method="_on_night_timer_timeout"]
 [connection signal="timeout" from="Timers/HealTimer" to="." method="_on_heal_timer_timeout"]
+[connection signal="timeout" from="Timers/NoRepairTimer" to="." method="_on_no_repair_timer_timeout"]
 [connection signal="timeout" from="Timers/WaveTimer" to="." method="_on_wave_timer_timeout"]

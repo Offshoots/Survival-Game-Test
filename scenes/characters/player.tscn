@@ -1735,10 +1735,10 @@ zoom = Vector2(4, 4)
 
 [node name="ToolUI" parent="." unique_id=112056013 instance=ExtResource("3_76oj4")]
 
-[node name="DeathTimer" type="Timer" parent="." unique_id=1810935386]
-wait_time = 0.3
+[node name="Timer" type="Timer" parent="." unique_id=1450118010]
+wait_time = 0.5
 one_shot = true
 
 [connection signal="animation_finished" from="Animation/AnimationTree" to="." method="_on_animation_tree_animation_finished"]
 [connection signal="animation_started" from="Animation/AnimationTree" to="." method="_on_animation_tree_animation_started"]
-[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

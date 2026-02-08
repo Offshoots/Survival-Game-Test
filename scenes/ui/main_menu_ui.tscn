@@ -171,7 +171,9 @@ size_flags_horizontal = 3
 [node name="VikingButton" type="Button" parent="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1813658889]
 layout_mode = 2
 focus_neighbor_left = NodePath("../BoyButton")
+focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath("../GirlButton")
+focus_neighbor_bottom = NodePath(".")
 theme_override_font_sizes/font_size = 36
 text = "Viking"
 
@@ -182,7 +184,9 @@ size_flags_horizontal = 3
 [node name="GirlButton" type="Button" parent="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=541163048]
 layout_mode = 2
 focus_neighbor_left = NodePath("../VikingButton")
+focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath("../BoyButton")
+focus_neighbor_bottom = NodePath(".")
 theme_override_font_sizes/font_size = 36
 text = "Wesley"
 
@@ -193,7 +197,9 @@ size_flags_horizontal = 3
 [node name="BoyButton" type="Button" parent="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=165928573]
 layout_mode = 2
 focus_neighbor_left = NodePath("../GirlButton")
+focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath("../VikingButton")
+focus_neighbor_bottom = NodePath(".")
 theme_override_font_sizes/font_size = 36
 text = "Boy"
 
@@ -225,7 +231,9 @@ size_flags_stretch_ratio = 4.0
 
 [node name="OptionsButton" type="Button" parent="MarginContainer/HBoxContainer/ButtonContainer/VBoxContainer" unique_id=1702496716]
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../QuitButton")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../StartButton")
 theme_override_font_sizes/font_size = 24
 text = "Select 
@@ -238,7 +246,9 @@ size_flags_vertical = 3
 
 [node name="StartButton" type="Button" parent="MarginContainer/HBoxContainer/ButtonContainer/VBoxContainer" unique_id=1341843674]
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../OptionsButton")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../SettingsButton")
 theme_override_font_sizes/font_size = 24
 text = "Start"
@@ -250,7 +260,9 @@ size_flags_vertical = 3
 
 [node name="SettingsButton" type="Button" parent="MarginContainer/HBoxContainer/ButtonContainer/VBoxContainer" unique_id=1884088442]
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../StartButton")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../QuitButton")
 theme_override_font_sizes/font_size = 24
 text = "Settings"
@@ -262,7 +274,9 @@ size_flags_vertical = 3
 
 [node name="QuitButton" type="Button" parent="MarginContainer/HBoxContainer/ButtonContainer/VBoxContainer" unique_id=165531598]
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../SettingsButton")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../OptionsButton")
 theme_override_colors/icon_focus_color = Color(0.20392157, 0.5882353, 0.8156863, 1)
 theme_override_font_sizes/font_size = 24
@@ -330,13 +344,17 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
+focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../GameRules")
 text = "Return"
 
 [node name="GameRules" type="Button" parent="SettingsContainer/VBoxContainer" unique_id=755561929]
 layout_mode = 2
+focus_neighbor_left = NodePath("../ReturnButton")
 focus_neighbor_top = NodePath("../ReturnButton")
+focus_neighbor_right = NodePath("../ReturnButton")
 focus_neighbor_bottom = NodePath(".")
 text = "Rules Video"
 

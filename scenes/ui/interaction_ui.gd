@@ -1,7 +1,6 @@
 extends Control
 
 @onready var message_label: Label = $PanelContainer/MarginContainer/VBoxContainer/MessageLabel
-@onready var timer: Timer = $Timer
 @onready var no_button: Button = $PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/NoButton
 @onready var yes_button: Button = $PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/YesButton
 @onready var ok_button: Button = $PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/OkButton
@@ -57,7 +56,6 @@ func add_take_button(interaction : Enum.Tool):
 	current_interaction = interaction
 
 func select():
-	#Engine.time_scale = 0
 	if grab_focus_once == false:
 		no_button.grab_focus()
 		ok_button.hide()

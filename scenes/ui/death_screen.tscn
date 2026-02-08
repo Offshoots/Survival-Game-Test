@@ -58,7 +58,9 @@ size_flags_stretch_ratio = 4.0
 
 [node name="RestartButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=262931901]
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../QuitButton")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../StatsButton")
 mouse_filter = 1
 text = "Restart Game"
@@ -69,7 +71,9 @@ size_flags_vertical = 3
 
 [node name="StatsButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1448494913]
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../RestartButton")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../MainMenuButton")
 text = "Stats Screen"
 
@@ -79,7 +83,9 @@ size_flags_vertical = 3
 
 [node name="MainMenuButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1898886090]
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../StatsButton")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../QuitButton")
 mouse_filter = 1
 text = "Main Menu"
@@ -90,7 +96,9 @@ size_flags_vertical = 3
 
 [node name="QuitButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=898808093]
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../MainMenuButton")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../RestartButton")
 text = "Guit Game"
 

@@ -1,7 +1,7 @@
 extends StaticBody2D
 
 var ship_health : int = 10
-var max_ship_health : int = 30
+var max_ship_health : int = 25
 
 signal enter_ship
 signal exit_ship

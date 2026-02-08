@@ -10,6 +10,12 @@ var pyre_scene = preload("res://scenes/objects/pyre.tscn")
 var tree_scene = preload("res://scenes/objects/tree.tscn")
 var rock_scene = preload("res://scenes/objects/rock.tscn")
 var enemy_scene = preload("res://scenes/characters/blob.tscn")
+var seed_scene = preload("res://scenes/objects/tools/tool_seed.tscn")
+var hoe_scene = preload("res://scenes/objects/tools/tool_hoe.tscn")
+var water_scene = preload("res://scenes/objects/tools/tool_water.tscn")
+var toy_scene = preload("res://scenes/objects/rewards/reward_toy.tscn")
+
+
 var used_cells: Array[Vector2i]
 var placement_pos : Vector2
 
@@ -21,6 +27,8 @@ var axe_visited : bool = false
 var extra_wave : bool = false
 var repair_ship_message : bool = false
 var game_paused : bool = false
+var at_ship : bool = false
+var no_repair : bool = false
 
 #May not need any of these item variables. I simplified all iventory functions to use Enums
 var apple: int
@@ -114,6 +122,7 @@ func _process(delta: float) -> void:
 	$Overlay/DayTimeColor.color = color
 	update_health()
 	update_ship_progress()
+	check_ship()
 	
 	#"Tab" is input for day change by button press. Commenting out for now.
 	#if Input.is_action_just_pressed("day_change"):
@@ -148,7 +157,7 @@ func _process(delta: float) -> void:
 		var final_message:String = 'Enough Wood Has Been Collected!'
 		print(final_message)
 		main_ui.update_message(final_message)
-		repair_ship()
+	
 
 	
 	if Input.is_action_just_pressed("inventory"):
@@ -220,6 +229,15 @@ func spawn_rocks(num: int):
 		new_rock.smash.connect(_on_rock_smash)
 		$Objects.add_child(new_rock)
 		new_rock.position = pos_marker.position
+
+func spawn_reward(reward_scene):
+	var reward_markers = $Objects/RewardSpawnPositions.get_children().duplicate(true)
+	var pos_marker = reward_markers.pop_at(randi_range(0,reward_markers.size()-1))
+	var new_reward = reward_scene.instantiate()
+	$Objects.add_child(new_reward)
+	new_reward.position = pos_marker.position
+	
+	
 
 func spawn_enemies(num: int):
 	var enemy_markers = $Objects/EnemySpawnPositions.get_children().duplicate(true)
@@ -418,9 +436,12 @@ func death_screen():
 #"Day_restart" function calls the "Level_reset" via callback in the middle of the circle transistion/animation for the day change
 func day_restart():
 	#Survival Mode will require food to be consumed each day. Subtract 1 apple each day:
-	#need to remove an apple from the player.inventory array
-	remove_inventory(Enum.Item.APPLE)
-	Scores.score_apples_eaten += 1
+	#need to remove ten apples from the player.inventory array
+	for number in range(10):
+		#May need to improve this to take damage if not enough apples
+		remove_inventory(Enum.Item.APPLE)
+		#Apples score will no longer be accurate
+		Scores.score_apples_eaten += 1 
 	
 	#adjust the shader parameter that creates the circle transistion
 	var tween = create_tween()
@@ -451,6 +472,13 @@ func level_reset():
 	for object in get_tree().get_nodes_in_group('Objects'):
 		if 'reset' in object:
 			object.reset()
+	#New item arrivals:
+	if day > 1:
+		spawn_reward(seed_scene)
+		spawn_reward(hoe_scene)
+		spawn_reward(water_scene)
+	if day > 5:
+		spawn_reward(toy_scene)
 #endregion
 
 #After a plany dies, delete cells used by that plant from the used_cells array
@@ -539,6 +567,7 @@ func interaction_visit(message : String, visit : Enum.Visit):
 	Engine.time_scale = 0
 
 func interaction_tool(message : String, interaction : Enum.Tool):
+	print("interact")
 	interaction_ui.update_message(message)
 	interaction_ui.select()
 	interaction_ui.add_take_button(interaction)
@@ -551,8 +580,9 @@ func _on_ship_enter_ship(body) -> void:
 		print('Enemy')
 		body.tracking = true
 		message = 'My SHIP! They are attacking my ship!'
-
 	else:
+		at_ship = true
+		repair_ship_message = false
 		if ship.ship_health < ship.max_ship_health and player.inventory.count(Enum.Item.WOOD) >= 1:
 			var wood_total = player.inventory.count(Enum.Item.WOOD)
 			print(wood_total)
@@ -569,33 +599,41 @@ func _on_ship_enter_ship(body) -> void:
 	main_ui.update_message(message)
 
 
-func repair_ship():
-	await get_tree().create_timer(0.05).timeout
-	var interaction_message : String = 'Repair Ship?'
-	interaction_ui.update_message(interaction_message)
-	interaction_ui.select()
-	interaction_ui.show()
-	Engine.time_scale = 0
+func check_ship():
+	if at_ship == true and ship.ship_health < ship.max_ship_health:
+		var message = 'Collect more wood!'
+		print(message)
+		main_ui.update_message(message)
+	if at_ship == true and ship.ship_health >= ship.max_ship_health and interaction_ui.grab_focus_once == false and no_repair == false:
+		interaction_ui.select()
+		#await get_tree().create_timer(0.05).timeout
+		var interaction_message : String = 'Repair Ship?'
+		interaction_ui.update_message(interaction_message)
+		interaction_ui.show()
+		
+		Engine.time_scale = 0
 
 
 func _on_ship_exit_ship(body) -> void:
+	at_ship = false
 	if body.is_in_group('Enemy'):
 		print('Enemy')
 		body.tracking = false
 	await get_tree().create_timer(1.0).timeout
 	interaction_ui.grab_focus_once = false
-	repair_ship_message = false
+	
 
 
 func _on_interaction_ui_no() -> void:
-	print("More Work To Do!")
 	interaction_ui.grab_focus_once = true
+	print("More Work To Do!")
+	$Timers/NoRepairTimer.start()
+	no_repair = true
 	interaction_ui.hide()
 	Engine.time_scale = 1
 
 
 func _on_interaction_ui_yes() -> void:
-	print("Repairing the Ship!")
 	interaction_ui.grab_focus_once = true
 	interaction_ui.hide()
 	Engine.time_scale = 1
@@ -615,7 +653,7 @@ func _on_interaction_ui_ok(visit: Enum.Visit) -> void:
 	interaction_ui.hide()
 	Engine.time_scale = 1
 
-func _on_interaction_ui_take(interaction: Enum.Tool) -> void:
+func _on_interaction_ui_take(_interaction: Enum.Tool) -> void:
 	interaction_ui.hide()
 	Engine.time_scale = 1
 
@@ -649,3 +687,7 @@ func _on_blob_ship_damaged() -> void:
 func _on_wave_timer_timeout() -> void:
 	spawn_rand_enemies()
 	extra_wave = false
+
+
+func _on_no_repair_timer_timeout() -> void:
+	no_repair = false
