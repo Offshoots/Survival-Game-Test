@@ -14,8 +14,8 @@ var victory_threshold = 20
 var days_worth_of_supplies = 0
 var victory_days = 0
 var victory_score = 0
-var victory_criteria 
-var distance
+var victory_criteria = 0
+var distance = 0
 
 func _ready() -> void:
 	if Scores.score_dead == true:
@@ -61,10 +61,10 @@ func combat_stats():
 	
 func sea_stats():
 	var journey : String
-	days_worth_of_supplies = (Scores.score_apples_collected - Scores.score_apples_eaten)/10 + Scores.motivation_boost
+	days_worth_of_supplies = (Scores.score_apples_collected - Scores.score_apples_eaten)/10 #+ Scores.motivation_boost
 	for day in range(days_worth_of_supplies):
 		print(day)
-		#distance += 1 #randi_range(1,100)
+		distance += randi_range(1,100)
 	if days_worth_of_supplies > victory_threshold:
 		Scores.victory_chance = true
 	if Scores.score_dead == true:

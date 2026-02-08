@@ -69,6 +69,7 @@ func _ready() -> void:
 	Scores.score_enemies_killed_by_daylight = 0
 	Scores.score_enemies_killed_by_pyre = 0
 	Scores.score_pyres_built = 0
+	Scores.motivation_boost = 0
 	
 	Scores.score_days_survived = 0
 	Scores.score_total_time  = 0
@@ -473,11 +474,13 @@ func level_reset():
 		if 'reset' in object:
 			object.reset()
 	#New item arrivals:
-	if day > 1:
+	if day == 2:
+		spawn_reward(toy_scene)
 		spawn_reward(seed_scene)
-		spawn_reward(hoe_scene)
 		spawn_reward(water_scene)
-	if day > 5:
+	if day == 4:
+		spawn_reward(hoe_scene)
+	if day == 6:
 		spawn_reward(toy_scene)
 #endregion
 
@@ -663,7 +666,30 @@ func _on_tool_axe_axe_found() -> void:
 	var interaction_message : String = 'My AXE!\nI wonder what else has washed ashore?'
 	interaction_tool(interaction_message, Enum.Tool.AXE)
 
+func _on_tool_hoe_hoe_found() -> void:
+	await get_tree().create_timer(0.05).timeout
+	#var interaction_message : String = 'Who needs a sword or a bow, when you can have an AXE!'
+	var interaction_message : String = 'Look a Hoe!\nI better not yell that too much.'
+	interaction_tool(interaction_message, Enum.Tool.HOE)
 
+func _on_tool_water_water_found() -> void:
+	await get_tree().create_timer(0.05).timeout
+	#var interaction_message : String = 'Who needs a sword or a bow, when you can have an AXE!'
+	var interaction_message : String = 'A watering can!\nIf I plant seeds, I can water them to grow'
+	interaction_tool(interaction_message, Enum.Tool.WATER)
+
+func _on_tool_seed_seed_found() -> void:
+	await get_tree().create_timer(0.05).timeout
+	#var interaction_message : String = 'Who needs a sword or a bow, when you can have an AXE!'
+	var interaction_message : String = 'Seeds!\nIf I plant seeds, I can water them to grow'
+	interaction_tool(interaction_message, Enum.Tool.WATER)
+
+func _on_reawrd_toy_toy_found() -> void:
+	await get_tree().create_timer(0.05).timeout
+	#var interaction_message : String = 'Who needs a sword or a bow, when you can have an AXE!'
+	var interaction_message : String = 'I know this Toy.\nI need to make it home.'
+	#need to update interation, to include new enum of rewards
+	interaction_tool(interaction_message, Enum.Tool.WATER)
 
 func _on_tool_sword_sword_found() -> void:
 	await get_tree().create_timer(0.05).timeout

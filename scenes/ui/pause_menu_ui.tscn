@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://6n54anmee8fk"]
 
 [ext_resource type="Script" uid="uid://dfxi2v4dutctr" path="res://scenes/ui/pause_menu_ui.gd" id="1_jfoc7"]
-[ext_resource type="Texture2D" uid="uid://b8cg2sgkwwm01" path="res://graphics/backgrounds/Game Controls.png" id="2_31fmg"]
+[ext_resource type="Texture2D" uid="uid://x6tf0vgntrya" path="res://graphics/backgrounds/control diagram.png" id="2_31fmg"]
 
 [node name="PauseMenuUI" type="Control" unique_id=1979129113]
 layout_mode = 3

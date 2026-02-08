@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cnu5qh08qhv1f" path="res://graphics/backgrounds/Viking Survival.png" id="2_qegi1"]
 [ext_resource type="VideoStream" uid="uid://gamk10cq7nd7" path="res://videos/Startin Rules 2.ogv" id="4_02l8k"]
 [ext_resource type="AudioStream" uid="uid://bxcr4fnl4dti0" path="res://audio/The Struggle Loop.ogg" id="4_qegi1"]
-[ext_resource type="Texture2D" uid="uid://b8cg2sgkwwm01" path="res://graphics/backgrounds/Game Controls.png" id="5_02l8k"]
+[ext_resource type="Texture2D" uid="uid://x6tf0vgntrya" path="res://graphics/backgrounds/control diagram.png" id="5_02l8k"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qegi1"]
 atlas = ExtResource("2_qegi1")
