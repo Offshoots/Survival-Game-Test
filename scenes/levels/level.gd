@@ -49,6 +49,7 @@ var wheat: int
 @onready var interaction_ui: Control = $Overlay/CanvasLayer/InteractionUI
 @onready var pause_menu_ui: Control = $Overlay/CanvasLayer/PauseMenuUI
 
+#Test these unstored variabled for the connect signals for rewards
 
 
 func _ready() -> void:
@@ -170,11 +171,12 @@ func _process(delta: float) -> void:
 			#var craft = Enum.Craft.BOX
 			#build(craft, placement_pos)
 			#remove_inventory(Enum.Item.WOOD)
-		if player.inventory.count(Enum.Item.STONE) >= 1:
+		if player.inventory.count(Enum.Item.STONE) >= 12:
 			var craft = Enum.Craft.PYRE
 			build(craft, placement_pos)
-			remove_inventory(Enum.Item.STONE)
-			Scores.score_pyres_built += 1
+			for num in range(12):
+				remove_inventory(Enum.Item.STONE)
+				Scores.score_pyres_built += 1
 
 	if player.health < player.max_health:
 		main_ui.show_heal()
@@ -252,8 +254,8 @@ func spawn_enemies(num: int):
 		new_enemy.position = pos_marker.position
 		#increase the speed of the blobs every day
 		for object in get_tree().get_nodes_in_group('Enemy'):
-			object.leap_cooldown_freq = object.leap_cooldown_freq_start + 10 * day
-			object.leap_force = object.leap_force_start + 10 * day
+			object.leap_cooldown_freq = object.leap_cooldown_freq_start + 5 * day
+			object.leap_force = object.leap_force_start + 5 * day
 
 
 #Build when 'B' Input map action is pressed (called in process function)
@@ -344,44 +346,68 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 				if object.position.distance_to(pos)< 20:
 					object.hit(tool)
 					if object.stone:
+						var stone_message = "Yes stones.\nI can build something strong with these."
 						var item_drop = Enum.Item.STONE
-						player.inventory.append(item_drop)
-						add_inventory(item_drop)
-						Scores.score_stone_collected += 1
+						var stone_dropped = randi_range(6,10)
+						for num in stone_dropped:
+							player.inventory.append(item_drop)
+							add_inventory(item_drop)
+							Scores.score_stone_collected += 1
+			#Currently all stumps are still managed by the "Tree" sceene in group 'Objects'.
+			for object in get_tree().get_nodes_in_group('Objects'):
+				if object.position.distance_to(pos)< 20:
+					object.hit(tool)
+					if object.stump_wood:
+						var item_drop = Enum.Item.WOOD
+						var wood_dropped = 2
+						for num in wood_dropped:
+							player.inventory.append(item_drop)
+							add_inventory(item_drop)
+							Scores.score_wood_collected += 1
 		Enum.Tool.SWORD:
 			#For now group for blob has been changed from 'Objects' to new group 'Enemy'.
 			for object in get_tree().get_nodes_in_group('Enemy'):
 				if object.position.distance_to(pos)< 20:
 					object.hit(tool)
 					if object.gold:
+						var gold_message = "I found some grains of gold in this slime.\nBut what use is gold on this forsaken island?"
 						var item_drop = Enum.Item.GOLD
-						player.inventory.append(item_drop)
-						add_inventory(item_drop)
-						Scores.score_gold_collected += 1
+						var gold_dropped = randi_range(3,3+day*2)
+						for num in gold_dropped:
+							player.inventory.append(item_drop)
+							add_inventory(item_drop)
+							Scores.score_gold_collected += 1
 		Enum.Tool.AXE:
 			#For now group for blob has been changed from 'Objects' to new group 'Enemy'.
 			for object in get_tree().get_nodes_in_group('Enemy'):
 				if object.position.distance_to(pos)< 20:
 					object.hit(tool)
 					if object.gold:
+						var gold_message = "I found some grains of gold in this slime.\nBut what use is gold on this forsaken island?"
 						var item_drop = Enum.Item.GOLD
-						player.inventory.append(item_drop)
-						add_inventory(item_drop)
-						Scores.score_gold_collected += 1
+						var gold_dropped = randi_range(3,3+day*2)
+						for num in gold_dropped:
+							player.inventory.append(item_drop)
+							add_inventory(item_drop)
+							Scores.score_gold_collected += 1
 			#Currently all trees are in group 'Objects'.
 			for object in get_tree().get_nodes_in_group('Objects'):
 				if object.position.distance_to(pos)< 20:
 					object.hit(tool)
 					if object.apples:
+						var apple_message = "An Apple!\nThank Odinson, I am starving.\nI need to find more of these to take with me."
 						var item_drop = Enum.Item.APPLE
 						player.inventory.append(item_drop)
 						add_inventory(item_drop)
 						Scores.score_apples_collected += 1
 					if object.wood:
 						var item_drop = Enum.Item.WOOD
-						player.inventory.append(item_drop)
-						add_inventory(item_drop)
-						Scores.score_wood_collected += 1
+						var wood_dropped = randi_range(4,8)
+						for num in wood_dropped:
+							player.inventory.append(item_drop)
+							add_inventory(item_drop)
+							Scores.score_wood_collected += 1
+						
 
 #region Inventory Add, Remove, and Update
 #Use Bool for item pickup inside the correct scenes. If the Item is present for the event that it would be collected, then the bool is true.
@@ -440,9 +466,11 @@ func day_restart():
 	#need to remove ten apples from the player.inventory array
 	for number in range(10):
 		#May need to improve this to take damage if not enough apples
-		remove_inventory(Enum.Item.APPLE)
-		#Apples score will no longer be accurate
-		Scores.score_apples_eaten += 1 
+		if player.inventory.count(Enum.Item.APPLE) > 0:
+			remove_inventory(Enum.Item.APPLE)
+			Scores.score_apples_eaten += 1 
+		else:
+			player.health -= 1
 	
 	#adjust the shader parameter that creates the circle transistion
 	var tween = create_tween()
@@ -476,12 +504,15 @@ func level_reset():
 	#New item arrivals:
 	if day == 2:
 		spawn_reward(toy_scene)
-		spawn_reward(seed_scene)
-		spawn_reward(water_scene)
-	if day == 4:
-		spawn_reward(hoe_scene)
-	if day == 6:
-		spawn_reward(toy_scene)
+		await get_tree().create_timer(0.05).timeout
+		var reward_toy = $Objects/RewardToy
+		reward_toy.toy_found.connect(_on_reward_toy_toy_found)
+		#spawn_reward(seed_scene)
+		#spawn_reward(water_scene)
+	#if day == 4:
+		#spawn_reward(hoe_scene)
+	#if day == 7:
+		#spawn_reward(toy_scene, "found_toy", "_on_reward_toy_toy_found")
 #endregion
 
 #After a plany dies, delete cells used by that plant from the used_cells array
@@ -684,7 +715,7 @@ func _on_tool_seed_seed_found() -> void:
 	var interaction_message : String = 'Seeds!\nIf I plant seeds, I can water them to grow'
 	interaction_tool(interaction_message, Enum.Tool.WATER)
 
-func _on_reawrd_toy_toy_found() -> void:
+func _on_reward_toy_toy_found() -> void:
 	await get_tree().create_timer(0.05).timeout
 	#var interaction_message : String = 'Who needs a sword or a bow, when you can have an AXE!'
 	var interaction_message : String = 'I know this Toy.\nI need to make it home.'

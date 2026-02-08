@@ -8,6 +8,9 @@ const apple_texture = preload("res://graphics/plants/apple.png")
 #The item will be added to the inventory via the Level scene into the ItemContainerUI, after assisinging the approiate enum to get the correct icon and properties.
 var apples : bool = false
 var wood : bool = false
+var stump_wood : bool = false
+var stump : bool = false
+
 var health := 4:
 	set(value):
 		health = value
@@ -20,10 +23,22 @@ var health := 4:
 			$CollisionShape2D.shape = shape
 			$CollisionShape2D.position.y = 6
 			Scores.score_trees_felled += 1
+			stump = true
 			wood = true
 		else:
 			wood = false
-		
+			stump_wood = false
+
+var stump_health := 2:
+	set(value):
+		stump_health = value
+		if stump_health == 0:
+			$Stump.hide()
+			$CollisionShape2D.queue_free()
+			stump_wood = true
+		else:
+			stump_wood = false
+			wood = false
 
 #To Do list:
 #Tree should flash when hit, we will add a shader
@@ -42,6 +57,8 @@ func hit(tool: Enum.Tool):
 		$FlashSprite2D.flash()
 		get_apples()
 		health -= 1
+	if tool == Enum.Tool.PICKAXE and stump == true:
+		stump_health -= 1
 	
 	
 

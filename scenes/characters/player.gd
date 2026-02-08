@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 var direction: Vector2
 var last_direction: Vector2
-var speed = 50
+var speed = 200
 var dash = 90
 var can_move: bool = true
 var player_input: bool = false
@@ -33,7 +33,7 @@ var taking_damage : bool = false
 var in_enemy_range : bool = false
 var dash_cooldown : bool = false
   
-var max_health : int = 10
+var max_health : int = 15
 var health := max_health:
 	set(value):
 		health = value

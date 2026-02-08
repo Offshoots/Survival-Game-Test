@@ -5,8 +5,8 @@ signal ship_damaged
 
 var direction: Vector2
 var speed = 20
-var leap_force_start = 50
-var leap_force = 50
+var leap_force_start = 40
+var leap_force = 40
 var leap_cooldown_freq_start = 20
 var leap_cooldown_freq = 20
 var push_distance = 130
@@ -18,7 +18,7 @@ var distance_remaining
 var gold : bool = false
 var is_dead : bool = false
 var leap_cooldown : bool = false
-var leap_speed : bool = true
+var leap_speed : bool = false
 var tracking : bool = false
 
 @onready var player = get_tree().get_first_node_in_group('Player')
@@ -82,10 +82,11 @@ func _physics_process(delta: float) -> void:
 	velocity = direction * speed + push_direction
 	
 	#Check for lead condition and the execute leap physics
-	if global_position.distance_to(target.global_position) < 300 and !leap_cooldown:
-		leap_visual()
-		leap_at_target()
-		start_leap_cooldown()
+	if Scores.score_days_survived > 1:
+		if global_position.distance_to(target.global_position) < 300 and !leap_cooldown:
+			leap_visual()
+			leap_at_target()
+			start_leap_cooldown()
 	
 	#Move and slide
 	move_and_slide()
@@ -93,7 +94,7 @@ func _physics_process(delta: float) -> void:
 func leap_visual():
 	var tween = create_tween()
 	# Move sprite up visually
-	var rand_jump_size = randf_range(0.3,0.6)
+	var rand_jump_size = randf_range(0.2,0.4)
 	tween.tween_property(flash_sprite_2d, "position:y", -40 * rand_jump_size, 0.5 * rand_jump_size).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	# Come back down
 	tween.tween_property(flash_sprite_2d, "position:y", 0, 0.5 * rand_jump_size).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)

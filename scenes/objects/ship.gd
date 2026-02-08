@@ -1,10 +1,20 @@
 extends StaticBody2D
 
-var ship_health : int = 10
-var max_ship_health : int = 12
+
+var max_ship_health : int = 250
+
+var death : bool = false
 
 signal enter_ship
 signal exit_ship
+
+var ship_health : int = 25 :
+	set(value):
+		ship_health = value
+		print(value)
+		if ship_health == 0:
+			death = true
+			print('You Lost you ship!')
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	enter_ship.emit(body)
