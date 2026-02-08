@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ba1bb6c2dned3" path="res://scenes/Ending/score_screen.gd" id="1_4d2gj"]
 [ext_resource type="VideoStream" uid="uid://bk32035gi5oqs" path="res://videos/Viking_Ship_Video_Loop_Generation 2.ogv" id="2_2iisf"]
+[ext_resource type="Texture2D" uid="uid://vcnm26u31wyv" path="res://graphics/backgrounds/Final credits The lost viking 2.png" id="3_c021j"]
 
 [node name="ScoreScreen" type="Control" unique_id=484245641]
 layout_mode = 3
@@ -11,6 +12,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_4d2gj")
+
+[node name="CreditTexture" type="TextureRect" parent="." unique_id=298860794]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_c021j")
 
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=1997740894]
 custom_minimum_size = Vector2(2130, 1200)
@@ -30,6 +40,21 @@ stream = ExtResource("2_2iisf")
 autoplay = true
 expand = true
 loop = true
+
+[node name="CreditVideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=711212711]
+custom_minimum_size = Vector2(2130, 1200)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -60.0
+offset_right = 150.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+speed_scale = 0.8
+expand = true
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=420618151]
 layout_mode = 1
@@ -125,6 +150,15 @@ focus_neighbor_right = NodePath("../QuitButton")
 focus_neighbor_bottom = NodePath(".")
 theme_override_font_sizes/font_size = 36
 text = "Main Menu"
+
+[node name="VictoryButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=980297954]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+theme_override_font_sizes/font_size = 36
+text = "Victory!"
 
 [node name="Spacer6" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=718096430]
 layout_mode = 2
@@ -223,5 +257,30 @@ autowrap_mode = 0
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="ReturnContainer" type="MarginContainer" parent="." unique_id=1858367917]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_right = 150
+theme_override_constants/margin_bottom = 50
+
+[node name="ReturnButton" type="Button" parent="ReturnContainer" unique_id=1720805128]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+theme_override_font_sizes/font_size = 36
+text = "Return"
+
+[connection signal="finished" from="VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]
+[connection signal="finished" from="CreditVideoStreamPlayer" to="." method="_on_credit_video_stream_player_finished"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/VictoryButton" to="." method="_on_victory_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="ReturnContainer/ReturnButton" to="." method="_on_return_button_pressed"]

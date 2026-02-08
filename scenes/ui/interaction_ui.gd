@@ -12,7 +12,7 @@ signal ok
 signal take
 
 var grab_focus_once : bool = false
-var current_interaction : Enum.Tool
+var current_interaction
 var current_visit : Enum.Visit
 
 func update_message(message : String):
@@ -48,7 +48,7 @@ func add_ok_button(visit: Enum.Visit):
 	ok_button.grab_focus()
 	current_visit = visit
 
-func add_take_button(interaction : Enum.Tool):
+func add_take_button(interaction):
 	yes_button.hide()
 	no_button.hide()
 	take_button.show()

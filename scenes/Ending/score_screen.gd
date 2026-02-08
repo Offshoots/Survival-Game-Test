@@ -2,6 +2,14 @@ extends Control
 
 @onready var main_menu_button: Button = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/MainMenuButton
 @onready var quit_button: Button = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/QuitButton
+@onready var victory_button: Button = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/VictoryButton
+@onready var spacer_6: Control = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/Spacer6
+@onready var return_container: MarginContainer = $ReturnContainer
+@onready var margin_container: MarginContainer = $MarginContainer
+@onready var credit_texture: TextureRect = $CreditTexture
+
+@onready var video_stream_player: VideoStreamPlayer = $VideoStreamPlayer
+@onready var credit_video_stream_player: VideoStreamPlayer = $CreditVideoStreamPlayer
 
 @onready var victory_label: Label = $MarginContainer/VBoxContainer/PanelContainer/VictoryLabel
 
@@ -10,14 +18,19 @@ extends Control
 @onready var sea_stats_label: RichTextLabel = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/VBoxContainer2/PanelContainer2/SeaStatsLabel
 
 var journey_results = ["Lost at Sea", "Lost in the Storm", "Disappeared in the Maelstrom"]
-var victory_threshold = 20
+var victory_threshold = 1
 var days_worth_of_supplies = 0
 var victory_days = 0
 var victory_score = 0
 var victory_criteria = 0
 var distance = 0
 
+var victory : bool = false
+
 func _ready() -> void:
+	victory_button.hide()
+	return_container.hide()
+	$CreditTexture.hide()
 	if Scores.score_dead == true:
 		$VideoStreamPlayer.stop()
 		$VideoStreamPlayer.hide()
@@ -26,8 +39,16 @@ func _ready() -> void:
 	combat_stats()
 	sea_stats()
 	victoy_chance()
-	if Scores.score_dead == true:
-		victory_label.text = "Died in Combat"
+	if victory == true:
+		victory_label.text = "Ultimate Victory: You Made it Home!"
+		main_menu_button.hide()
+		quit_button.hide()
+		spacer_6.hide()
+		victory_button.show()
+		victory_button.grab_focus()
+		sea_stats_label.text = "Days Worth of Supplies =  " + "[color=green]" + str(days_worth_of_supplies) + "[/color]" + "
+		Distance Sailed = " +  "[color=green]" + str(distance) + "[/color]" + "
+		Journey Result: " + "[color=green]You made it home![/color]"
 
 func _on_main_menu_button_pressed() -> void:
 	AudioManager.music_player.stop()
@@ -61,18 +82,26 @@ func combat_stats():
 	
 func sea_stats():
 	var journey : String
-	days_worth_of_supplies = (Scores.score_apples_collected - Scores.score_apples_eaten)/10 #+ Scores.motivation_boost
+	days_worth_of_supplies = (Scores.score_apples_collected - Scores.score_apples_eaten)/10 + Scores.motivation_boost
 	for day in range(days_worth_of_supplies):
 		print(day)
 		distance += randi_range(1,100)
 	if days_worth_of_supplies > victory_threshold:
 		Scores.victory_chance = true
 	if Scores.score_dead == true:
+		victory_label.text = "Died in Combat"
 		journey = "Died in Combat"
 		distance = 0
 	else:
 		journey = journey_results.pick_random()
 		distance = randi_range(1,100) * days_worth_of_supplies
+	if Scores.ship_destroyed == true:
+		journey = "Ship Destory. Stranded. Surrounded."
+		distance = 0
+	if Scores.score_dead == true and Scores.starved_dead:
+		victory_label.text = "Starved to Death"
+		journey = "Starved to dead. Find more food."
+		distance = 0
 	if days_worth_of_supplies > 10:
 		sea_stats_label.text = "Days Worth of Supplies =  " + "[color=yellow]" + str(days_worth_of_supplies) + "[/color]" + "
 		Distance Sailed = " +  "[color=yellow]" + str(distance) + "[/color]" + "
@@ -93,4 +122,29 @@ func victoy_chance():
 		print('chance of victory = ' + str(victory_score) + " vs " + str(victory_criteria))
 		if victory_score >= victory_criteria:
 			print("YOU WON THE GAME!")
-		
+			victory = true
+
+func _on_victory_button_pressed() -> void:
+	$ReturnContainer/ReturnButton.grab_focus()
+	margin_container.hide()
+	return_container.show()
+	video_stream_player.stop()
+	$VideoStreamPlayer.hide()
+	credit_video_stream_player.stream = preload("res://videos/Family Embrace 3.ogv")
+	credit_video_stream_player.play()
+	AudioManager.music_player.stream = preload("res://audio/tributary - Lish Grooves.mp3")
+	AudioManager.music_player.play()
+
+
+func _on_credit_video_stream_player_finished() -> void:
+	$CreditVideoStreamPlayer.hide()
+	$CreditTexture.show()
+
+
+func _on_return_button_pressed() -> void:
+	main_menu_button.grab_focus()
+	main_menu_button.show()
+	quit_button.show()
+	victory_button.hide()
+	margin_container.show()
+	return_container.hide()

@@ -2,6 +2,8 @@ extends Node
 
 var victory_chance : bool
 var score_dead : bool
+var ship_destroyed : bool
+var starved_dead : bool
 var score_trees_felled
 var score_rocks_smashed
 var score_apples_collected

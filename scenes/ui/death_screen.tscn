@@ -14,6 +14,7 @@ grow_vertical = 2
 script = ExtResource("1_j0ehl")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1513875506]
+custom_minimum_size = Vector2(1000, 1000)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,6 +22,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_njuei")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="FadeTransition" type="ColorRect" parent="." unique_id=1229484881]
 layout_mode = 1
@@ -113,6 +116,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ScoreScreen" parent="." unique_id=484245641 instance=ExtResource("3_w6at5")]
+visible = false
 layout_mode = 1
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1562050567]

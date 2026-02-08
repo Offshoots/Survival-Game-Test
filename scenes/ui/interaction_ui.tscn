@@ -43,12 +43,12 @@ theme_override_constants/separation = 10
 layout_mode = 2
 focus_neighbor_left = NodePath("../HBoxContainer/YesButton")
 theme_override_font_sizes/font_size = 36
-text = "Message BIGGGGGGGGGGGGGGGGG"
+text = "Repair Ship and Set Sail Now?"
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1334162433]
 layout_mode = 2
-theme_override_constants/separation = 0
+theme_override_constants/separation = 25
 
 [node name="Spacer3" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=617511867]
 layout_mode = 2
@@ -61,7 +61,8 @@ focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath("../NoButton")
 focus_neighbor_bottom = NodePath(".")
 theme_override_font_sizes/font_size = 36
-text = "Yes"
+text = "Yes
+Get Me Out of HERE!"
 
 [node name="Spacer2" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1051151849]
 layout_mode = 2
@@ -88,7 +89,9 @@ focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath(".")
 theme_override_font_sizes/font_size = 36
-text = "No"
+text = "No
+I'll gather more resources,
+for the journey home."
 
 [node name="Spacer" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=451341023]
 layout_mode = 2

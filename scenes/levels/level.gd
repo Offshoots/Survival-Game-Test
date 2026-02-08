@@ -54,6 +54,9 @@ var wheat: int
 
 func _ready() -> void:
 	Scores.score_dead = false
+	Scores.ship_destroyed = false
+	Scores.starved_dead = false
+	Scores.victory_chance = false
 	#Set all global scores to zero:
 	Scores.score_trees_felled = 0
 	Scores.score_rocks_smashed = 0
@@ -201,7 +204,7 @@ func _process(delta: float) -> void:
 		add_inventory(item_dropped)
 		player.new_item = false
 
-	if player.death == true:
+	if player.death == true or ship.death == true:
 		player_dead() 
 
 func update_health():
@@ -395,7 +398,10 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 				if object.position.distance_to(pos)< 20:
 					object.hit(tool)
 					if object.apples:
-						var apple_message = "An Apple!\nThank Odinson, I am starving.\nI need to find more of these to take with me."
+						if player.inventory.count(Enum.Item.APPLE) == 0:
+							var apple_message = "An Apple!\nThank Odinson, I am starving.\nI need to find more of these to take with me."
+							await get_tree().create_timer(0.05).timeout
+							interaction_tool(apple_message, Enum.Item.APPLE)
 						var item_drop = Enum.Item.APPLE
 						player.inventory.append(item_drop)
 						add_inventory(item_drop)
@@ -471,6 +477,8 @@ func day_restart():
 			Scores.score_apples_eaten += 1 
 		else:
 			player.health -= 1
+			if player.health <= 0:
+				Scores.starved_dead = true
 	
 	#adjust the shader parameter that creates the circle transistion
 	var tween = create_tween()
@@ -503,16 +511,21 @@ func level_reset():
 			object.reset()
 	#New item arrivals:
 	if day == 2:
+		spawn_reward(seed_scene)
+		await get_tree().create_timer(0.05).timeout
+		var reward_seed = $Objects/ToolSeed
+		reward_seed.seed_found.connect(_on_tool_seed_seed_found)
+		spawn_reward(water_scene)
+		await get_tree().create_timer(0.05).timeout
+		var reward_water = $Objects/ToolWater
+		reward_water.water_found.connect(_on_tool_water_water_found)
+	#if day == 4:
+		#spawn_reward(hoe_scene)
+	if day == 8:
 		spawn_reward(toy_scene)
 		await get_tree().create_timer(0.05).timeout
 		var reward_toy = $Objects/RewardToy
 		reward_toy.toy_found.connect(_on_reward_toy_toy_found)
-		#spawn_reward(seed_scene)
-		#spawn_reward(water_scene)
-	#if day == 4:
-		#spawn_reward(hoe_scene)
-	#if day == 7:
-		#spawn_reward(toy_scene, "found_toy", "_on_reward_toy_toy_found")
 #endregion
 
 #After a plany dies, delete cells used by that plant from the used_cells array
@@ -600,13 +613,14 @@ func interaction_visit(message : String, visit : Enum.Visit):
 	interaction_ui.show()
 	Engine.time_scale = 0
 
-func interaction_tool(message : String, interaction : Enum.Tool):
+func interaction_tool(message : String, interaction):
 	print("interact")
 	interaction_ui.update_message(message)
 	interaction_ui.select()
 	interaction_ui.add_take_button(interaction)
 	interaction_ui.show()
 	Engine.time_scale = 0
+
 
 func _on_ship_enter_ship(body) -> void:
 	var message:String 
@@ -641,7 +655,7 @@ func check_ship():
 	if at_ship == true and ship.ship_health >= ship.max_ship_health and interaction_ui.grab_focus_once == false and no_repair == false:
 		interaction_ui.select()
 		#await get_tree().create_timer(0.05).timeout
-		var interaction_message : String = 'Repair Ship?'
+		var interaction_message : String = 'Repair Ship and Set Sail Now?'
 		interaction_ui.update_message(interaction_message)
 		interaction_ui.show()
 		
