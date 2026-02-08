@@ -13,20 +13,22 @@ grow_vertical = 2
 script = ExtResource("1_4d2gj")
 
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=1997740894]
+custom_minimum_size = Vector2(2130, 1200)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -1020.0
+offset_top = -600.0
+offset_right = 1110.0
+offset_bottom = 600.0
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("2_2iisf")
 autoplay = true
+expand = true
 loop = true
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=420618151]
@@ -46,10 +48,11 @@ layout_mode = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=1748289875]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="VictoryLabel" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer" unique_id=248079294]
 layout_mode = 2
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 80
 text = "You Survived The Island!
 ... but you perished at sea"
 horizontal_alignment = 1
@@ -77,17 +80,22 @@ size_flags_vertical = 3
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1048382832]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="IslandLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer" unique_id=427627254]
 layout_mode = 2
-theme_override_font_sizes/font_size = 36
+size_flags_horizontal = 5
+theme_override_font_sizes/font_size = 60
 text = "Island Survival"
 
 [node name="PanelContainer3" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=41090395]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="IslandStatsLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer3" unique_id=1079433551]
 layout_mode = 2
+size_flags_horizontal = 5
+theme_override_font_sizes/font_size = 36
 text = "Resources:
 Apples Collected
 Crops Harvested
@@ -113,6 +121,7 @@ size_flags_vertical = 3
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_right = NodePath("../QuitButton")
+theme_override_font_sizes/font_size = 36
 text = "Main Menu"
 
 [node name="Spacer6" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=718096430]
@@ -124,6 +133,7 @@ size_flags_vertical = 3
 layout_mode = 2
 focus_neighbor_left = NodePath("../MainMenuButton")
 focus_neighbor_right = NodePath(".")
+theme_override_font_sizes/font_size = 36
 text = "Quit Game"
 
 [node name="Spacer7" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1224931290]
@@ -149,17 +159,22 @@ size_flags_vertical = 3
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3" unique_id=191578894]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="CombatLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/PanelContainer" unique_id=378061341]
 layout_mode = 2
-theme_override_font_sizes/font_size = 36
+size_flags_horizontal = 5
+theme_override_font_sizes/font_size = 60
 text = "Combat"
 
 [node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3" unique_id=1440822373]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="CombatStatsLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/PanelContainer2" unique_id=727281127]
 layout_mode = 2
+size_flags_horizontal = 5
+theme_override_font_sizes/font_size = 36
 text = "Days Survived
 Apples Consumed
 Pyres Built
@@ -177,17 +192,27 @@ size_flags_horizontal = 3
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/VBoxContainer2" unique_id=1936175490]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="SeaLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/VBoxContainer2/PanelContainer" unique_id=1080207338]
 layout_mode = 2
-theme_override_font_sizes/font_size = 36
+size_flags_horizontal = 5
+theme_override_font_sizes/font_size = 60
 text = "Seafaring"
 
 [node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/VBoxContainer2" unique_id=1838539275]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="SeaStatsLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/VBoxContainer2/PanelContainer2" unique_id=416058092]
+custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
+size_flags_horizontal = 5
+theme_override_font_sizes/normal_font_size = 36
+theme_override_font_sizes/bold_font_size = 36
+theme_override_font_sizes/bold_italics_font_size = 36
+theme_override_font_sizes/italics_font_size = 36
+theme_override_font_sizes/mono_font_size = 36
 bbcode_enabled = true
 text = "Sea"
 fit_content = true

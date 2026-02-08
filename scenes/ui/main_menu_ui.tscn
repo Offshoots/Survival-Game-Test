@@ -262,7 +262,7 @@ size_flags_vertical = 3
 
 [node name="QuitButton" type="Button" parent="MarginContainer/HBoxContainer/ButtonContainer/VBoxContainer" unique_id=165531598]
 layout_mode = 2
-focus_neighbor_top = NodePath("../StartButton")
+focus_neighbor_top = NodePath("../SettingsButton")
 focus_neighbor_bottom = NodePath("../OptionsButton")
 theme_override_colors/icon_focus_color = Color(0.20392157, 0.5882353, 0.8156863, 1)
 theme_override_font_sizes/font_size = 24

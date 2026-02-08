@@ -1,5 +1,6 @@
 extends Node
 
+var victory_chance : bool
 var score_dead : bool
 var score_trees_felled
 var score_rocks_smashed

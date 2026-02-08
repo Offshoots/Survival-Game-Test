@@ -3,7 +3,7 @@ extends Control
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var margin_container: MarginContainer = $MarginContainer
 @onready var video_stream_player: VideoStreamPlayer = $VideoStreamPlayer
-@onready var margin_container_2: MarginContainer = $MarginContainer2
+
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 

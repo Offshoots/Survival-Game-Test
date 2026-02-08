@@ -38,7 +38,7 @@ layout_mode = 2
 
 [node name="DayLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2" unique_id=342598655]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 36
 text = "Day: 1"
 
 [node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1779546656]
@@ -50,7 +50,7 @@ layout_mode = 2
 
 [node name="DayTimeLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/PanelContainer" unique_id=1904088183]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 36
 text = "Time"
 
 [node name="Spacer2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=748486238]

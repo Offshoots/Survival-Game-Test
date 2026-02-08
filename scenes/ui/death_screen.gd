@@ -21,8 +21,13 @@ var turned_against = preload("res://audio/DeathTracks/You turned her against me 
 var failed_you = preload("res://audio/DeathTracks/I have failed you anakin 2.ogg")
 
 var files = [high_ground, breaking_heart, chosen_one, turned_against, failed_you]
+var select_audio
 
 func _ready() -> void:
+	if Scores.score_days_survived > 2:
+		select_audio = files
+	else:
+		select_audio = [high_ground]
 	$ScoreScreen.hide()
 	Engine.time_scale = 1.0
 	main_menu_button.hide()
@@ -30,7 +35,7 @@ func _ready() -> void:
 	stats_button.hide()
 	quit_button.hide()
 	fade_transition.color.a = 1.0
-	audio_stream_player_2d.stream = files.pick_random()
+	audio_stream_player_2d.stream = select_audio.pick_random()
 	audio_stream_player_2d.volume_db = -40.0
 	audio_stream_player_2d.play()
 	fade_in()

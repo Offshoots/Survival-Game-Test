@@ -28,5 +28,7 @@ func update_fuel(max_fuel: int, fuel: int):
 
 #When the fuel runs out, make the light go out
 func _on_fuel_timer_timeout() -> void:
+	$Sprite2D.show()
+	$AnimatedSprite2D.hide()
 	$PointLight2D.hide()
-	$Area2D.hide()
+	$Area2D.queue_free()

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://7fa7ncy71rcp" path="res://scenes/objects/pyre.gd" id="1_7epyt"]
 [ext_resource type="Texture2D" uid="uid://bjnbhknu81iwj" path="res://graphics/objects/Pyre Sheet.png" id="1_vaprf"]
+[ext_resource type="Texture2D" uid="uid://pt1ve4fs7eda" path="res://graphics/objects/Pyre0.png" id="2_ac8kh"]
 [ext_resource type="Texture2D" uid="uid://6htihb83y05q" path="res://graphics/tilesets/light texture.PNG" id="2_ehmvm"]
 [ext_resource type="Texture2D" uid="uid://k4r0km103lsj" path="res://graphics/ui/v_bar.png" id="4_2ykkb"]
 
@@ -45,6 +46,10 @@ y_sort_enabled = true
 collision_layer = 4
 collision_mask = 8
 script = ExtResource("1_7epyt")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1368255943]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_ac8kh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1413525050]
 scale = Vector2(0.5, 0.5)

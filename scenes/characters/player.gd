@@ -111,15 +111,13 @@ func get_basic_input():
 			$Animation/AnimationTree.set("parameters/ToolOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 	
 	
-	if Input.is_action_just_pressed("seed_forward"):
-		var dir2 = Input.get_action_strength("seed_forward")
-		current_seed = posmod((current_seed + int(dir2)), Enum.Seed.size()) as Enum.Seed
-		#print(current_seed)
-		#print(Data.PLANT_DATA[current_seed]["name"])
-		$ToolUI.reveal_seed()
+	#if Input.is_action_just_pressed("seed_forward"):
+		#var dir2 = Input.get_action_strength("seed_forward")
+		#current_seed = posmod((current_seed + int(dir2)), Enum.Seed.size()) as Enum.Seed
+		#$ToolUI.reveal_seed()
 	
-	if Input.is_action_just_pressed("diagnose"):
-		diagnose.emit()
+	#if Input.is_action_just_pressed("diagnose"):
+		#diagnose.emit()
 	
 	
 

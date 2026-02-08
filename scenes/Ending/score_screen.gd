@@ -10,6 +10,8 @@ extends Control
 @onready var sea_stats_label: RichTextLabel = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/VBoxContainer2/PanelContainer2/SeaStatsLabel
 
 var journey_results = ["Lost at Sea", "Lost in the Storm", "Disappeared in the Maelstrom"]
+var victory_threshold = 1
+var victory_days = 0
 
 func _ready() -> void:
 	if Scores.score_dead == true:
@@ -57,12 +59,25 @@ func sea_stats():
 	var distance
 	var days_worth_supplies = (Scores.score_apples_collected - Scores.score_apples_eaten)/10
 	#var days_worth_supplies = 0
+	if days_worth_supplies > victory_threshold:
+		Scores.victory_chance = true
 	if Scores.score_dead == true:
 		journey = "Died in Combat"
 		distance = 0
 	else:
 		journey = journey_results.pick_random()
 		distance = randi_range(1,100) * days_worth_supplies
-	sea_stats_label.text = "Days Worth of Supplies =  " + "[color=red]" + str(days_worth_supplies) + "[/color]" + "
-	Distance Sailed = " +  "[color=red]" + str(distance) + "[/color]" + "
-	Journey Result: " + "[color=red]" + journey + "[/color]"
+	if days_worth_supplies > 10:
+		sea_stats_label.text = "Days Worth of Supplies =  " + "[color=yellow]" + str(days_worth_supplies) + "[/color]" + "
+		Distance Sailed = " +  "[color=yellow]" + str(distance) + "[/color]" + "
+		Journey Result: " + "[color=yellow]" + journey + "[/color]"
+	else:
+		sea_stats_label.text = "Days Worth of Supplies =  " + "[color=red]" + str(days_worth_supplies) + "[/color]" + "
+		Distance Sailed = " +  "[color=red]" + str(distance) + "[/color]" + "
+		Journey Result: " + "[color=red]" + journey + "[/color]"
+
+func victoy_chance():
+	if Scores.victory_chance == true:
+		#percent increase in Victory every day passed the victory threshold
+		victory_days = (Scores.score_days_survived - victory_threshold)
+		

@@ -16,34 +16,38 @@ script = ExtResource("1_koiy4")
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=793635207]
 
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer" unique_id=1496606543]
+custom_minimum_size = Vector2(2130, 1200)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -640.0
-offset_top = -360.0
-offset_right = 640.0
-offset_bottom = 360.0
+offset_left = -1020.0
+offset_top = -600.0
+offset_right = 1110.0
+offset_bottom = 600.0
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("2_koiy4")
 autoplay = true
+expand = true
 bus = &"Video"
 
 [node name="VideoStreamPlayer2" type="VideoStreamPlayer" parent="CanvasLayer" unique_id=29663321]
+custom_minimum_size = Vector2(2130, 1200)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -640.0
-offset_top = -360.0
-offset_right = 640.0
-offset_bottom = 360.0
+offset_left = -1020.0
+offset_top = -600.0
+offset_right = 1110.0
+offset_bottom = 600.0
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("3_tsjdu")
+expand = true
 bus = &"Video"
 
 [node name="Timer" type="Timer" parent="." unique_id=199796788]
