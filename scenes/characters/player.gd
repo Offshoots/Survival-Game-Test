@@ -48,10 +48,12 @@ func _ready() -> void:
 	#tool_ui.get_tool_inventory(tool_inventory)
 
 func _physics_process(_delta: float) -> void:
+	direction = Vector2.ZERO
 	if can_move:
 		
 		get_basic_input()
-		keyboard_move()
+		joypad_move()
+		#keyboard_move()
 		#mouse_move()
 		animate()
 	
@@ -133,6 +135,18 @@ func _input(event: InputEvent) -> void:
 #Write code for "keysboard keys" arrow movement
 func keyboard_move():
 	direction = Input.get_vector("left","right","up","down")
+	velocity = direction * speed
+	move_and_slide()
+
+func joypad_move():
+	if Input.is_action_pressed("left"):
+		direction.x = -1
+	if Input.is_action_pressed("right"):
+		direction.x = 1
+	if Input.is_action_pressed("up"):
+		direction.y = -1
+	if Input.is_action_pressed("down"):
+		direction.y = 1
 	velocity = direction * speed
 	move_and_slide()
 
