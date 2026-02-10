@@ -53,7 +53,7 @@ grow_vertical = 2
 focus_mode = 2
 script = ExtResource("1_3bauu")
 
-[node name="MainVideo" type="VideoStreamPlayer" parent="." unique_id=1790121303]
+[node name="MainVideo2" type="VideoStreamPlayer" parent="." unique_id=1077215546]
 custom_minimum_size = Vector2(2130, 1200)
 layout_mode = 1
 anchors_preset = 15
@@ -69,7 +69,7 @@ stream = ExtResource("2_oq2e2")
 expand = true
 buffering_msec = 1000
 
-[node name="MainVideo2" type="VideoStreamPlayer" parent="." unique_id=1077215546]
+[node name="MainVideo" type="VideoStreamPlayer" parent="." unique_id=1790121303]
 custom_minimum_size = Vector2(2130, 1200)
 layout_mode = 1
 anchors_preset = 15
@@ -418,8 +418,8 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[connection signal="finished" from="MainVideo" to="." method="_on_main_video_finished"]
 [connection signal="finished" from="MainVideo2" to="." method="_on_main_video_2_finished"]
+[connection signal="finished" from="MainVideo" to="." method="_on_main_video_finished"]
 [connection signal="focus_entered" from="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer/HBoxContainer/VikingButton" to="." method="_on_viking_button_focus_entered"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer/HBoxContainer/VikingButton" to="." method="_on_viking_button_pressed"]
 [connection signal="focus_entered" from="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer/HBoxContainer/GirlButton" to="." method="_on_girl_button_focus_entered"]

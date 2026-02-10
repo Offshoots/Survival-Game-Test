@@ -31,6 +31,7 @@ extends Control
 var warned_1 : bool = false
 var warned_2 : bool = false
 var first_play : bool = true
+var time_remaining = 3
 
 func _ready() -> void:
 	video_stream_player.hide()
@@ -49,7 +50,7 @@ func _physics_process(delta: float) -> void:
 	if main_video.is_playing() and !warned_1:
 		var length = main_video.get_stream_length()
 		var pos = main_video.stream_position
-		var time = 1
+		var time = time_remaining
 		if length - pos <= time:
 			warned_1 = true
 			fade_out_audio(main_video)
@@ -60,7 +61,7 @@ func _physics_process(delta: float) -> void:
 	if main_video_2.is_playing() and !warned_2:
 		var length = main_video_2.get_stream_length()
 		var pos = main_video_2.stream_position
-		var time = 1
+		var time = time_remaining
 		if length - pos <= time:
 			warned_2 = true
 			#print("near the track end!")
@@ -165,8 +166,8 @@ func fade_in():
 
 func fade_VideoA_to_VideoB(video_A: VideoStreamPlayer, video_B: VideoStreamPlayer):
 	var tween := create_tween()
-	tween.tween_property(video_A, "modulate:a", 0.05 , 2)
-	tween.parallel().tween_property(video_B, "modulate:a", 1 , 0.4)
+	tween.tween_property(video_A, "modulate:a", 0.01 , time_remaining)
+	tween.parallel().tween_property(video_B, "modulate:a", 1 , time_remaining * 0.5)
 	await tween.finished
 	#await get_tree().create_timer(1.5).timeout
 
