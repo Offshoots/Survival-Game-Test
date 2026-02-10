@@ -169,59 +169,13 @@ path_postprocessing = 1
 wait_time = 0.1
 autostart = true
 
-[node name="RayCastDown" type="RayCast2D" parent="." unique_id=340102522]
-position = Vector2(0, 2)
-target_position = Vector2(0, 12)
-collision_mask = 4
-
-[node name="RayCastDownLeft" type="RayCast2D" parent="." unique_id=1132704516]
-position = Vector2(0, 2)
-rotation = 0.7853982
-target_position = Vector2(0, 12)
-collision_mask = 4
-
-[node name="RayCastLeft" type="RayCast2D" parent="." unique_id=1132565359]
-position = Vector2(0, 2)
-rotation = 1.5707964
-target_position = Vector2(0, 12)
-collision_mask = 4
-
-[node name="RayCastUpLeft" type="RayCast2D" parent="." unique_id=690113191]
-position = Vector2(0, 2)
-rotation = 2.3561945
-scale = Vector2(0.99999994, 0.99999994)
-target_position = Vector2(0, 12)
-collision_mask = 4
-
-[node name="RayCastUp" type="RayCast2D" parent="." unique_id=187885324]
-position = Vector2(0, 2)
-rotation = 3.1415927
-target_position = Vector2(0, 12)
-collision_mask = 4
-
-[node name="RayCastUpRight" type="RayCast2D" parent="." unique_id=520279469]
-position = Vector2(0, 2)
-rotation = -2.3561945
-target_position = Vector2(0, 12)
-collision_mask = 4
-
-[node name="RayCastRight" type="RayCast2D" parent="." unique_id=650312639]
-position = Vector2(0, 2)
-rotation = 4.712389
-target_position = Vector2(0, 12)
-collision_mask = 4
-
-[node name="RayCastDownRight" type="RayCast2D" parent="." unique_id=1432595419]
-position = Vector2(0, 2)
-rotation = 5.497787
-target_position = Vector2(0, 12)
-collision_mask = 4
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1933089268]
+visible = false
 position = Vector2(0, 2)
 shape = SubResource("CircleShape2D_nlap5")
 
 [node name="DamageArea" parent="." unique_id=608577442 instance=ExtResource("5_50kq6")]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea" unique_id=48267857]
 position = Vector2(0, 2)

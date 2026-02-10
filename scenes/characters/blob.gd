@@ -5,8 +5,8 @@ signal ship_damaged
 
 var direction: Vector2
 var speed = 20
-var leap_force_start = 40
-var leap_force = 40
+var leap_force_start = 50
+var leap_force = 50
 var leap_cooldown_freq_start = 20
 var leap_cooldown_freq = 20
 var push_distance = 130
@@ -27,18 +27,15 @@ var tracking : bool = false
 @onready var flash_sprite_2d: Sprite2D = $FlashSprite2D
 
 
-@onready var ray_cast_down: RayCast2D = $RayCastDown
-@onready var ray_cast_down_left: RayCast2D = $RayCastDownLeft
-@onready var ray_cast_left: RayCast2D = $RayCastLeft
-@onready var ray_cast_up_left: RayCast2D = $RayCastUpLeft
-@onready var ray_cast_up: RayCast2D = $RayCastUp
-@onready var ray_cast_up_right: RayCast2D = $RayCastUpRight
-@onready var ray_cast_right: RayCast2D = $RayCastRight
-@onready var ray_cast_down_right: RayCast2D = $RayCastDownRight
-
+var days
 var elapsed_attack_time = 0.0
 var damage_interval = 5
 var target
+
+var color
+var blue
+var green
+var red
 
 var health := 12:
 	set(value):
@@ -58,10 +55,12 @@ var normal_speed := 20:
 		normal_speed = value
 
 func _ready() -> void:
+	days = Scores.score_days_survived
 	print(ship.global_position)
 	#Assign Target for blob
 	target = [player, ship].pick_random()
 	print(target)
+	color = [blue, blue, blue, green, green, red].pick_random()
 	#if Scores.score_days_survived > 1:
 		#target = [player, ship].pick_random()
 	#else:
@@ -82,11 +81,26 @@ func _physics_process(delta: float) -> void:
 	velocity = direction * speed + push_direction
 	
 	#Check for lead condition and the execute leap physics
-	if Scores.score_days_survived > 1:
-		if global_position.distance_to(target.global_position) < 300 and !leap_cooldown:
-			leap_visual()
-			leap_at_target()
-			start_leap_cooldown()
+	if days > 3:
+		speed = 25
+	if days > 5:
+		speed = 30
+		leap_force = 55
+	if days > 9:
+		speed = 35
+		leap_force = 60
+		
+	if color == red:
+		if days > 4:
+			flash_sprite_2d.modulate = Color("ff005f")
+			speed = 70
+	if color == green:
+		if days > 3:
+			flash_sprite_2d.modulate = Color("00ff00")
+			if global_position.distance_to(target.global_position) < 300 and !leap_cooldown:
+				leap_visual()
+				leap_at_target()
+				start_leap_cooldown()
 	
 	#Move and slide
 	move_and_slide()

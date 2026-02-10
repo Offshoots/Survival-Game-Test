@@ -15,7 +15,7 @@ var ship_health : int = 5 :
 		if ship_health == 0:
 			death = true
 			Scores.ship_destroyed = true
-			print('You Lost you ship!')
+			print('You lost your ship!')
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	enter_ship.emit(body)

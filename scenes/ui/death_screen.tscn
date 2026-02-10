@@ -25,16 +25,8 @@ texture = ExtResource("2_njuei")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="FadeTransition" type="ColorRect" parent="." unique_id=1229484881]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 1)
-
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=582767554]
+visible = false
 z_index = 1
 layout_mode = 1
 anchors_preset = 15
@@ -116,7 +108,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ScoreScreen" parent="." unique_id=484245641 instance=ExtResource("3_w6at5")]
-visible = false
 layout_mode = 1
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1562050567]
@@ -124,6 +115,15 @@ bus = &"Music"
 
 [node name="SecondAudioPlayer" type="AudioStreamPlayer2D" parent="." unique_id=626263140]
 bus = &"Music 2"
+
+[node name="FadeTransition" type="ColorRect" parent="." unique_id=1229484881]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/StatsButton" to="." method="_on_stats_button_pressed"]

@@ -255,10 +255,7 @@ func spawn_enemies(num: int):
 		new_enemy.ship_damaged.connect(_on_blob_ship_damaged)
 		$Objects.add_child(new_enemy)
 		new_enemy.position = pos_marker.position
-		#increase the speed of the blobs every day
-		for object in get_tree().get_nodes_in_group('Enemy'):
-			object.leap_cooldown_freq = object.leap_cooldown_freq_start + 5 * day
-			object.leap_force = object.leap_force_start + 5 * day
+
 
 
 #Build when 'B' Input map action is pressed (called in process function)

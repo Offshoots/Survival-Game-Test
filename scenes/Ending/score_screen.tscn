@@ -137,6 +137,20 @@ size_flags_vertical = 3
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1807593833]
 layout_mode = 2
 
+[node name="Spacer9" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1837420407]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RestartButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=828596122]
+layout_mode = 2
+focus_neighbor_left = NodePath("../QuitButton")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../MainMenuButton")
+focus_neighbor_bottom = NodePath(".")
+theme_override_font_sizes/font_size = 36
+text = "Restart Game"
+
 [node name="Spacer8" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=169412282]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -144,7 +158,7 @@ size_flags_vertical = 3
 
 [node name="MainMenuButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1266303382]
 layout_mode = 2
-focus_neighbor_left = NodePath(".")
+focus_neighbor_left = NodePath("../RestartButton")
 focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath("../QuitButton")
 focus_neighbor_bottom = NodePath(".")
@@ -169,7 +183,7 @@ size_flags_vertical = 3
 layout_mode = 2
 focus_neighbor_left = NodePath("../MainMenuButton")
 focus_neighbor_top = NodePath(".")
-focus_neighbor_right = NodePath(".")
+focus_neighbor_right = NodePath("../RestartButton")
 focus_neighbor_bottom = NodePath(".")
 theme_override_font_sizes/font_size = 36
 text = "Quit Game"
@@ -280,6 +294,7 @@ text = "Return"
 
 [connection signal="finished" from="VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]
 [connection signal="finished" from="CreditVideoStreamPlayer" to="." method="_on_credit_video_stream_player_finished"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/VictoryButton" to="." method="_on_victory_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

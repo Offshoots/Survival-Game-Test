@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://djyycmtepngxl"]
 
 [ext_resource type="Script" uid="uid://b481cfo7n566m" path="res://scenes/ui/main_menu_ui.gd" id="1_3bauu"]
+[ext_resource type="VideoStream" uid="uid://c2l52xy77tvgj" path="res://videos/Consistent fire 2.ogv" id="2_oq2e2"]
 [ext_resource type="Texture2D" uid="uid://cnu5qh08qhv1f" path="res://graphics/backgrounds/Viking Survival.png" id="2_qegi1"]
 [ext_resource type="VideoStream" uid="uid://gamk10cq7nd7" path="res://videos/Startin Rules 2.ogv" id="4_02l8k"]
 [ext_resource type="AudioStream" uid="uid://bxcr4fnl4dti0" path="res://audio/The Struggle Loop.ogg" id="4_qegi1"]
@@ -52,7 +53,40 @@ grow_vertical = 2
 focus_mode = 2
 script = ExtResource("1_3bauu")
 
+[node name="MainVideo" type="VideoStreamPlayer" parent="." unique_id=1790121303]
+custom_minimum_size = Vector2(2130, 1200)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -60.0
+offset_right = 150.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_oq2e2")
+expand = true
+buffering_msec = 1000
+
+[node name="MainVideo2" type="VideoStreamPlayer" parent="." unique_id=1077215546]
+custom_minimum_size = Vector2(2130, 1200)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -60.0
+offset_right = 150.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_oq2e2")
+expand = true
+buffering_msec = 1000
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1344281405]
+visible = false
 position = Vector2(960, 540)
 sprite_frames = SubResource("SpriteFrames_1xem4")
 autoplay = "default"
@@ -290,7 +324,6 @@ size_flags_stretch_ratio = 4.0
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=490144933]
 stream = ExtResource("4_qegi1")
-autoplay = true
 
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=1151401172]
 layout_mode = 1
@@ -376,6 +409,17 @@ text = "Game Rules:
 3. If you survive long enough, you may find more items that wash ashore to help you in your journey."
 horizontal_alignment = 1
 
+[node name="FadeTransition" type="ColorRect" parent="." unique_id=2084713513]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[connection signal="finished" from="MainVideo" to="." method="_on_main_video_finished"]
+[connection signal="finished" from="MainVideo2" to="." method="_on_main_video_2_finished"]
 [connection signal="focus_entered" from="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer/HBoxContainer/VikingButton" to="." method="_on_viking_button_focus_entered"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer/HBoxContainer/VikingButton" to="." method="_on_viking_button_pressed"]
 [connection signal="focus_entered" from="MarginContainer/HBoxContainer/CharacterContainer/HBoxContainer/VBoxContainer/HBoxContainer/GirlButton" to="." method="_on_girl_button_focus_entered"]

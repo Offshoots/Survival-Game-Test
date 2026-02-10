@@ -1,14 +1,16 @@
 [gd_scene format=3 uid="uid://dgyu8twiiw72q"]
 
 [ext_resource type="Script" path="res://scenes/objects/tools/tool_seed.gd" id="1_sdfyj"]
-[ext_resource type="Texture2D" uid="uid://bj3yq5p04rd6t" path="res://graphics/icons/sack 2.png" id="2_sdfyj"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_rup17"]
+load_path = "res://.godot/imported/Barrel small.PNG-308ce75a88ecbfbc5fb6ebf469bd2c01.ctex"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ekjv0"]
-radius = 4.1231055
+radius = 2.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_swywj"]
-radius = 7.0
-height = 16.0
+radius = 4.0
+height = 10.0
 
 [node name="ToolSeed" type="StaticBody2D" unique_id=1157470611]
 collision_layer = 4
@@ -16,8 +18,9 @@ collision_mask = 0
 script = ExtResource("1_sdfyj")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2141459894]
+rotation = 3.1415927
 scale = Vector2(0.2, 0.2)
-texture = ExtResource("2_sdfyj")
+texture = SubResource("CompressedTexture2D_rup17")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1237368595]
 shape = SubResource("CircleShape2D_ekjv0")

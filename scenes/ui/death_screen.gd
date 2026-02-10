@@ -30,10 +30,10 @@ func _ready() -> void:
 		select_audio = [high_ground]
 	$ScoreScreen.hide()
 	Engine.time_scale = 1.0
-	main_menu_button.hide()
-	restart_button.hide()
-	stats_button.hide()
-	quit_button.hide()
+	#main_menu_button.hide()
+	#restart_button.hide()
+	#stats_button.hide()
+	#quit_button.hide()
 	fade_transition.color.a = 1.0
 	audio_stream_player_2d.stream = select_audio.pick_random()
 	audio_stream_player_2d.volume_db = -40.0
@@ -69,13 +69,16 @@ func _on_restart_button_pressed() -> void:
 
 func fade_in():
 	var tween := create_tween()
-	tween.tween_property(fade_transition, "color:a", 0.0 , 3.0)
-	await tween.finished
-	main_menu_button.show()
-	restart_button.show()
-	stats_button.show()
-	quit_button.show()
-	restart_button.grab_focus()
+	tween.tween_property(fade_transition, "color:a", 0.0 , 5.0)
+	#await tween.finished
+	await get_tree().create_timer(1.5).timeout
+	$ScoreScreen.show()
+	$ScoreScreen.focus_button()
+	#main_menu_button.show()
+	#restart_button.show()
+	#stats_button.show()
+	#quit_button.show()
+	#restart_button.grab_focus()
 
 func fade_in_audio(player: AudioStreamPlayer2D):
 	var tween = create_tween()

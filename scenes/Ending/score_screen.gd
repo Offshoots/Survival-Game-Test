@@ -4,6 +4,7 @@ extends Control
 @onready var quit_button: Button = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/QuitButton
 @onready var victory_button: Button = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/VictoryButton
 @onready var spacer_6: Control = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/Spacer6
+@onready var spacer_8: Control = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/Spacer8
 @onready var return_container: MarginContainer = $ReturnContainer
 @onready var margin_container: MarginContainer = $MarginContainer
 @onready var credit_texture: TextureRect = $CreditTexture
@@ -18,7 +19,7 @@ extends Control
 @onready var sea_stats_label: RichTextLabel = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/VBoxContainer2/PanelContainer2/SeaStatsLabel
 
 var journey_results = ["Lost at Sea", "Lost in the Storm", "Disappeared in the Maelstrom"]
-var victory_threshold = 25
+var victory_threshold = 20
 var days_worth_of_supplies = 0
 var victory_days = 0
 var victory_score = 0
@@ -44,6 +45,7 @@ func _ready() -> void:
 		main_menu_button.hide()
 		quit_button.hide()
 		spacer_6.hide()
+		spacer_8.hide()
 		victory_button.show()
 		victory_button.grab_focus()
 		sea_stats_label.text = "Days Worth of Supplies =  " + "[color=green]" + str(days_worth_of_supplies) + "[/color]" + "
@@ -148,3 +150,7 @@ func _on_return_button_pressed() -> void:
 	victory_button.hide()
 	margin_container.show()
 	return_container.hide()
+
+
+func _on_restart_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/levels/level.tscn")

@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://1ire5m5sefhi"]
 
 [ext_resource type="Script" uid="uid://dm1ddgwxp51pg" path="res://scenes/objects/rewards/reward_toy.gd" id="1_b4pm4"]
-[ext_resource type="Texture2D" uid="uid://b2fh1xp3eaqd8" path="res://graphics/icons/Toy horse.png" id="2_b4pm4"]
+[ext_resource type="Texture2D" uid="uid://bwwrld32vhphc" path="res://graphics/icons/Barrel small.PNG" id="2_b4pm4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ekjv0"]
-radius = 6.0
+radius = 2.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cfw34"]
-radius = 9.055386
+radius = 5.0
 
 [node name="RewardToy" type="StaticBody2D" unique_id=1157470611]
 collision_layer = 4
@@ -15,7 +15,8 @@ collision_mask = 0
 script = ExtResource("1_b4pm4")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2141459894]
-scale = Vector2(0.3, 0.3)
+rotation = 3.1415927
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_b4pm4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1237368595]

@@ -3,6 +3,9 @@ extends Control
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var margin_container: MarginContainer = $MarginContainer
 @onready var video_stream_player: VideoStreamPlayer = $VideoStreamPlayer
+@onready var main_video: VideoStreamPlayer = $MainVideo
+@onready var fade_transition: ColorRect = $FadeTransition
+@onready var main_video_2: VideoStreamPlayer = $MainVideo2
 
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
@@ -25,8 +28,8 @@ extends Control
 @onready var control_texture: TextureRect = $ControlTexture
 @onready var wood_container: MarginContainer = $SettingsContainer/WoodContainer
 
-
-
+var warned_1 : bool = false
+var warned_2 : bool = false
 var first_play : bool = true
 
 func _ready() -> void:
@@ -36,9 +39,40 @@ func _ready() -> void:
 	settings_container.hide()
 	Scores.player_selected = Enum.Style.VIKING
 	control_texture.hide()
+	main_video.play()
+	main_video.volume_db = -20.0
+	fade_transition.color.a = 1.0
+	fade_in()
+	fade_in_audio(main_video)
+
+func _physics_process(delta: float) -> void:
+	if main_video.is_playing() and !warned_1:
+		var length = main_video.get_stream_length()
+		var pos = main_video.stream_position
+		var time = 1
+		if length - pos <= time:
+			warned_1 = true
+			fade_out_audio(main_video)
+			main_video_2.play()
+			fade_VideoA_to_VideoB(main_video, main_video_2)
+			main_video_2.volume_db = -20.0
+			fade_in_audio(main_video_2)
+	if main_video_2.is_playing() and !warned_2:
+		var length = main_video_2.get_stream_length()
+		var pos = main_video_2.stream_position
+		var time = 1
+		if length - pos <= time:
+			warned_2 = true
+			#print("near the track end!")
+			fade_out_audio(main_video_2)
+			main_video.play()
+			fade_VideoA_to_VideoB(main_video_2,main_video)
+			main_video.volume_db = -20.0
+			fade_in_audio(main_video)
 
 
 func _on_options_button_pressed() -> void:
+	$MainVideo.hide()
 	$AnimatedSprite2D.hide()
 	character_container.show()
 	viking_button.grab_focus()
@@ -102,7 +136,7 @@ func _on_return_button_pressed() -> void:
 	settings_container.hide()
 	video_stream_player.hide()
 	video_stream_player.stop()
-	audio_stream_player_2d.play()
+	#audio_stream_player_2d.play()
 	video_stream_player.stream = preload("res://videos/Startin Rules 2.ogv")
 
 
@@ -122,4 +156,38 @@ func _on_game_rules_pressed() -> void:
 	video_stream_player.show()
 	video_stream_player.play()
 	audio_stream_player_2d.stop()
-	
+
+func fade_in():
+	var tween := create_tween()
+	tween.tween_property(fade_transition, "color:a", 0.0 , 3)
+	await tween.finished
+	#await get_tree().create_timer(1.5).timeout
+
+func fade_VideoA_to_VideoB(video_A: VideoStreamPlayer, video_B: VideoStreamPlayer):
+	var tween := create_tween()
+	tween.tween_property(video_A, "modulate:a", 0.05 , 2)
+	tween.parallel().tween_property(video_B, "modulate:a", 1 , 0.4)
+	await tween.finished
+	#await get_tree().create_timer(1.5).timeout
+
+
+func fade_out():
+	var tween := create_tween()
+	tween.tween_property(fade_transition, "color:a", 1.0 , 1)
+	await tween.finished
+	#await get_tree().create_timer(1.5).timeout
+
+func fade_in_audio(player: VideoStreamPlayer):
+	var tween = create_tween()
+	tween.tween_property(player, "volume_db", -10.0, 1)
+
+func fade_out_audio(player: VideoStreamPlayer):
+	var tween = create_tween()
+	tween.tween_property(player, "volume_db", -20.0, 1)
+
+
+func _on_main_video_finished() -> void:
+	warned_1 = false
+
+func _on_main_video_2_finished() -> void:
+	warned_2 = false
