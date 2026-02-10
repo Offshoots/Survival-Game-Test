@@ -15,6 +15,9 @@ func _ready() -> void:
 
 func grab_control_focus():
 	controls_button.grab_focus()
+	texture_rect.hide()
+	panel_container.show()
+	margin_container.hide()
 
 func _on_controls_button_pressed() -> void:
 	return_button.grab_focus()

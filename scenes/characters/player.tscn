@@ -4,9 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://dj4kcmhcwcg37" path="res://graphics/characters/main/main_viking.png" id="2_dyp2m"]
 [ext_resource type="PackedScene" uid="uid://brl0me0ik87pi" path="res://scenes/ui/tool_ui.tscn" id="3_76oj4"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_atpat"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_76oj4"]
 radius = 4.0
-height = 8.0
+height = 11.0
 
 [sub_resource type="Animation" id="Animation_atpat"]
 length = 0.001
@@ -1705,7 +1705,8 @@ hframes = 33
 vframes = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=377253241]
-shape = SubResource("CapsuleShape2D_atpat")
+position = Vector2(0, -1.5)
+shape = SubResource("CapsuleShape2D_76oj4")
 
 [node name="Animation" type="Node" parent="." unique_id=71811429]
 

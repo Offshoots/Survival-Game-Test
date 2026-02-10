@@ -53,7 +53,7 @@ radius = 83.02409
 radius = 21.0
 height = 48.0
 
-[node name="GiantPyre" type="StaticBody2D" unique_id=619828489]
+[node name="GiantPyre" type="StaticBody2D" unique_id=619828489 groups=["GreatPyre"]]
 y_sort_enabled = true
 collision_layer = 4
 collision_mask = 8

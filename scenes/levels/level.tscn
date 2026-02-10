@@ -915,7 +915,6 @@ z_index = -2
 tile_set = SubResource("TileSet_ouxo3")
 
 [node name="DebugLayer" type="TileMapLayer" parent="Layers" unique_id=1333168900]
-visible = false
 z_index = -2
 tile_set = SubResource("TileSet_rmjfq")
 

@@ -107,7 +107,7 @@ func fade_out():
 #This physic function was put in the level script just for active frame debuging. 
 #However this could be a very cool "Cursor" or "Aim/Reticle" in a different game.
 func _physics_process(_delta: float) -> void:
-	placement_pos = player.position + player.last_direction * 16 + Vector2(0,4)
+	placement_pos = player.position + player.last_direction * 8 #+ Vector2(0,1)
 	var pos = placement_pos
 	var grid_coord: Vector2i = Vector2i(int(pos.x / Data.TILE_SIZE) , int(pos.y / Data.TILE_SIZE))
 	grid_coord.x += -1 if pos.x < 0 else 0
@@ -354,6 +354,17 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 							add_inventory(item_drop)
 							Scores.score_stone_collected += 1
 			#For now group for Pyre has been changed from 'Objects' to new group 'Pyres'.
+			for object in get_tree().get_nodes_in_group('GreatPyre'):
+				if object.position.distance_to(pos)< 20:
+					object.hit(tool)
+					if object.stone:
+						#var stone_message = "Yes stones.\nI can build something strong with these."
+						var item_drop = Enum.Item.STONE
+						var stone_dropped = 1
+						for num in stone_dropped:
+							player.inventory.append(item_drop)
+							add_inventory(item_drop)
+							Scores.score_stone_collected += 1
 			for object in get_tree().get_nodes_in_group('Pyres'):
 				if object.position.distance_to(pos)< 20:
 					object.hit(tool)
