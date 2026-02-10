@@ -54,7 +54,9 @@ size_flags_horizontal = 3
 [node name="ControlsButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1401877662]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath("../MainMenuButton")
+focus_neighbor_bottom = NodePath(".")
 text = "Game Controls"
 
 [node name="Spacer2" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1051151849]
@@ -64,7 +66,9 @@ size_flags_horizontal = 3
 [node name="MainMenuButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=33119306]
 layout_mode = 2
 focus_neighbor_left = NodePath("../ControlsButton")
+focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
 text = "Main Menu"
 
 [node name="Spacer" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=451341023]

@@ -91,11 +91,11 @@ func _physics_process(delta: float) -> void:
 		leap_force = 60
 		
 	if color == red:
-		if days > 2:
+		#if days > 2:
 			flash_sprite_2d.modulate = Color("ff005f")
 			speed = 70
 	if color == green:
-		if days > 1:
+		#if days > 1:
 			flash_sprite_2d.modulate = Color("00ff00")
 			if global_position.distance_to(target.global_position) < 300 and !leap_cooldown:
 				leap_visual()
@@ -131,9 +131,10 @@ func pathfind():
 func death():
 	if tracking == true:
 		tracking = false
-	speed = 0
-	$CollisionShape2D.queue_free()
-	$Animation/AnimationPlayer.current_animation = 'explode'
+	if is_instance_valid($CollisionShape2D):
+		speed = 0
+		$CollisionShape2D.queue_free()
+		$Animation/AnimationPlayer.current_animation = 'explode'
 
 func push(hit_target):
 	var tween = get_tree().create_tween()
