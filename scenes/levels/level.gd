@@ -353,7 +353,7 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 							player.inventory.append(item_drop)
 							add_inventory(item_drop)
 							Scores.score_stone_collected += 1
-			#For now group for Pyre has been changed from 'Objects' to new group 'Pyres'.
+			#For now group for GiantPyre has been changed to new group 'GreatPyre'.
 			for object in get_tree().get_nodes_in_group('GreatPyre'):
 				if object.position.distance_to(pos)< 20:
 					object.hit(tool)
@@ -404,6 +404,7 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 			#For now group for blob has been changed from 'Objects' to new group 'Enemy'.
 			for object in get_tree().get_nodes_in_group('Enemy'):
 				if object.position.distance_to(pos)< 20:
+					print(player.last_direction)
 					object.hit(tool)
 					if object.gold:
 						var gold_message = "I found some grains of gold in this slime.\nBut what use is gold on this forsaken island?"
@@ -416,6 +417,8 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 			#Currently all trees are in group 'Objects'.
 			for object in get_tree().get_nodes_in_group('Objects'):
 				if object.position.distance_to(pos)< 20:
+					print(player.last_direction)
+					print(object.position.direction_to(player.position).round())
 					object.hit(tool)
 					if object.apples:
 						if player.inventory.count(Enum.Item.APPLE) == 0:

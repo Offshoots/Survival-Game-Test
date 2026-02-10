@@ -1551,7 +1551,7 @@ mouse_filter = 2
 [node name="Timers" type="Node" parent="." unique_id=1507378834]
 
 [node name="DayTimer" type="Timer" parent="Timers" unique_id=1170833392]
-wait_time = 30.0
+wait_time = 180.0
 one_shot = true
 autostart = true
 

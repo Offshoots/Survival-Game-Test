@@ -191,7 +191,7 @@ func animate():
 func tool_use_emit():
 	placement_pos = position + last_direction * 8 #+ Vector2(0,4)
 	tool_use.emit(current_tool, placement_pos)
-	print(placement_pos)
+	#print(placement_pos)
 
 func _on_animation_tree_animation_started(_anim_name: StringName) -> void:
 	can_move = false
