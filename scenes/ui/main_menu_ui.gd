@@ -1,12 +1,12 @@
 extends Control
 
-@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+
 @onready var margin_container: MarginContainer = $MarginContainer
-@onready var video_stream_player: VideoStreamPlayer = $VideoStreamPlayer
 @onready var main_video: VideoStreamPlayer = $MainVideo
 @onready var fade_transition: ColorRect = $FadeTransition
 @onready var main_video_2: VideoStreamPlayer = $MainVideo2
-
+@onready var video_stream_player: VideoStreamPlayer = $SubViewportContainer/SubViewport/VideoStreamPlayer
+@onready var sub_viewport_container: SubViewportContainer = $SubViewportContainer
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 
@@ -34,6 +34,7 @@ var first_play : bool = true
 var time_remaining = 3
 
 func _ready() -> void:
+	sub_viewport_container.hide()
 	video_stream_player.hide()
 	character_container.hide()
 	start_button.grab_focus()
@@ -74,7 +75,6 @@ func _physics_process(delta: float) -> void:
 
 func _on_options_button_pressed() -> void:
 	$MainVideo.hide()
-	$AnimatedSprite2D.hide()
 	character_container.show()
 	viking_button.grab_focus()
 	story_container.hide()
@@ -86,10 +86,11 @@ func _on_start_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/levels/level.tscn")
 
 func _on_settings_button_pressed() -> void:
+	main_video.hide()
+	main_video_2.hide()
 	wood_container.hide()
 	game_rules.show()
 	return_button.grab_focus()
-	animated_sprite_2d.hide()
 	margin_container.hide()
 	settings_container.show()
 	control_texture.show()
@@ -129,16 +130,18 @@ func _on_boy_button_focus_entered() -> void:
 
 
 func _on_return_button_pressed() -> void:
-	wood_container.hide()
-	control_texture.hide()
-	start_button.grab_focus()
-	animated_sprite_2d.show()
-	margin_container.show()
-	settings_container.hide()
-	video_stream_player.hide()
-	video_stream_player.stop()
-	#audio_stream_player_2d.play()
-	video_stream_player.stream = preload("res://videos/Startin Rules 2.ogv")
+	get_tree().change_scene_to_file("res://scenes/ui/main_menu_ui.tscn")
+	#main_video.show()
+	#main_video_2.hide()
+	#wood_container.hide()
+	#control_texture.hide()
+	#start_button.grab_focus()
+	#margin_container.show()
+	#settings_container.hide()
+	#video_stream_player.hide()
+	#video_stream_player.stop()
+	##audio_stream_player_2d.play()
+	#video_stream_player.stream = preload("res://videos/Startin Rules 2.ogv")
 
 
 func _on_video_stream_player_finished() -> void:
@@ -149,10 +152,13 @@ func _on_video_stream_player_finished() -> void:
 		
 
 func _on_game_rules_pressed() -> void:
+	sub_viewport_container.show()
+	main_video.stop()
+	main_video_2.stop()
 	wood_container.show()
 	return_button.grab_focus()
 	first_play = true
-	control_texture.hide()
+	control_texture.hide() 
 	game_rules.hide()
 	video_stream_player.show()
 	video_stream_player.play()

@@ -31,11 +31,9 @@ var days
 var elapsed_attack_time = 0.0
 var damage_interval = 5
 var target
+var colors : Array[Enum.Blob] = [Enum.Blob.BLUE, Enum.Blob.GREEN, Enum.Blob.RED]
+var color_selected : Enum.Blob
 
-var color
-var blue
-var green
-var red
 
 var health := 12:
 	set(value):
@@ -56,11 +54,12 @@ var normal_speed := 20:
 
 func _ready() -> void:
 	days = Scores.score_days_survived
-	print(ship.global_position)
 	#Assign Target for blob
 	target = [player, ship].pick_random()
 	print(target)
-	color = [blue, green, red].pick_random()
+	print(colors)
+	color_selected = colors.pick_random()
+	print(color_selected)
 	#if Scores.score_days_survived > 1:
 		#target = [player, ship].pick_random()
 	#else:
@@ -82,20 +81,20 @@ func _physics_process(delta: float) -> void:
 	
 	#Check for lead condition and the execute leap physics
 	if days > 3:
-		speed = 25
+		normal_speed = 25
 	if days > 5:
-		speed = 30
+		normal_speed = 30
 		leap_force = 55
 	if days > 9:
-		speed = 35
+		normal_speed = 35
 		leap_force = 60
 		
-	if color == red:
-		#if days > 2:
+	if color_selected == Enum.Blob.RED:
+		if days > 4:
 			flash_sprite_2d.modulate = Color("ff005f")
-			speed = 70
-	if color == green:
-		#if days > 1:
+			normal_speed = 70
+	if color_selected == Enum.Blob.GREEN:
+		if days > 3:
 			flash_sprite_2d.modulate = Color("00ff00")
 			if global_position.distance_to(target.global_position) < 300 and !leap_cooldown:
 				leap_visual()

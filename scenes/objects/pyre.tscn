@@ -5,6 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://pt1ve4fs7eda" path="res://graphics/objects/Pyre0.png" id="2_ac8kh"]
 [ext_resource type="Texture2D" uid="uid://6htihb83y05q" path="res://graphics/tilesets/light texture.PNG" id="2_ehmvm"]
 [ext_resource type="Texture2D" uid="uid://k4r0km103lsj" path="res://graphics/ui/v_bar.png" id="4_2ykkb"]
+[ext_resource type="PackedScene" uid="uid://b1a4cl0kv3lpw" path="res://scenes/vfx/flash_sprite_2d.tscn" id="4_k8vn0"]
+[ext_resource type="Shader" uid="uid://b6nm5dtkeitqy" path="res://shaders/flash.tres" id="5_02tvp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ehmvm"]
 atlas = ExtResource("1_vaprf")
@@ -35,33 +37,48 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_orev0"]
+resource_local_to_scene = true
+shader = ExtResource("5_02tvp")
+shader_parameter/Color = Color(1, 1, 1, 1)
+shader_parameter/Progress = 0.0
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_osgk1"]
-size = Vector2(38, 18.5)
+size = Vector2(23, 17)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ehmvm"]
 radius = 63.0
 
-[node name="Pyre" type="StaticBody2D" unique_id=619828489]
+[node name="Pyre" type="StaticBody2D" unique_id=619828489 groups=["Pyres"]]
 y_sort_enabled = true
 collision_layer = 4
 collision_mask = 8
 script = ExtResource("1_7epyt")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1368255943]
+visible = false
+position = Vector2(-0.19999695, -7.199997)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_ac8kh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1413525050]
+position = Vector2(-0.19999695, -7.199997)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_ac8kh")
 autoplay = "default"
 
+[node name="FlashSprite2D" parent="." unique_id=1425081756 instance=ExtResource("4_k8vn0")]
+material = SubResource("ShaderMaterial_orev0")
+position = Vector2(-0.19999695, -7.199997)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_ac8kh")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1629013321]
-position = Vector2(0, 9.25)
+position = Vector2(0.30000305, 0.30000305)
 shape = SubResource("RectangleShape2D_osgk1")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1365646536]
-position = Vector2(0, -6)
+position = Vector2(-0.19999695, -13.199997)
 collision_layer = 4
 collision_mask = 14
 
@@ -69,15 +86,15 @@ collision_mask = 14
 shape = SubResource("CircleShape2D_ehmvm")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1649821778]
-position = Vector2(0, -6)
+position = Vector2(-0.19999695, -13.199997)
 texture = ExtResource("2_ehmvm")
 texture_scale = 0.4
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=579372879]
-offset_left = -10.0
-offset_top = -25.0
-offset_right = 10.0
-offset_bottom = -20.0
+offset_left = -10.199997
+offset_top = -32.199997
+offset_right = 9.800003
+offset_bottom = -27.199997
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="PanelContainer" unique_id=394623701]
 layout_mode = 2

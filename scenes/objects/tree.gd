@@ -17,9 +17,10 @@ var health := 4:
 		if health == 0:
 			#Changed to when health == 0 so that the below code is only executed once
 			$FlashSprite2D.hide()
-			$Stump.show()
+			#$Stump.show()
 			var shape = RectangleShape2D.new()
 			shape.size = Vector2(12,6)
+			$StumpFlashSprite2D.show()
 			$CollisionShape2D.shape = shape
 			$CollisionShape2D.position.y = 6
 			Scores.score_trees_felled += 1
@@ -33,7 +34,8 @@ var stump_health := 2:
 	set(value):
 		stump_health = value
 		if stump_health == 0:
-			$Stump.hide()
+			#$Stump.hide()
+			$StumpFlashSprite2D.hide()
 			$CollisionShape2D.queue_free()
 			stump_wood = true
 		else:
@@ -58,6 +60,7 @@ func hit(tool: Enum.Tool):
 		get_apples()
 		health -= 1
 	if tool == Enum.Tool.PICKAXE and stump == true:
+		$StumpFlashSprite2D.flash()
 		stump_health -= 1
 	
 	

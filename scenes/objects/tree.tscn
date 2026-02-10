@@ -6,6 +6,12 @@
 [ext_resource type="Texture2D" uid="uid://dyxbmdangl8xx" path="res://graphics/plants/stump.png" id="2_mbbxw"]
 [ext_resource type="Shader" uid="uid://b6nm5dtkeitqy" path="res://shaders/flash.tres" id="3_7yu6v"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lg7fn"]
+resource_local_to_scene = true
+shader = ExtResource("3_7yu6v")
+shader_parameter/Color = Color(1, 1, 1, 1)
+shader_parameter/Progress = 0.0
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mbbxw"]
 resource_local_to_scene = true
 shader = ExtResource("3_7yu6v")
@@ -23,21 +29,29 @@ input_pickable = true
 script = ExtResource("1_5qchx")
 
 [node name="Stump" type="Sprite2D" parent="." unique_id=805518261]
-position = Vector2(0, 11)
+visible = false
+position = Vector2(0, 2)
+texture = ExtResource("2_mbbxw")
+
+[node name="StumpFlashSprite2D" parent="." unique_id=65240557 instance=ExtResource("2_5qchx")]
+material = SubResource("ShaderMaterial_lg7fn")
+position = Vector2(0, 2)
 texture = ExtResource("2_mbbxw")
 
 [node name="FlashSprite2D" parent="." unique_id=448338754 instance=ExtResource("2_5qchx")]
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_mbbxw")
+position = Vector2(0, -9)
 texture = ExtResource("1_r6wkp")
 hframes = 2
 frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1160258444]
-position = Vector2(0, 6)
+position = Vector2(0, -3)
 shape = SubResource("CapsuleShape2D_5qchx")
 
 [node name="AppleSpawnPositions" type="Node2D" parent="." unique_id=1069517618]
+position = Vector2(0, -9)
 
 [node name="Marker2D" type="Marker2D" parent="AppleSpawnPositions" unique_id=1386801206]
 position = Vector2(5, 3)
@@ -61,5 +75,6 @@ position = Vector2(-12, -2)
 position = Vector2(1, -10)
 
 [node name="Apples" type="Node2D" parent="." unique_id=646205153]
+position = Vector2(0, -9)
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]

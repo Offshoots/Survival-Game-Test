@@ -25,6 +25,7 @@ var score_total_time
 var score_longest_time_survived
 var score_fastest_time_to_repair
 var score_ship_damage_taken
+var stones_mined_from_great_pyre
 
 var motivation_boost
 

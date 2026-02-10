@@ -23,7 +23,7 @@ func _ready() -> void:
 	#$FlashSprite2D.frame = [0,1].pick_random()
 	pass
 
-#Tree will flash when hit via shader created called flash.tres and applied to new sprite 2d scene we created called "flash_sprite_2d" and instantiated into ther Tree node.
+#Rock will flash when hit via shader created called flash.tres and applied to new sprite 2d scene we created called "flash_sprite_2d" and instantiated into ther Rock node.
 func hit(tool: Enum.Tool):
 	if tool == Enum.Tool.PICKAXE:
 		$FlashSprite2D.flash()

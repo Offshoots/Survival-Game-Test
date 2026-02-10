@@ -4,10 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://bwwrld32vhphc" path="res://graphics/icons/Barrel small.PNG" id="2_b4pm4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ekjv0"]
-radius = 2.0
+radius = 3.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_cfw34"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b4pm4"]
 radius = 5.0
+height = 14.0
 
 [node name="RewardToy" type="StaticBody2D" unique_id=1157470611]
 collision_layer = 4
@@ -16,7 +17,7 @@ script = ExtResource("1_b4pm4")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2141459894]
 rotation = 3.1415927
-scale = Vector2(0.2, 0.2)
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("2_b4pm4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1237368595]
@@ -27,6 +28,6 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1458776434]
-shape = SubResource("CircleShape2D_cfw34")
+shape = SubResource("CapsuleShape2D_b4pm4")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

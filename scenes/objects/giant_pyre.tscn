@@ -5,6 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://derxcqwn714rj" path="res://graphics/objects/Giant_Pyre.png" id="3_0pxun"]
 [ext_resource type="Texture2D" uid="uid://6htihb83y05q" path="res://graphics/tilesets/light texture.PNG" id="3_u3nii"]
 [ext_resource type="Texture2D" uid="uid://k4r0km103lsj" path="res://graphics/ui/v_bar.png" id="4_7cnug"]
+[ext_resource type="PackedScene" uid="uid://b1a4cl0kv3lpw" path="res://scenes/vfx/flash_sprite_2d.tscn" id="4_knqaq"]
+[ext_resource type="Shader" uid="uid://b6nm5dtkeitqy" path="res://shaders/flash.tres" id="5_iavpm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ehmvm"]
 atlas = ExtResource("2_0pxun")
@@ -35,11 +37,17 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c0v7v"]
+resource_local_to_scene = true
+shader = ExtResource("5_iavpm")
+shader_parameter/Color = Color(1, 1, 1, 1)
+shader_parameter/Progress = 0.0
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_osgk1"]
 size = Vector2(52, 22.75)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ehmvm"]
-radius = 56.0357
+radius = 83.02409
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_knqaq"]
 radius = 21.0
@@ -57,6 +65,11 @@ sprite_frames = SubResource("SpriteFrames_ac8kh")
 autoplay = "default"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1534680216]
+visible = false
+texture = ExtResource("3_0pxun")
+
+[node name="FlashSprite2D" parent="." unique_id=493722067 instance=ExtResource("4_knqaq")]
+material = SubResource("ShaderMaterial_c0v7v")
 texture = ExtResource("3_0pxun")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1629013321]

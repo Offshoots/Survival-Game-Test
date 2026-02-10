@@ -8,7 +8,7 @@ var death : bool = false
 signal enter_ship
 signal exit_ship
 
-var ship_health : int = 5 :
+var ship_health : int = 25 :
 	set(value):
 		ship_health = value
 		print(value)

@@ -353,6 +353,18 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 							player.inventory.append(item_drop)
 							add_inventory(item_drop)
 							Scores.score_stone_collected += 1
+			#For now group for Pyre has been changed from 'Objects' to new group 'Pyres'.
+			for object in get_tree().get_nodes_in_group('Pyres'):
+				if object.position.distance_to(pos)< 20:
+					object.hit(tool)
+					if object.stone:
+						#var stone_message = "Yes stones.\nI can build something strong with these."
+						var item_drop = Enum.Item.STONE
+						var stone_dropped = 6
+						for num in stone_dropped:
+							player.inventory.append(item_drop)
+							add_inventory(item_drop)
+							Scores.score_stone_collected += 1
 			#Currently all stumps are still managed by the "Tree" sceene in group 'Objects'.
 			for object in get_tree().get_nodes_in_group('Objects'):
 				if object.position.distance_to(pos)< 20:
@@ -641,14 +653,12 @@ func _on_ship_enter_ship(body) -> void:
 			interaction_visit(interaction_message, Enum.Visit.SHIP)
 		print('Friend')
 		message = 'Collect more wood!'
-	print(message)
 	main_ui.update_message(message)
 
 
 func check_ship():
 	if at_ship == true and ship.ship_health < ship.max_ship_health:
 		var message = 'Collect more wood!'
-		print(message)
 		main_ui.update_message(message)
 	if at_ship == true and ship.ship_health >= ship.max_ship_health and interaction_ui.grab_focus_once == false and no_repair == false:
 		interaction_ui.select()

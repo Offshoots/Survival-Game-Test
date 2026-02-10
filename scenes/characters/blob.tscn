@@ -147,6 +147,7 @@ script = ExtResource("1_xa0uo")
 
 [node name="FlashSprite2D" parent="." unique_id=158028710 instance=ExtResource("2_xa0uo")]
 material = SubResource("ShaderMaterial_50kq6")
+position = Vector2(-1, -2)
 texture = ExtResource("1_n17ut")
 hframes = 14
 vframes = 4
@@ -170,12 +171,11 @@ wait_time = 0.1
 autostart = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1933089268]
-visible = false
-position = Vector2(0, 2)
+position = Vector2(-1, 0)
 shape = SubResource("CircleShape2D_nlap5")
 
 [node name="DamageArea" parent="." unique_id=608577442 instance=ExtResource("5_50kq6")]
-visible = false
+position = Vector2(-1, -2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea" unique_id=48267857]
 position = Vector2(0, 2)
