@@ -467,7 +467,7 @@ func death_screen():
 func day_restart():
 	#Survival Mode will require food to be consumed each day. Subtract 1 apple each day:
 	#need to remove ten apples from the player.inventory array
-	for number in range(10):
+	for number in range(1):
 		#May need to improve this to take damage if not enough apples
 		if player.inventory.count(Enum.Item.APPLE) > 0:
 			remove_inventory(Enum.Item.APPLE)
@@ -490,7 +490,7 @@ func level_reset():
 		#If there is water on the tile, then plant function grow can be completed
 		plant.grow(plant.coord in $Layers/SoilWaterLayer.get_used_cells())
 	for enemy in get_tree().get_nodes_in_group('Enemy'):
-		if enemy.health > 0:
+		if enemy.health > 0 and enemy.is_dead == false:
 			enemy.death()
 			Scores.score_enemies_killed_by_daylight += 1
 	$Overlay/CanvasLayer/PlantInfoContainer.update_all()
@@ -541,7 +541,7 @@ func _on_day_timer_timeout() -> void:
 	day_timer = false
 	var message : String 
 	if day == 1:
-		message = "There eerie about this darkness."
+		message = "There is something eerie about this darkness."
 	else:
 		message = "Defend against the darkness!"
 	main_ui.update_message(message)
@@ -587,9 +587,10 @@ func _on_heal_timer_timeout() -> void:
 
 func _on_pyre_entered_pyre(body) -> void:
 	if body.is_in_group('Enemy'):
-		print('Enemy')
-		body.death()
-		Scores.score_enemies_killed_by_pyre += 1
+		if body.health > 0 and body.is_dead == false:
+			print('Enemy')
+			body.death()
+			Scores.score_enemies_killed_by_pyre += 1
 	else:
 		print('Friend')
 

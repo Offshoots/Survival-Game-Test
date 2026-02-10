@@ -19,7 +19,7 @@ extends Control
 @onready var sea_stats_label: RichTextLabel = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/VBoxContainer2/PanelContainer2/SeaStatsLabel
 
 var journey_results = ["Lost at Sea", "Lost in the Storm", "Disappeared in the Maelstrom"]
-var victory_threshold = 20
+var victory_threshold = 25
 var days_worth_of_supplies = 0
 var victory_days = 0
 var victory_score = 0

@@ -61,9 +61,9 @@ func _physics_process(_delta: float) -> void:
 	if in_enemy_range == true and taking_damage == false:
 		taking_damage = true
 		health -= 1
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(0.5).timeout
 		taking_damage = false
-	
+	print(taking_damage)
 	
 	if new_tool == true:
 		tool_inventory.append(found_tool)

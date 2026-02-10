@@ -60,7 +60,7 @@ func _ready() -> void:
 	#Assign Target for blob
 	target = [player, ship].pick_random()
 	print(target)
-	color = [blue, blue, blue, green, green, red].pick_random()
+	color = [blue, green, red].pick_random()
 	#if Scores.score_days_survived > 1:
 		#target = [player, ship].pick_random()
 	#else:
@@ -91,18 +91,16 @@ func _physics_process(delta: float) -> void:
 		leap_force = 60
 		
 	if color == red:
-		if days > 4:
+		if days > 2:
 			flash_sprite_2d.modulate = Color("ff005f")
 			speed = 70
 	if color == green:
-		if days > 3:
+		if days > 1:
 			flash_sprite_2d.modulate = Color("00ff00")
 			if global_position.distance_to(target.global_position) < 300 and !leap_cooldown:
 				leap_visual()
 				leap_at_target()
 				start_leap_cooldown()
-	
-	#Move and slide
 	move_and_slide()
 
 func leap_visual():
