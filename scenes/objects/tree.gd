@@ -19,10 +19,10 @@ var health := 4:
 			$FlashSprite2D.hide()
 			#$Stump.show()
 			var shape = RectangleShape2D.new()
-			shape.size = Vector2(12,6)
+			shape.size = Vector2(6,10)
 			$StumpFlashSprite2D.show()
 			$CollisionShape2D.shape = shape
-			$CollisionShape2D.position.y = 6
+			$CollisionShape2D.position.y = 4
 			Scores.score_trees_felled += 1
 			stump = true
 			wood = true

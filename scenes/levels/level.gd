@@ -22,6 +22,7 @@ var placement_pos : Vector2
 var day: int = 1
 var day_timer: bool = true
 var giant_pyre_visited : bool = false
+var giant_pyre_doorway : bool = false
 var ship_visited : bool = false
 var axe_visited : bool = false
 var extra_wave : bool = false
@@ -39,9 +40,9 @@ var corn: int
 var pumpkin: int
 var wheat: int
 
-
+@onready var dungeon: Node2D = $Dungeon
 @onready var ship: StaticBody2D = $Objects/Ship
-@onready var player = $Objects/Player
+@onready var player: CharacterBody2D = $Player
 @onready var inv = $Overlay/CanvasLayer/InventoryContainer
 @export var daytime_color: Gradient
 @onready var main_ui: Control = $Overlay/CanvasLayer/MainUI
@@ -53,6 +54,7 @@ var wheat: int
 
 
 func _ready() -> void:
+	dungeon.hide()
 	Scores.score_dead = false
 	Scores.ship_destroyed = false
 	Scores.starved_dead = false
@@ -343,10 +345,15 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 		Enum.Tool.PICKAXE:
 			#For now group for Rock has been changed from 'Objects' to new group 'Rock'.
 			for object in get_tree().get_nodes_in_group('Rock'):
-				if object.position.distance_to(pos)< 20:
+				if object.position.distance_to(pos)< 20 and (object.position.direction_to(player.position).round() == -player.last_direction):
+					print(object.position.distance_to(pos))
 					object.hit(tool)
 					if object.stone:
-						var stone_message = "Yes stones.\nI can build something strong with these."
+						if player.inventory.count(Enum.Item.STONE) == 0:
+							var stone_message = "Yes stones.\nI can build something strong with these."
+							await get_tree().create_timer(0.05).timeout
+							interaction_tool(stone_message, Enum.Item.STONE)
+						#var stone_message = "Yes stones.\nI can build something strong with these."
 						var item_drop = Enum.Item.STONE
 						var stone_dropped = randi_range(6,10)
 						for num in stone_dropped:
@@ -355,10 +362,14 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 							Scores.score_stone_collected += 1
 			#For now group for GiantPyre has been changed to new group 'GreatPyre'.
 			for object in get_tree().get_nodes_in_group('GreatPyre'):
-				if object.position.distance_to(pos)< 20:
+				if object.position.distance_to(pos)< 50 and (object.position.direction_to(player.position).round() == -player.last_direction):
+					print(object.position.distance_to(pos))
 					object.hit(tool)
 					if object.stone:
-						#var stone_message = "Yes stones.\nI can build something strong with these."
+						if player.inventory.count(Enum.Item.STONE) == 0:
+							var stone_message = "Yes stones.\nI can build something strong with these."
+							await get_tree().create_timer(0.05).timeout
+							interaction_tool(stone_message, Enum.Item.STONE)
 						var item_drop = Enum.Item.STONE
 						var stone_dropped = 1
 						for num in stone_dropped:
@@ -366,10 +377,14 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 							add_inventory(item_drop)
 							Scores.score_stone_collected += 1
 			for object in get_tree().get_nodes_in_group('Pyres'):
-				if object.position.distance_to(pos)< 20:
+				if object.position.distance_to(pos)< 20 and (object.position.direction_to(player.position).round() == -player.last_direction):
+					print(object.position.distance_to(pos))
 					object.hit(tool)
 					if object.stone:
-						#var stone_message = "Yes stones.\nI can build something strong with these."
+						if player.inventory.count(Enum.Item.STONE) == 0:
+							var stone_message = "Yes stones.\nI can build something strong with these."
+							await get_tree().create_timer(0.05).timeout
+							interaction_tool(stone_message, Enum.Item.STONE)
 						var item_drop = Enum.Item.STONE
 						var stone_dropped = 6
 						for num in stone_dropped:
@@ -378,7 +393,8 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 							Scores.score_stone_collected += 1
 			#Currently all stumps are still managed by the "Tree" sceene in group 'Objects'.
 			for object in get_tree().get_nodes_in_group('Objects'):
-				if object.position.distance_to(pos)< 20:
+				if object.position.distance_to(pos)< 20 and (object.position.direction_to(player.position).round() == -player.last_direction):
+					print(object.position.distance_to(pos))
 					object.hit(tool)
 					if object.stump_wood:
 						var item_drop = Enum.Item.WOOD
@@ -390,10 +406,14 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 		Enum.Tool.SWORD:
 			#For now group for blob has been changed from 'Objects' to new group 'Enemy'.
 			for object in get_tree().get_nodes_in_group('Enemy'):
-				if object.position.distance_to(pos)< 20:
+				if object.position.distance_to(pos) < 20 and (object.position.direction_to(player.position).round() == -player.last_direction):
+					print(object.position.distance_to(pos))
 					object.hit(tool)
 					if object.gold:
-						var gold_message = "I found some grains of gold in this slime.\nBut what use is gold on this forsaken island?"
+						if player.inventory.count(Enum.Item.GOLD) == 0:
+							var gold_message = "I found some grains of gold in this slime.\nBut what use is gold on this forsaken island?"
+							await get_tree().create_timer(0.05).timeout
+							interaction_tool(gold_message, Enum.Item.GOLD)
 						var item_drop = Enum.Item.GOLD
 						var gold_dropped = randi_range(3,3+day*2)
 						for num in gold_dropped:
@@ -403,11 +423,14 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 		Enum.Tool.AXE:
 			#For now group for blob has been changed from 'Objects' to new group 'Enemy'.
 			for object in get_tree().get_nodes_in_group('Enemy'):
-				if object.position.distance_to(pos)< 20:
-					print(player.last_direction)
+				if object.position.distance_to(pos)< 13 and (object.position.direction_to(player.position).round() == -player.last_direction):
+					print(object.position.distance_to(pos))
 					object.hit(tool)
 					if object.gold:
-						var gold_message = "I found some grains of gold in this slime.\nBut what use is gold on this forsaken island?"
+						if player.inventory.count(Enum.Item.GOLD) == 0:
+							var gold_message = "I found some grains of gold in this slime.\nBut what use is gold on this forsaken island?"
+							await get_tree().create_timer(0.05).timeout
+							interaction_tool(gold_message, Enum.Item.GOLD)
 						var item_drop = Enum.Item.GOLD
 						var gold_dropped = randi_range(3,3+day*2)
 						for num in gold_dropped:
@@ -416,9 +439,10 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 							Scores.score_gold_collected += 1
 			#Currently all trees are in group 'Objects'.
 			for object in get_tree().get_nodes_in_group('Objects'):
-				if object.position.distance_to(pos)< 20:
-					print(player.last_direction)
-					print(object.position.direction_to(player.position).round())
+				if object.position.distance_to(pos) < 13 and (object.position.direction_to(player.position).round() == -player.last_direction):
+					#print(player.last_direction)
+					print(object.position.distance_to(pos))
+					#print(object.position.direction_to(player.position).round())
 					object.hit(tool)
 					if object.apples:
 						if player.inventory.count(Enum.Item.APPLE) == 0:
@@ -627,8 +651,50 @@ func _on_giant_pyre_entered_giant_pyre() -> void:
 	main_ui.update_message(message)
 	if giant_pyre_visited == false:
 		await get_tree().create_timer(0.05).timeout
-		var interaction_message : String = 'Someone built this a long time ago.\nIt looks like a great fire used to burn on top.\n\nCould I build something like this?'
+		#var interaction_message : String = 'Someone built this a long time ago.\nIt looks like a great fire used to burn on top.\n\nCould I build something like this?'
+		var interaction_message : String = 'Whoa! How is this great stone pyre here?'
 		interaction_visit(interaction_message, Enum.Visit.PYRE)
+
+func freeze_level():
+	for enemy in get_tree().get_nodes_in_group('Enemy'):
+		enemy.normal_speed = 0
+	if $Timers/DayTimer.is_stopped():
+		$Timers/NightTimer.paused = true
+	else:
+		$Timers/DayTimer.paused = true
+
+func unfreeze_level():
+	if $Timers/DayTimer.paused == true:
+		$Timers/DayTimer.paused = false
+	else:
+		$Timers/NightTimer.paused = false
+	$Dungeon.show()
+
+func _on_giant_pyre_entered_dungeon() -> void:
+	print("Entered Dungeon!")
+	for object in get_tree().get_nodes_in_group('GreatPyre'):
+		object.call_deferred("disable_collision_polygon")
+	freeze_level()
+	giant_pyre_doorway = true
+	$Layers.hide()
+	$Layers/GrassLayer.enabled = false
+	$Objects.hide()
+	$Dungeon.show()
+	
+
+func _on_dungeon_exit_dungeon() -> void:
+	unfreeze_level()
+	for object in get_tree().get_nodes_in_group('GreatPyre'):
+		object.call_deferred("enable_collision_polygon")
+	$Objects/GiantPyre.show_exit_area()
+	$Dungeon.inside_dungeon = false
+	$Layers.show()
+	$Layers/GrassLayer.enabled = true
+	$Objects.show()
+
+
+func _on_giant_pyre_exited_pyre_doorway() -> void:
+	$Objects/GiantPyre.hide_exit_area()
 
 func interaction_visit(message : String, visit : Enum.Visit):
 	interaction_ui.update_message(message)

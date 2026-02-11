@@ -131,7 +131,7 @@ func death():
 	if tracking == true:
 		tracking = false
 	if is_instance_valid($CollisionShape2D):
-		speed = 0
+		normal_speed = 0
 		$CollisionShape2D.queue_free()
 		$Animation/AnimationPlayer.current_animation = 'explode'
 

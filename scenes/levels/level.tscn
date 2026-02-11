@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://6n54anmee8fk" path="res://scenes/ui/pause_menu_ui.tscn" id="19_4ab0e"]
 [ext_resource type="AudioStream" uid="uid://8qax63dw8bcy" path="res://audio/Night Song 2.ogg" id="20_lp2ca"]
 [ext_resource type="PackedScene" uid="uid://3lpeo6ap6evi" path="res://scenes/ui/interaction_ui.tscn" id="21_c3o0d"]
+[ext_resource type="PackedScene" uid="uid://dwmun14snearf" path="res://scenes/levels/dungeon.tscn" id="22_p62il"]
 
 [sub_resource type="Gradient" id="Gradient_icy5c"]
 offsets = PackedFloat32Array(0, 0.4299517, 0.8599034)
@@ -477,7 +478,7 @@ custom_data_layer_0/name = "farmable"
 custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_b2cq8")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ouxo3"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c3o0d"]
 texture = ExtResource("3_urvlt")
 0:0/0 = 0
 0:0/0/terrain_set = 0
@@ -857,7 +858,7 @@ texture = ExtResource("3_urvlt")
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Soil"
 terrain_set_0/terrain_0/color = Color(0.62798536, 0.17769939, 0.46800947, 1)
-sources/0 = SubResource("TileSetAtlasSource_ouxo3")
+sources/0 = SubResource("TileSetAtlasSource_c3o0d")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mbbpy"]
 texture = ExtResource("5_d4w6o")
@@ -892,6 +893,9 @@ shader_parameter/progress = 0.218000010355
 script = ExtResource("1_urvlt")
 daytime_color = SubResource("Gradient_icy5c")
 
+[node name="Player" parent="." unique_id=1116143726 instance=ExtResource("2_b2cq8")]
+position = Vector2(21, 695)
+
 [node name="Layers" type="Node2D" parent="." unique_id=682630035]
 
 [node name="WaterLayer" type="TileMapLayer" parent="Layers" unique_id=1182908526]
@@ -920,9 +924,6 @@ tile_set = SubResource("TileSet_rmjfq")
 
 [node name="Objects" type="Node2D" parent="." unique_id=1709508911]
 y_sort_enabled = true
-
-[node name="Player" parent="Objects" unique_id=1116143726 instance=ExtResource("2_b2cq8")]
-position = Vector2(21, 695)
 
 [node name="ToolAxe" parent="Objects" unique_id=1157470611 instance=ExtResource("13_jyre1")]
 position = Vector2(48, 719)
@@ -1580,13 +1581,18 @@ autoplay = true
 [node name="NightMusic" type="AudioStreamPlayer2D" parent="Music" unique_id=1791065060]
 stream = ExtResource("20_lp2ca")
 
-[connection signal="diagnose" from="Objects/Player" to="." method="_on_player_diagnose"]
-[connection signal="input_event" from="Objects/Player" to="." method="_on_player_input_event"]
-[connection signal="tool_use" from="Objects/Player" to="." method="_on_player_tool_use"]
+[node name="Dungeon" parent="." unique_id=1707457319 instance=ExtResource("22_p62il")]
+position = Vector2(245, -365)
+
+[connection signal="diagnose" from="Player" to="." method="_on_player_diagnose"]
+[connection signal="input_event" from="Player" to="." method="_on_player_input_event"]
+[connection signal="tool_use" from="Player" to="." method="_on_player_tool_use"]
 [connection signal="axe_found" from="Objects/ToolAxe" to="." method="_on_tool_axe_axe_found"]
 [connection signal="sword_found" from="Objects/ToolSword" to="." method="_on_tool_sword_sword_found"]
 [connection signal="pickaxe_found" from="Objects/ToolPickaxe" to="." method="_on_tool_pickaxe_pickaxe_found"]
+[connection signal="entered_dungeon" from="Objects/GiantPyre" to="." method="_on_giant_pyre_entered_dungeon"]
 [connection signal="entered_giant_pyre" from="Objects/GiantPyre" to="." method="_on_giant_pyre_entered_giant_pyre"]
+[connection signal="exited_pyre_doorway" from="Objects/GiantPyre" to="." method="_on_giant_pyre_exited_pyre_doorway"]
 [connection signal="enter_ship" from="Objects/Ship" to="." method="_on_ship_enter_ship"]
 [connection signal="exit_ship" from="Objects/Ship" to="." method="_on_ship_exit_ship"]
 [connection signal="heal" from="Overlay/CanvasLayer/MainUI" to="." method="_on_main_ui_heal"]
@@ -1599,3 +1605,4 @@ stream = ExtResource("20_lp2ca")
 [connection signal="timeout" from="Timers/HealTimer" to="." method="_on_heal_timer_timeout"]
 [connection signal="timeout" from="Timers/NoRepairTimer" to="." method="_on_no_repair_timer_timeout"]
 [connection signal="timeout" from="Timers/WaveTimer" to="." method="_on_wave_timer_timeout"]
+[connection signal="exit_dungeon" from="Dungeon" to="." method="_on_dungeon_exit_dungeon"]

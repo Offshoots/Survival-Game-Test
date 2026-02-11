@@ -9,8 +9,8 @@ load_path = "res://.godot/imported/Test Ship 3.png-d5a44b4e8ea4e29d163c2b9c44892
 radius = 11.00831
 height = 125.97775
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_x2d0j"]
-radius = 15.033297
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a4j8e"]
+height = 28.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fnfjl"]
 radius = 19.0
@@ -30,8 +30,9 @@ rotation = 1.5620697
 shape = SubResource("CapsuleShape2D_x2d0j")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=167410749]
-position = Vector2(34.25003, 10)
-shape = SubResource("CircleShape2D_x2d0j")
+position = Vector2(33, 10)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_a4j8e")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1031627774]
 position = Vector2(-9.7499695, 10)

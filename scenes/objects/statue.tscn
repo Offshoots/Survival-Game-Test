@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://bx7lch3g3s0jw"]
+
+[ext_resource type="Texture2D" uid="uid://cdcrvw4368qtg" path="res://graphics/objects/Knght Statue 3.png" id="1_2cx37"]
+[ext_resource type="Script" uid="uid://dwkqyx0id14hu" path="res://scenes/objects/statue.gd" id="1_kfl53"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kfl53"]
+size = Vector2(60, 29)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m87gu"]
+size = Vector2(83, 14)
+
+[node name="Statue" type="StaticBody2D" unique_id=517209246]
+script = ExtResource("1_kfl53")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=447524442]
+position = Vector2(6, 24.5)
+shape = SubResource("RectangleShape2D_kfl53")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1694681402]
+texture = ExtResource("1_2cx37")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=891059274]
+y_sort_enabled = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1871377686]
+position = Vector2(4.5, 50)
+shape = SubResource("RectangleShape2D_m87gu")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

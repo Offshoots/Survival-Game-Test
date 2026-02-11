@@ -44,14 +44,15 @@ shader_parameter/Color = Color(1, 1, 1, 1)
 shader_parameter/Progress = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_osgk1"]
-size = Vector2(52, 22.75)
+size = Vector2(16, 17)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ehmvm"]
 radius = 83.02409
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_knqaq"]
-radius = 21.0
-height = 48.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7cnug"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_knqaq"]
+size = Vector2(24, 11)
 
 [node name="GiantPyre" type="StaticBody2D" unique_id=619828489 groups=["GreatPyre"]]
 y_sort_enabled = true
@@ -70,14 +71,19 @@ texture = ExtResource("3_0pxun")
 
 [node name="FlashSprite2D" parent="." unique_id=493722067 instance=ExtResource("4_knqaq")]
 material = SubResource("ShaderMaterial_c0v7v")
+position = Vector2(0, -17)
 texture = ExtResource("3_0pxun")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1629013321]
-position = Vector2(0, 24.625)
+position = Vector2(0, 11.5)
 shape = SubResource("RectangleShape2D_osgk1")
 
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1451673569]
+build_mode = 1
+polygon = PackedVector2Array(20, -24, 37, 12, 25, 19, 9, 20, 8, 3, -8, 3, -9, 20, -26, 18, -36, 13, -17, -24, -17, -24)
+
 [node name="Area2D" type="Area2D" parent="." unique_id=1365646536]
-position = Vector2(1, 9)
+position = Vector2(1, -8)
 collision_layer = 4
 collision_mask = 2
 
@@ -109,9 +115,23 @@ tint_progress = Color(1, 1, 0, 1)
 wait_time = 60.0
 one_shot = true
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=1269936660]
-position = Vector2(0, 9)
-shape = SubResource("CapsuleShape2D_knqaq")
+[node name="DungeonArea2D2" type="Area2D" parent="." unique_id=548400857]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DungeonArea2D2" unique_id=352289499]
+shape = SubResource("RectangleShape2D_7cnug")
+
+[node name="ExitedDoorwayArea2D" type="Area2D" parent="." unique_id=1048538828]
+visible = false
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitedDoorwayArea2D" unique_id=642696558]
+position = Vector2(0, 26)
+shape = SubResource("RectangleShape2D_knqaq")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="FuelTimer" to="." method="_on_fuel_timer_timeout"]
+[connection signal="body_entered" from="DungeonArea2D2" to="." method="_on_dungeon_area_2d_2_body_entered"]
+[connection signal="body_entered" from="ExitedDoorwayArea2D" to="." method="_on_exited_doorway_area_2d_body_entered"]

@@ -61,12 +61,14 @@ func _on_quit_button_pressed() -> void:
 	
 func focus_button():
 	main_menu_button.grab_focus()
+	
 
 func island_stats():
 	island_stats_label.text = "Resources:
 	Apples Collected = " + str(Scores.score_apples_collected) + "
 	Wood Collected = " + str(Scores.score_wood_collected) + "
 	Stone Collected = " + str(Scores.score_stone_collected) + "
+	Stone Mined From Great Pyre =  " + str(Scores.stones_mined_from_great_pyre) + "
 	Rocks Smashed = " + str(Scores.score_rocks_smashed) + "
 	Trees Felled = " + str(Scores.score_trees_felled)  + "
 	Plants Harvested = " + str(Scores.score_plants_harvested)  + "
