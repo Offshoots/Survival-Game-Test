@@ -164,9 +164,10 @@ layout_mode = 2
 [node name="MessageLabel" type="Label" parent="MarginContainer2/HBoxContainer/PanelContainer" unique_id=1263190649]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
 
 [node name="MessageTimer" type="Timer" parent="." unique_id=1815698796]
-wait_time = 3.0
+wait_time = 5.0
 one_shot = true
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/HealButton" to="." method="_on_heal_button_pressed"]

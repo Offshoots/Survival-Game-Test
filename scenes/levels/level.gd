@@ -9,7 +9,7 @@ var box_scene = preload("res://scenes/objects/box.tscn")
 var pyre_scene = preload("res://scenes/objects/pyre.tscn")
 var tree_scene = preload("res://scenes/objects/tree.tscn")
 var rock_scene = preload("res://scenes/objects/rock.tscn")
-var enemy_scene = preload("res://scenes/characters/blob.tscn")
+var enemy_scene = preload("res://scenes/characters/blob.tscn") 
 var seed_scene = preload("res://scenes/objects/tools/tool_seed.tscn")
 var hoe_scene = preload("res://scenes/objects/tools/tool_hoe.tscn")
 var water_scene = preload("res://scenes/objects/tools/tool_water.tscn")
@@ -226,7 +226,7 @@ func update_ship_progress():
 func spawn_trees(num: int):
 	var tree_markers = $Objects/TreeSpawnPositions.get_children().duplicate(true)
 	for i in num:
-		var pos_marker = tree_markers.pop_at(randf_range(0, tree_markers.size()-1))
+		var pos_marker = tree_markers.pop_at(randi_range(0, tree_markers.size()-1))
 		var new_tree = tree_scene.instantiate()
 		new_tree.chop.connect(_on_tree_chop)
 		$Objects.add_child(new_tree)
@@ -235,7 +235,7 @@ func spawn_trees(num: int):
 func spawn_rocks(num: int):
 	var rock_markers = $Objects/RockSpawnPositions.get_children().duplicate(true)
 	for i in num:
-		var pos_marker = rock_markers.pop_at(randf_range(0, rock_markers.size()-1))
+		var pos_marker = rock_markers.pop_at(randi_range(0, rock_markers.size()-1))
 		var new_rock = rock_scene.instantiate()
 		new_rock.smash.connect(_on_rock_smash)
 		$Objects.add_child(new_rock)
@@ -254,7 +254,7 @@ func spawn_enemies(num: int):
 	var enemy_markers = $Objects/EnemySpawnPositions.get_children().duplicate(true)
 	print("spawned enemies: " + str(num))
 	for i in num:
-		var pos_marker = enemy_markers.pop_at(randf_range(0, enemy_markers.size()-1))
+		var pos_marker = enemy_markers.pop_at(randi_range(0, enemy_markers.size()-1))
 		var new_enemy = enemy_scene.instantiate()
 		new_enemy.slice.connect(_on_blob_slice)
 		new_enemy.ship_damaged.connect(_on_blob_ship_damaged)
@@ -300,8 +300,8 @@ func build(craft: Enum.Craft, pos: Vector2):
 			$Layers/SoilLayer.set_cells_terrain_connect([grid_coord], 0, 0)
 
 #This will toggle the plant info bar on/off by pressing the diagnose button "N"
-func _on_player_diagnose() -> void:
-	$Overlay/CanvasLayer/PlantInfoContainer.visible = not $Overlay/CanvasLayer/PlantInfoContainer.visible
+#func _on_player_diagnose() -> void:
+	#$Overlay/CanvasLayer/PlantInfoContainer.visible = not $Overlay/CanvasLayer/PlantInfoContainer.visible
 
 func _on_chop():
 	player.current_tool = Enum.Tool.AXE
@@ -355,8 +355,8 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 						if player.inventory.count(Enum.Item.STONE) == 0:
 							var stone_message = "Yes stones.\nI can build something strong with these."
 							await get_tree().create_timer(0.05).timeout
-							interaction_tool(stone_message, Enum.Item.STONE)
-						#var stone_message = "Yes stones.\nI can build something strong with these."
+							#interaction_tool(stone_message, Enum.Item.STONE)
+							main_ui.update_message(stone_message)
 						var item_drop = Enum.Item.STONE
 						var stone_dropped = randi_range(6,10)
 						for num in stone_dropped:
@@ -372,7 +372,8 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 						if player.inventory.count(Enum.Item.STONE) == 0:
 							var stone_message = "Yes stones.\nI can build something strong with these."
 							await get_tree().create_timer(0.05).timeout
-							interaction_tool(stone_message, Enum.Item.STONE)
+							#interaction_tool(stone_message, Enum.Item.STONE)
+							main_ui.update_message(stone_message)
 						var item_drop = Enum.Item.STONE
 						var stone_dropped = 1
 						for num in stone_dropped:
@@ -387,7 +388,8 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 						if player.inventory.count(Enum.Item.STONE) == 0:
 							var stone_message = "Yes stones.\nI can build something strong with these."
 							await get_tree().create_timer(0.05).timeout
-							interaction_tool(stone_message, Enum.Item.STONE)
+							#interaction_tool(stone_message, Enum.Item.STONE)
+							main_ui.update_message(stone_message)
 						var item_drop = Enum.Item.STONE
 						var stone_dropped = 6
 						for num in stone_dropped:
@@ -416,7 +418,8 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 						if player.inventory.count(Enum.Item.GOLD) == 0:
 							var gold_message = "I found some grains of gold in this slime.\nBut what use is gold on this forsaken island?"
 							await get_tree().create_timer(0.05).timeout
-							interaction_tool(gold_message, Enum.Item.GOLD)
+							#interaction_tool(gold_message, Enum.Item.GOLD)
+							main_ui.update_message(gold_message)
 						var item_drop = Enum.Item.GOLD
 						var gold_dropped = randi_range(3,3+day*2)
 						for num in gold_dropped:
@@ -433,7 +436,8 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 						if player.inventory.count(Enum.Item.GOLD) == 0:
 							var gold_message = "I found some grains of gold in this slime.\nBut what use is gold on this forsaken island?"
 							await get_tree().create_timer(0.05).timeout
-							interaction_tool(gold_message, Enum.Item.GOLD)
+							#interaction_tool(gold_message, Enum.Item.GOLD)
+							main_ui.update_message(gold_message)
 						var item_drop = Enum.Item.GOLD
 						var gold_dropped = randi_range(3,3+day*2)
 						for num in gold_dropped:
@@ -452,6 +456,7 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 							var apple_message = "An Apple!\nThank Odinson, I am starving.\nI need to find more of these to take with me."
 							await get_tree().create_timer(0.05).timeout
 							#interaction_tool(apple_message, Enum.Item.APPLE)
+							main_ui.update_message(apple_message)
 						var item_drop = Enum.Item.APPLE
 						player.inventory.append(item_drop)
 						add_inventory(item_drop)
@@ -655,7 +660,7 @@ func _on_giant_pyre_entered_giant_pyre() -> void:
 	if giant_pyre_visited == false:
 		await get_tree().create_timer(0.05).timeout
 		#var interaction_message : String = 'Someone built this a long time ago.\nIt looks like a great fire used to burn on top.\n\nCould I build something like this?'
-		var interaction_message : String = 'Whoa! How is this great stone pyre here?'
+		#var interaction_message : String = 'Whoa! How is this great stone pyre here?'
 		#interaction_visit(interaction_message, Enum.Visit.PYRE)
 
 func freeze_level():
@@ -743,6 +748,7 @@ func _on_ship_enter_ship(body) -> void:
 			await get_tree().create_timer(0.05).timeout
 			var interaction_message : String = 'My ship is damaged.\nI will need to collect wood to repair it.'
 			#interaction_visit(interaction_message, Enum.Visit.SHIP)
+			main_ui.update_message(interaction_message)
 		print('Friend')
 		message = 'Collect more wood!'
 	main_ui.update_message(message)
@@ -806,40 +812,45 @@ func _on_interaction_ui_take(_interaction: Enum.Tool) -> void:
 
 func _on_tool_axe_axe_found() -> void:
 	await get_tree().create_timer(0.05).timeout
-	#var interaction_message : String = 'Who needs a sword or a bow, when you can have an AXE!'
-	var interaction_message : String = 'My AXE!\nI wonder what else has washed ashore?'
+	var interaction_message : Array[String] = ['Who needs a sword or a bow, when you can have an AXE!','My AXE!\nI wonder what else has washed ashore?']
 	#interaction_tool(interaction_message, Enum.Tool.AXE)
+	main_ui.update_message(interaction_message.pick_random())
 
 func _on_tool_hoe_hoe_found() -> void:
 	await get_tree().create_timer(0.05).timeout
 	#var interaction_message : String = 'Who needs a sword or a bow, when you can have an AXE!'
 	var interaction_message : String = 'Look a Hoe!\nI better not yell that too much.'
-	interaction_tool(interaction_message, Enum.Tool.HOE)
+	#interaction_tool(interaction_message, Enum.Tool.HOE)
+	main_ui.update_message(interaction_message)
 
 func _on_tool_water_water_found() -> void:
 	await get_tree().create_timer(0.05).timeout
 	#var interaction_message : String = 'Who needs a sword or a bow, when you can have an AXE!'
 	var interaction_message : String = 'A watering can!\nIf I plant seeds, I can water them to grow'
-	interaction_tool(interaction_message, Enum.Tool.WATER)
+	#interaction_tool(interaction_message, Enum.Tool.WATER)
+	main_ui.update_message(interaction_message)
 
 func _on_tool_seed_seed_found() -> void:
 	await get_tree().create_timer(0.05).timeout
 	#var interaction_message : String = 'Who needs a sword or a bow, when you can have an AXE!'
 	var interaction_message : String = 'Seeds!\nIf I plant seeds, I can water them to grow'
-	interaction_tool(interaction_message, Enum.Tool.WATER)
+	#interaction_tool(interaction_message, Enum.Tool.WATER)
+	main_ui.update_message(interaction_message)
 
 func _on_reward_toy_toy_found() -> void:
 	await get_tree().create_timer(0.05).timeout
 	#var interaction_message : String = 'Who needs a sword or a bow, when you can have an AXE!'
 	var interaction_message : String = 'I know this Toy.\nI need to make it home.'
 	#need to update interation, to include new enum of rewards
-	interaction_tool(interaction_message, Enum.Tool.WATER)
+	#interaction_tool(interaction_message, Enum.Tool.WATER)
+	main_ui.update_message(interaction_message)
 
 func _on_tool_sword_sword_found() -> void:
 	await get_tree().create_timer(0.05).timeout
 	#var interaction_message : String = 'You have my Sword!'
 	var interaction_message : String = 'Whoa a Sword!\nThe pointy end goes in the enemy!'
-	interaction_tool(interaction_message, Enum.Tool.SWORD)
+	#interaction_tool(interaction_message, Enum.Tool.SWORD)
+	main_ui.update_message(interaction_message)
 
 
 func _on_tool_pickaxe_pickaxe_found() -> void:
@@ -847,6 +858,7 @@ func _on_tool_pickaxe_pickaxe_found() -> void:
 	#var interaction_message : String = 'You have my Sword!'
 	var interaction_message : String = 'This looks useful.\nMaybe for smashing?'
 	#interaction_tool(interaction_message, Enum.Tool.PICKAXE)
+	main_ui.update_message(interaction_message)
 
 #Need to Connect in the enemy_spawn function
 func _on_blob_ship_damaged() -> void:
@@ -863,3 +875,4 @@ func _on_no_repair_timer_timeout() -> void:
 func _on_dungeon_approach_statue() -> void:
 	var message = "WHO ENTERS MY LAIR?"
 	main_ui.update_message(message)
+	print(message)

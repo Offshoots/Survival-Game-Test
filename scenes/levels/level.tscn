@@ -1586,7 +1586,6 @@ stream = ExtResource("20_lp2ca")
 
 [connection signal="approach_statue" from="Dungeon" to="." method="_on_dungeon_approach_statue"]
 [connection signal="exit_dungeon" from="Dungeon" to="." method="_on_dungeon_exit_dungeon"]
-[connection signal="diagnose" from="Player" to="." method="_on_player_diagnose"]
 [connection signal="input_event" from="Player" to="." method="_on_player_input_event"]
 [connection signal="tool_use" from="Player" to="." method="_on_player_tool_use"]
 [connection signal="axe_found" from="Objects/ToolAxe" to="." method="_on_tool_axe_axe_found"]

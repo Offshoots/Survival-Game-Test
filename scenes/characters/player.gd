@@ -26,7 +26,7 @@ var found_tool : Enum.Tool
 @onready var tool_ui: Control = $ToolUI
 
 signal tool_use(tool: Enum.Tool, pos: Vector2)
-signal diagnose
+#signal diagnose
 
 var death : bool = false
 var taking_damage : bool = false

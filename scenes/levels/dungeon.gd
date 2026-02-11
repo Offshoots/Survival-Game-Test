@@ -7,12 +7,13 @@ var inside_dungeon : bool = false
 
 func _on_entered_area_2d_body_entered(_body: Node2D) -> void:
 	inside_dungeon = true
+	print(inside_dungeon)
 
 func _on_exit_area_2d_body_entered(_body: Node2D) -> void:
 	if inside_dungeon == true:
 		exit_dungeon.emit()
 
-func _on_statue_area_2d_body_entered(body: Node2D) -> void:
+func _on_statue_area_2d_body_entered(_body: Node2D) -> void:
 	approach_statue.emit()
 
 func disable_layers():

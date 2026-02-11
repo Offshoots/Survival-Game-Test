@@ -69,7 +69,7 @@ func hit(tool: Enum.Tool):
 func create_apples(num: int):
 	var apple_markers = $AppleSpawnPositions.get_children().duplicate(true)
 	for i in num:
-		var pos_marker = apple_markers.pop_at(randf_range(0, apple_markers.size()-1))
+		var pos_marker = apple_markers.pop_at(randi_range(0, apple_markers.size()-1))
 		var sprite = Sprite2D.new()
 		sprite.texture = apple_texture
 		$Apples.add_child(sprite)
