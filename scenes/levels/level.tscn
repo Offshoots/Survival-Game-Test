@@ -27,7 +27,7 @@
 offsets = PackedFloat32Array(0, 0.4299517, 0.8599034)
 colors = PackedColorArray(0.9737398, 0.8204431, 0.45016474, 1, 1, 1, 1, 1, 0.36862746, 0.46666667, 1, 1)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d4w6o"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p62il"]
 texture = ExtResource("1_xb4v1")
 0:0/animation_columns = 4
 0:0/animation_frame_0/duration = 0.4
@@ -37,7 +37,7 @@ texture = ExtResource("1_xb4v1")
 0:0/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_mbbpy"]
-sources/0 = SubResource("TileSetAtlasSource_d4w6o")
+sources/0 = SubResource("TileSetAtlasSource_p62il")
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_qogh7"]
 vertices = PackedVector2Array(8, -4, 8, 4, 4, 8, -4, 8, -8, 4, -8, -4, -4, -8, 4, -8)
@@ -69,7 +69,7 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5, 6, 7)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -4, -4, -8, 4, -8, 8, -4, 8, 4, 4, 8, -4, 8, -8, 4)])
 agent_radius = 0.0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b2cq8"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c8ctg"]
 texture = ExtResource("1_bovvr")
 0:0/0 = 0
 0:0/0/terrain_set = 0
@@ -476,7 +476,7 @@ terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 navigation_layer_0/layers = 1
 custom_data_layer_0/name = "farmable"
 custom_data_layer_0/type = 1
-sources/0 = SubResource("TileSetAtlasSource_b2cq8")
+sources/0 = SubResource("TileSetAtlasSource_c8ctg")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c3o0d"]
 texture = ExtResource("3_urvlt")
@@ -893,8 +893,8 @@ shader_parameter/progress = 0.218000010355
 script = ExtResource("1_urvlt")
 daytime_color = SubResource("Gradient_icy5c")
 
-[node name="Player" parent="." unique_id=1116143726 instance=ExtResource("2_b2cq8")]
-position = Vector2(21, 695)
+[node name="Dungeon" parent="." unique_id=1707457319 instance=ExtResource("22_p62il")]
+position = Vector2(245, -365)
 
 [node name="Layers" type="Node2D" parent="." unique_id=682630035]
 
@@ -921,6 +921,9 @@ tile_set = SubResource("TileSet_ouxo3")
 [node name="DebugLayer" type="TileMapLayer" parent="Layers" unique_id=1333168900]
 z_index = -2
 tile_set = SubResource("TileSet_rmjfq")
+
+[node name="Player" parent="." unique_id=1116143726 instance=ExtResource("2_b2cq8")]
+position = Vector2(21, 695)
 
 [node name="Objects" type="Node2D" parent="." unique_id=1709508911]
 y_sort_enabled = true
@@ -1581,9 +1584,8 @@ autoplay = true
 [node name="NightMusic" type="AudioStreamPlayer2D" parent="Music" unique_id=1791065060]
 stream = ExtResource("20_lp2ca")
 
-[node name="Dungeon" parent="." unique_id=1707457319 instance=ExtResource("22_p62il")]
-position = Vector2(245, -365)
-
+[connection signal="approach_statue" from="Dungeon" to="." method="_on_dungeon_approach_statue"]
+[connection signal="exit_dungeon" from="Dungeon" to="." method="_on_dungeon_exit_dungeon"]
 [connection signal="diagnose" from="Player" to="." method="_on_player_diagnose"]
 [connection signal="input_event" from="Player" to="." method="_on_player_input_event"]
 [connection signal="tool_use" from="Player" to="." method="_on_player_tool_use"]
@@ -1605,4 +1607,3 @@ position = Vector2(245, -365)
 [connection signal="timeout" from="Timers/HealTimer" to="." method="_on_heal_timer_timeout"]
 [connection signal="timeout" from="Timers/NoRepairTimer" to="." method="_on_no_repair_timer_timeout"]
 [connection signal="timeout" from="Timers/WaveTimer" to="." method="_on_wave_timer_timeout"]
-[connection signal="exit_dungeon" from="Dungeon" to="." method="_on_dungeon_exit_dungeon"]

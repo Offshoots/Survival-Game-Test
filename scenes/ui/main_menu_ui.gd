@@ -47,7 +47,7 @@ func _ready() -> void:
 	fade_in()
 	fade_in_audio(main_video)
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if main_video.is_playing() and !warned_1:
 		var length = main_video.get_stream_length()
 		var pos = main_video.stream_position

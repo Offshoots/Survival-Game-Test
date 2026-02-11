@@ -40,9 +40,10 @@ var corn: int
 var pumpkin: int
 var wheat: int
 
+
 @onready var dungeon: Node2D = $Dungeon
 @onready var ship: StaticBody2D = $Objects/Ship
-@onready var player: CharacterBody2D = $Player
+@onready var player: CharacterBody2D = $Player 
 @onready var inv = $Overlay/CanvasLayer/InventoryContainer
 @export var daytime_color: Gradient
 @onready var main_ui: Control = $Overlay/CanvasLayer/MainUI
@@ -55,6 +56,7 @@ var wheat: int
 
 func _ready() -> void:
 	dungeon.hide()
+	$Dungeon.disable_layers()
 	Scores.score_dead = false
 	Scores.ship_destroyed = false
 	Scores.starved_dead = false
@@ -69,6 +71,7 @@ func _ready() -> void:
 	Scores.score_gold_collected = 0
 	Scores.score_wood_collected = 0
 	Scores.score_stone_collected = 0
+	Scores.stones_mined_from_great_pyre = 0
 	Scores.score_fish_caught = 0
 	Scores.score_plants_harvested = 0
 	
@@ -448,7 +451,7 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 						if player.inventory.count(Enum.Item.APPLE) == 0:
 							var apple_message = "An Apple!\nThank Odinson, I am starving.\nI need to find more of these to take with me."
 							await get_tree().create_timer(0.05).timeout
-							interaction_tool(apple_message, Enum.Item.APPLE)
+							#interaction_tool(apple_message, Enum.Item.APPLE)
 						var item_drop = Enum.Item.APPLE
 						player.inventory.append(item_drop)
 						add_inventory(item_drop)
@@ -653,17 +656,24 @@ func _on_giant_pyre_entered_giant_pyre() -> void:
 		await get_tree().create_timer(0.05).timeout
 		#var interaction_message : String = 'Someone built this a long time ago.\nIt looks like a great fire used to burn on top.\n\nCould I build something like this?'
 		var interaction_message : String = 'Whoa! How is this great stone pyre here?'
-		interaction_visit(interaction_message, Enum.Visit.PYRE)
+		#interaction_visit(interaction_message, Enum.Visit.PYRE)
 
 func freeze_level():
 	for enemy in get_tree().get_nodes_in_group('Enemy'):
 		enemy.normal_speed = 0
+		enemy.leap_force = 0
 	if $Timers/DayTimer.is_stopped():
 		$Timers/NightTimer.paused = true
 	else:
 		$Timers/DayTimer.paused = true
 
 func unfreeze_level():
+	for enemy in get_tree().get_nodes_in_group('Enemy'):
+		if enemy.color_selected == Enum.Blob.RED:
+			enemy.normal_speed = 70
+		else:
+			enemy.normal_speed = 30
+			enemy.leap_force = 55
 	if $Timers/DayTimer.paused == true:
 		$Timers/DayTimer.paused = false
 	else:
@@ -672,6 +682,7 @@ func unfreeze_level():
 
 func _on_giant_pyre_entered_dungeon() -> void:
 	print("Entered Dungeon!")
+	$Dungeon.enable_layers()
 	for object in get_tree().get_nodes_in_group('GreatPyre'):
 		object.call_deferred("disable_collision_polygon")
 	freeze_level()
@@ -683,6 +694,7 @@ func _on_giant_pyre_entered_dungeon() -> void:
 	
 
 func _on_dungeon_exit_dungeon() -> void:
+	$Dungeon.disable_layers()
 	unfreeze_level()
 	for object in get_tree().get_nodes_in_group('GreatPyre'):
 		object.call_deferred("enable_collision_polygon")
@@ -730,7 +742,7 @@ func _on_ship_enter_ship(body) -> void:
 		if ship_visited == false:
 			await get_tree().create_timer(0.05).timeout
 			var interaction_message : String = 'My ship is damaged.\nI will need to collect wood to repair it.'
-			interaction_visit(interaction_message, Enum.Visit.SHIP)
+			#interaction_visit(interaction_message, Enum.Visit.SHIP)
 		print('Friend')
 		message = 'Collect more wood!'
 	main_ui.update_message(message)
@@ -746,7 +758,6 @@ func check_ship():
 		var interaction_message : String = 'Repair Ship and Set Sail Now?'
 		interaction_ui.update_message(interaction_message)
 		interaction_ui.show()
-		
 		Engine.time_scale = 0
 
 
@@ -797,7 +808,7 @@ func _on_tool_axe_axe_found() -> void:
 	await get_tree().create_timer(0.05).timeout
 	#var interaction_message : String = 'Who needs a sword or a bow, when you can have an AXE!'
 	var interaction_message : String = 'My AXE!\nI wonder what else has washed ashore?'
-	interaction_tool(interaction_message, Enum.Tool.AXE)
+	#interaction_tool(interaction_message, Enum.Tool.AXE)
 
 func _on_tool_hoe_hoe_found() -> void:
 	await get_tree().create_timer(0.05).timeout
@@ -835,18 +846,20 @@ func _on_tool_pickaxe_pickaxe_found() -> void:
 	await get_tree().create_timer(0.05).timeout
 	#var interaction_message : String = 'You have my Sword!'
 	var interaction_message : String = 'This looks useful.\nMaybe for smashing?'
-	interaction_tool(interaction_message, Enum.Tool.PICKAXE)
+	#interaction_tool(interaction_message, Enum.Tool.PICKAXE)
 
 #Need to Connect in the enemy_spawn function
 func _on_blob_ship_damaged() -> void:
 	Scores.score_ship_damage_taken += 1
 	ship.ship_health -= 1
 
-
 func _on_wave_timer_timeout() -> void:
 	spawn_rand_enemies()
 	extra_wave = false
 
-
 func _on_no_repair_timer_timeout() -> void:
 	no_repair = false
+
+func _on_dungeon_approach_statue() -> void:
+	var message = "WHO ENTERS MY LAIR?"
+	main_ui.update_message(message)

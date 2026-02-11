@@ -11,9 +11,9 @@ var Giant_Pyre_3 : String = "res://graphics/objects/Giant_Pyre3.png"
 var Giant_Pyre_4 : String = "res://graphics/objects/Giant_Pyre4.png"
 
 var hits_to_crack_1 = 1
-var hits_to_crack_2 = 4
-var hits_to_crack_3 = 8
-var hits_to_crack_4 = 12
+var hits_to_crack_2 = 2
+var hits_to_crack_3 = 3
+var hits_to_crack_4 = 4
 
 func _on_area_2d_body_entered(_body: Node2D) -> void:
 	entered_giant_pyre.emit()
@@ -51,7 +51,7 @@ func hit(tool: Enum.Tool):
 	if tool == Enum.Tool.PICKAXE:
 		health -= 1
 		stone = true
-		Scores.stones_mined_from_great_pyre
+		Scores.stones_mined_from_great_pyre += 1
 		if health > (max_health - hits_to_crack_4):
 			$FlashSprite2D.flash()
 
@@ -60,7 +60,7 @@ func _on_dungeon_area_2d_2_body_entered(_body: Node2D) -> void:
 	entered_dungeon.emit()
 
 
-func _on_exited_doorway_area_2d_body_entered(body: Node2D) -> void:
+func _on_exited_doorway_area_2d_body_entered(_body: Node2D) -> void:
 	exited_pyre_doorway.emit()
 
 func show_exit_area():

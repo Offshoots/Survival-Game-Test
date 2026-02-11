@@ -37,7 +37,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_c0v7v"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7cnug"]
 resource_local_to_scene = true
 shader = ExtResource("5_iavpm")
 shader_parameter/Color = Color(1, 1, 1, 1)
@@ -70,7 +70,9 @@ visible = false
 texture = ExtResource("3_0pxun")
 
 [node name="FlashSprite2D" parent="." unique_id=493722067 instance=ExtResource("4_knqaq")]
-material = SubResource("ShaderMaterial_c0v7v")
+z_index = -1
+y_sort_enabled = true
+material = SubResource("ShaderMaterial_7cnug")
 position = Vector2(0, -17)
 texture = ExtResource("3_0pxun")
 
@@ -123,7 +125,6 @@ collision_mask = 2
 shape = SubResource("RectangleShape2D_7cnug")
 
 [node name="ExitedDoorwayArea2D" type="Area2D" parent="." unique_id=1048538828]
-visible = false
 collision_layer = 4
 collision_mask = 2
 
