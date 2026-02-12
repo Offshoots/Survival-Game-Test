@@ -436,7 +436,7 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 		Enum.Tool.AXE:
 			#For now group for blob has been changed from 'Objects' to new group 'Enemy'.
 			for object in get_tree().get_nodes_in_group('Enemy'):
-				if object.position.distance_to(pos)< 13 and (object.position.direction_to(player.position).round() == -player.last_direction):
+				if object.position.distance_to(pos)< 20 and (object.position.direction_to(player.position).round() == -player.last_direction):
 					print(object.position.distance_to(pos))
 					object.hit(tool)
 					if object.gold:
@@ -453,7 +453,7 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 							Scores.score_gold_collected += 1
 			#Currently all trees are in group 'Objects'.
 			for object in get_tree().get_nodes_in_group('Objects'):
-				if object.position.distance_to(pos) < 13 and (object.position.direction_to(player.position).round() == -player.last_direction):
+				if object.position.distance_to(pos) < 20 and (object.position.direction_to(player.position).round() == -player.last_direction):
 					#print(player.last_direction)
 					print(object.position.distance_to(pos))
 					#print(object.position.direction_to(player.position).round())
@@ -936,7 +936,7 @@ func _on_dungeon_warning() -> void:
 	print(message)
 
 func _on_dungeon_leave_statue() -> void:
-	await get_tree().create_timer(0.3).timeout
+	await get_tree().create_timer(0.5).timeout
 	interaction_ui.grab_focus_once = false
 
 func _on_store_screen_ui_buy_item_1(item, cost) -> void:
