@@ -1558,12 +1558,12 @@ mouse_filter = 2
 [node name="Timers" type="Node" parent="." unique_id=1507378834]
 
 [node name="DayTimer" type="Timer" parent="Timers" unique_id=1170833392]
-wait_time = 45.0
+wait_time = 75.0
 one_shot = true
 autostart = true
 
 [node name="NightTimer" type="Timer" parent="Timers" unique_id=782290827]
-wait_time = 30.0
+wait_time = 60.0
 one_shot = true
 
 [node name="HealTimer" type="Timer" parent="Timers" unique_id=720060771]

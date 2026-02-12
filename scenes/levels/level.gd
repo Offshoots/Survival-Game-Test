@@ -163,9 +163,11 @@ func _process(delta: float) -> void:
 		extra_wave = true
 	else:
 		extra_wave = false
-	#This additional enemy spawn can't be in the process function as written. Need to move or fix. Currently glitches and spawns infinite blobs.
-	if int(night_time) == 40 and extra_wave == false:
+	
+	#When 1/3 of the time has past, a wave will be spawned at a random time over the next 1/3 of the night
+	if int($Timers/NightTimer.wait_time*2/3) == int(night_time) and extra_wave == false:
 		extra_wave = true
+		$Timers/WaveTimer.wait_time = randi_range(0,int($Timers/NightTimer.wait_time/3))
 		$Timers/WaveTimer.start()
 
 	
