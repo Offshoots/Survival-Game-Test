@@ -791,7 +791,7 @@ func _on_ship_exit_ship(body) -> void:
 	
 
 
-func _on_interaction_ui_no(visit) -> void:
+func _on_interaction_ui_no(_visit) -> void:
 	interaction_ui.grab_focus_once = true
 	print("More Work To Do!")
 	$Timers/NoRepairTimer.start()

@@ -78,7 +78,50 @@ const INVENTORY_DATA = {
 	Enum.Item.WHEAT: {
 		#'texture': "res://graphics/plants/tomato.png",
 		'icon_texture': "res://graphics/icons/wheat.png",
-		'name':'Wheat'}
+		'name':'Wheat'},
+	Enum.Item.TOMATO_SEED: {
+		#'texture': "res://graphics/plants/tomato.png",
+		'icon_texture': "res://graphics/icons/tomato_seed.png",
+		'name':'Tomato Seed',
+		'cost': 5},
+	Enum.Item.CORN_SEED: {
+		#'texture': "res://graphics/plants/tomato.png",
+		'icon_texture': "res://graphics/icons/corn_seed.png",
+		'name':'Corn_Seed',
+		'cost': 5},
+	Enum.Item.PUMPKIN_SEED: {
+		#'texture': "res://graphics/plants/tomato.png",
+		'icon_texture': "res://graphics/icons/pumpkin_seed.png",
+		'name':'Pumpkin_Seed',
+		'cost': 5},
+	Enum.Item.WHEAT_SEED: {
+		#'texture': "res://graphics/plants/tomato.png",
+		'icon_texture': "res://graphics/icons/wheat_seed.png",
+		'name':'Wheat_Seed',
+		'cost': 5},
+	Enum.Item.ARMOR: {
+		#'texture': "res://graphics/plants/tomato.png",
+		'icon_texture': "res://graphics/icons/armor.png",
+		'name':'Armor',
+		'cost': 2},
+	Enum.Item.HEART: {
+		#'texture': "res://graphics/plants/tomato.png",
+		'icon_texture': "res://graphics/icons/heart.png",
+		'name':'Heart',
+		'details':'Increase maximum health by 15',
+		'cost': 50},
+	Enum.Item.STRENGTH: {
+		#'texture': "res://graphics/plants/tomato.png",
+		'icon_texture': "res://graphics/icons/strength.png",
+		'name':'Strength',
+		'details':'Increase you strength to slay\nBlobs with a single strike',
+		'cost': 50},
+	Enum.Item.SPEED: {
+		#'texture': "res://graphics/plants/tomato.png",
+		'icon_texture': "res://graphics/icons/speed.png",
+		'name':'Speed',
+		'details':'Increase walking and dashing speed by 50%',
+		'cost': 50},
 		}
 const MACHINE_UPGRADE_COST = {
 	Enum.Machine.SPRINKLER: {
