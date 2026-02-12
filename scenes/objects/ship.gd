@@ -1,7 +1,7 @@
 extends StaticBody2D
 
 
-var max_ship_health : int = 150
+var max_ship_health : int = 28
 
 var death : bool = false
 

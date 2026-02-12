@@ -47,11 +47,13 @@ const INVENTORY_DATA = {
 	Enum.Item.WOOD: {
 		#'texture': "res://graphics/plants/tomato.png",
 		'icon_texture': "res://graphics/icons/wood.png",
-		'name':'Wood'},
+		'name':'Wood',
+		'cost': 2},
 	Enum.Item.STONE: {
 		#'texture': "res://graphics/plants/tomato.png",
 		'icon_texture':"res://graphics/icons/stone.png",
-		'name':'Stone'},
+		'name':'Stone',
+		'cost': 2},
 	Enum.Item.GOLD: {
 		#'texture': "res://graphics/plants/tomato.png",
 		'icon_texture':"res://graphics/icons/gold.png",
@@ -59,7 +61,8 @@ const INVENTORY_DATA = {
 	Enum.Item.APPLE: {
 		#'texture': "res://graphics/plants/tomato.png",
 		'icon_texture': "res://graphics/icons/apple.png",
-		'name':'Apple'},
+		'name':'Apple',
+		'cost': 2},
 	Enum.Item.TOMATO: {
 		#'texture': "res://graphics/plants/tomato.png",
 		'icon_texture': "res://graphics/icons/tomato.png",

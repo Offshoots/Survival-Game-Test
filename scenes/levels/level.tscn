@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://8g84486pdrpt" path="res://scenes/objects/giant_pyre.tscn" id="16_p62il"]
 [ext_resource type="AudioStream" uid="uid://bxcr4fnl4dti0" path="res://audio/The Struggle Loop.ogg" id="17_qhnmj"]
 [ext_resource type="PackedScene" uid="uid://6n54anmee8fk" path="res://scenes/ui/pause_menu_ui.tscn" id="19_4ab0e"]
+[ext_resource type="PackedScene" uid="uid://b5f6beyvexg5g" path="res://scenes/ui/store_screen_ui.tscn" id="20_c3o0d"]
 [ext_resource type="AudioStream" uid="uid://8qax63dw8bcy" path="res://audio/Night Song 2.ogg" id="20_lp2ca"]
 [ext_resource type="PackedScene" uid="uid://3lpeo6ap6evi" path="res://scenes/ui/interaction_ui.tscn" id="21_c3o0d"]
 [ext_resource type="PackedScene" uid="uid://dwmun14snearf" path="res://scenes/levels/dungeon.tscn" id="22_p62il"]
@@ -1550,12 +1551,14 @@ mouse_filter = 2
 
 [node name="InteractionUI" parent="Overlay/CanvasLayer" unique_id=1979129113 instance=ExtResource("21_c3o0d")]
 
+[node name="StoreScreenUI" parent="Overlay/CanvasLayer" unique_id=1237760155 instance=ExtResource("20_c3o0d")]
+
 [node name="PauseMenuUI" parent="Overlay/CanvasLayer" unique_id=92325167 instance=ExtResource("19_4ab0e")]
 
 [node name="Timers" type="Node" parent="." unique_id=1507378834]
 
 [node name="DayTimer" type="Timer" parent="Timers" unique_id=1170833392]
-wait_time = 180.0
+wait_time = 45.0
 one_shot = true
 autostart = true
 
@@ -1568,6 +1571,10 @@ wait_time = 0.05
 one_shot = true
 
 [node name="NoRepairTimer" type="Timer" parent="Timers" unique_id=1668575093]
+wait_time = 5.0
+one_shot = true
+
+[node name="TransactingTimer" type="Timer" parent="Timers" unique_id=536269493]
 wait_time = 5.0
 one_shot = true
 
@@ -1586,6 +1593,8 @@ stream = ExtResource("20_lp2ca")
 
 [connection signal="approach_statue" from="Dungeon" to="." method="_on_dungeon_approach_statue"]
 [connection signal="exit_dungeon" from="Dungeon" to="." method="_on_dungeon_exit_dungeon"]
+[connection signal="leave_statue" from="Dungeon" to="." method="_on_dungeon_leave_statue"]
+[connection signal="warning" from="Dungeon" to="." method="_on_dungeon_warning"]
 [connection signal="input_event" from="Player" to="." method="_on_player_input_event"]
 [connection signal="tool_use" from="Player" to="." method="_on_player_tool_use"]
 [connection signal="axe_found" from="Objects/ToolAxe" to="." method="_on_tool_axe_axe_found"]
@@ -1601,8 +1610,12 @@ stream = ExtResource("20_lp2ca")
 [connection signal="ok" from="Overlay/CanvasLayer/InteractionUI" to="." method="_on_interaction_ui_ok"]
 [connection signal="take" from="Overlay/CanvasLayer/InteractionUI" to="." method="_on_interaction_ui_take"]
 [connection signal="yes" from="Overlay/CanvasLayer/InteractionUI" to="." method="_on_interaction_ui_yes"]
+[connection signal="buy_item_1" from="Overlay/CanvasLayer/StoreScreenUI" to="." method="_on_store_screen_ui_buy_item_1"]
+[connection signal="buy_item_2" from="Overlay/CanvasLayer/StoreScreenUI" to="." method="_on_store_screen_ui_buy_item_2"]
+[connection signal="buy_item_3" from="Overlay/CanvasLayer/StoreScreenUI" to="." method="_on_store_screen_ui_buy_item_3"]
 [connection signal="timeout" from="Timers/DayTimer" to="." method="_on_day_timer_timeout"]
 [connection signal="timeout" from="Timers/NightTimer" to="." method="_on_night_timer_timeout"]
 [connection signal="timeout" from="Timers/HealTimer" to="." method="_on_heal_timer_timeout"]
 [connection signal="timeout" from="Timers/NoRepairTimer" to="." method="_on_no_repair_timer_timeout"]
+[connection signal="timeout" from="Timers/TransactingTimer" to="." method="_on_transacting_timer_timeout"]
 [connection signal="timeout" from="Timers/WaveTimer" to="." method="_on_wave_timer_timeout"]

@@ -19,10 +19,10 @@ func update_message(message : String):
 	message_label.text = message
 
 func _on_yes_button_pressed() -> void:
-	yes.emit()
+	yes.emit(current_visit)
 
 func _on_no_button_pressed() -> void:
-	no.emit()
+	no.emit(current_visit)
 	
 
 #For Visiting Inteations
@@ -61,3 +61,9 @@ func select():
 		ok_button.hide()
 		take_button.hide()
 		grab_focus_once = true
+
+func update_no(message:String):
+	no_button.text = message
+	
+func update_yes(message:String):
+	yes_button.text = message

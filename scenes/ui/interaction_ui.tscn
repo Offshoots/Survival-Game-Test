@@ -61,8 +61,7 @@ focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath("../NoButton")
 focus_neighbor_bottom = NodePath(".")
 theme_override_font_sizes/font_size = 36
-text = "Yes
-Get Me Out of HERE!"
+text = "Yes"
 
 [node name="Spacer2" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1051151849]
 layout_mode = 2
@@ -97,9 +96,7 @@ focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath(".")
 theme_override_font_sizes/font_size = 36
-text = "No
-I'll gather more resources,
-for the journey home."
+text = "No"
 
 [node name="Spacer" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=451341023]
 layout_mode = 2

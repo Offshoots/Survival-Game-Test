@@ -20,7 +20,9 @@ var used_cells: Array[Vector2i]
 var placement_pos : Vector2
 
 var day: int = 1
+var statue_transactions : int = 0
 var day_timer: bool = true
+var statue_visited : bool = false
 var giant_pyre_visited : bool = false
 var giant_pyre_doorway : bool = false
 var ship_visited : bool = false
@@ -30,6 +32,8 @@ var repair_ship_message : bool = false
 var game_paused : bool = false
 var at_ship : bool = false
 var no_repair : bool = false
+var transacted : bool = false
+
 
 #May not need any of these item variables. I simplified all iventory functions to use Enums
 var apple: int
@@ -50,12 +54,15 @@ var wheat: int
 @onready var fade_transition: ColorRect = $Overlay/CanvasLayer/FadeTransition
 @onready var interaction_ui: Control = $Overlay/CanvasLayer/InteractionUI
 @onready var pause_menu_ui: Control = $Overlay/CanvasLayer/PauseMenuUI
+@onready var store_screen_ui: Control = $Overlay/CanvasLayer/StoreScreenUI
+
 
 #Test these unstored variabled for the connect signals for rewards
 
 
 func _ready() -> void:
 	dungeon.hide()
+	store_screen_ui.hide()
 	$Dungeon.disable_layers()
 	Scores.score_dead = false
 	Scores.ship_destroyed = false
@@ -728,6 +735,17 @@ func interaction_tool(message : String, interaction):
 	interaction_ui.show()
 	Engine.time_scale = 0
 
+func interaction_yes_no(message: String, visit : Enum.Visit):
+	interaction_ui.select()
+	if visit == Enum.Visit.SHIP:
+		interaction_ui.update_yes("Yes\nGet Me OUT of HERE!")
+		interaction_ui.update_no("No\nI'll gather more resources\nfor the journey home.")
+	if visit == Enum.Visit.STATUE:
+		interaction_ui.update_yes("Yes")
+		interaction_ui.update_no("No")
+	interaction_ui.update_message(message)
+	interaction_ui.show()
+	Engine.time_scale = 0
 
 func _on_ship_enter_ship(body) -> void:
 	var message:String 
@@ -747,7 +765,7 @@ func _on_ship_enter_ship(body) -> void:
 		if ship_visited == false:
 			await get_tree().create_timer(0.05).timeout
 			var interaction_message : String = 'My ship is damaged.\nI will need to collect wood to repair it.'
-			#interaction_visit(interaction_message, Enum.Visit.SHIP)
+			interaction_visit(interaction_message, Enum.Visit.SHIP)
 			main_ui.update_message(interaction_message)
 		print('Friend')
 		message = 'Collect more wood!'
@@ -759,12 +777,8 @@ func check_ship():
 		var message = 'Collect more wood!'
 		main_ui.update_message(message)
 	if at_ship == true and ship.ship_health >= ship.max_ship_health and interaction_ui.grab_focus_once == false and no_repair == false:
-		interaction_ui.select()
-		#await get_tree().create_timer(0.05).timeout
 		var interaction_message : String = 'Repair Ship and Set Sail Now?'
-		interaction_ui.update_message(interaction_message)
-		interaction_ui.show()
-		Engine.time_scale = 0
+		interaction_yes_no(interaction_message, Enum.Visit.SHIP)
 
 
 func _on_ship_exit_ship(body) -> void:
@@ -777,34 +791,45 @@ func _on_ship_exit_ship(body) -> void:
 	
 
 
-func _on_interaction_ui_no() -> void:
+func _on_interaction_ui_no(visit) -> void:
 	interaction_ui.grab_focus_once = true
 	print("More Work To Do!")
 	$Timers/NoRepairTimer.start()
 	no_repair = true
+	transacted = true
 	interaction_ui.hide()
 	Engine.time_scale = 1
 
 
-func _on_interaction_ui_yes() -> void:
+func _on_interaction_ui_yes(visit) -> void:
+	print(visit)
 	interaction_ui.grab_focus_once = true
 	interaction_ui.hide()
 	Engine.time_scale = 1
-	await get_tree().create_timer(1.0).timeout
-	print("You Survived The Island!")
-	get_tree().change_scene_to_file("res://scenes/Cutscenes/cutscene.tscn")
+	if visit == Enum.Visit.SHIP:
+		await get_tree().create_timer(1.0).timeout
+		print("You Survived The Island!")
+		get_tree().change_scene_to_file("res://scenes/Cutscenes/cutscene.tscn")
+	if visit == Enum.Visit.STATUE:
+		print("Make a deal with the Statue")
+		transacted = true
+		interaction_statue_start()
+		
 
 func update_visit(visit):
 	if visit == Enum.Visit.SHIP:
 		ship_visited = true
 	if visit == Enum.Visit.PYRE:
 		giant_pyre_visited = true
+	if visit == Enum.Visit.STATUE:
+		statue_visited = true
 
 
 func _on_interaction_ui_ok(visit: Enum.Visit) -> void:
 	update_visit(visit)
 	interaction_ui.hide()
 	Engine.time_scale = 1
+
 
 func _on_interaction_ui_take(_interaction: Enum.Tool) -> void:
 	interaction_ui.hide()
@@ -872,7 +897,57 @@ func _on_wave_timer_timeout() -> void:
 func _on_no_repair_timer_timeout() -> void:
 	no_repair = false
 
+
+
 func _on_dungeon_approach_statue() -> void:
+	if statue_visited == false:
+		var message = "A Human?! At last, someone other than those wretched blobs!\n\nPerhaps you could help me?\nBring me back the GOLD the blobs have stolen from me\n and you will be rewarded!"
+		interaction_visit(message, Enum.Visit.STATUE)
+		print(message)
+	if statue_visited == true and interaction_ui.grab_focus_once == false and transacted == false:
+		var interaction_message : String = 'Do you have any gold for me?'
+		interaction_yes_no(interaction_message, Enum.Visit.STATUE)
+
+func interaction_statue_start():
+	interaction_ui.hide()
+	store_screen_ui.show()
+	store_screen_ui.grab_focus_item_1()
+	Engine.time_scale = 0
+	if statue_transactions == 0:
+		store_screen_ui.update_items(Enum.Item.APPLE, Enum.Item.WOOD, Enum.Item.STONE)
+
+func interaction_statue_finish(item, cost):
+	Engine.time_scale = 1
+	interaction_ui.show()
+	store_screen_ui.hide()
+	await get_tree().create_timer(0.3).timeout
+	interaction_ui.grab_focus_once = false
+	if player.inventory.count(Enum.Item.GOLD) >= cost:
+		add_inventory(item)
+		for num in range(cost):
+			remove_inventory(Enum.Item.GOLD)
+	else:
+		var messages : Array[String]= ["You do not have enough gold!", "Come back after you've slain more blobs.", "Are you trying to decieve ME!\nCome back with more gold."]
+		main_ui.update_message(messages.pick_random())
+
+func _on_dungeon_warning() -> void:
 	var message = "WHO ENTERS MY LAIR?"
 	main_ui.update_message(message)
 	print(message)
+
+func _on_dungeon_leave_statue() -> void:
+	await get_tree().create_timer(0.3).timeout
+	interaction_ui.grab_focus_once = false
+
+func _on_store_screen_ui_buy_item_1(item, cost) -> void:
+	interaction_statue_finish(item, cost)
+
+func _on_store_screen_ui_buy_item_2(item, cost) -> void:
+	interaction_statue_finish(item, cost)
+
+func _on_store_screen_ui_buy_item_3(item, cost) -> void:
+	interaction_statue_finish(item, cost)
+
+
+func _on_transacting_timer_timeout() -> void:
+	transacted = false

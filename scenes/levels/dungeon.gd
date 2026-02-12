@@ -1,12 +1,15 @@
 extends Node2D
 
 signal exit_dungeon 
+signal warning
 signal approach_statue
+signal leave_statue
 var inside_dungeon : bool = false
 
 
 func _on_entered_area_2d_body_entered(_body: Node2D) -> void:
 	inside_dungeon = true
+	warning.emit()
 	print(inside_dungeon)
 
 func _on_exit_area_2d_body_entered(_body: Node2D) -> void:
@@ -24,3 +27,6 @@ func enable_layers():
 	$WaterLayer.enabled = true
 	$GrassLayer.enabled = true
 	
+
+func _on_statue_area_2d_body_exited(body: Node2D) -> void:
+	leave_statue.emit()
