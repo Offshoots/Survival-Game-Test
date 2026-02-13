@@ -15,7 +15,7 @@ var death_scene = preload("res://scenes/ui/death_screen.tscn")
 @onready var move_state_machine = $Animation/AnimationTree.get("parameters/MoveStateMachine/playback")
 @onready var tool_state_machine = $Animation/AnimationTree.get("parameters/ToolStateMachine/playback")
 var current_tool: Enum.Tool #= Enum.Tool.AXE
-var current_seed: Enum.Seed #= Enum.Seed.TOMATO
+var current_seed: Enum.Seed = Enum.Seed.TOMATO
 var current_inventory: Enum.Item 
 var new_item : bool = false
 var new_tool : bool = false
@@ -32,6 +32,7 @@ var death : bool = false
 var taking_damage : bool = false
 var in_enemy_range : bool = false
 var dash_cooldown : bool = false
+var inside_dungeon : bool = false
   
 var max_health : int = 15
 var health := max_health:
@@ -72,9 +73,10 @@ func _physics_process(_delta: float) -> void:
 		new_tool = false
 		tool_ui.add_tool = true
 
-#Storing items in an array for now, don't know if I'll use
-	if new_item == true:
-		inventory.append(current_inventory)
+##Storing items in an array for now, don't know if I'll use.
+#This is now taken care of in the level scene function add_inventory
+	#if new_item == true:
+		#inventory.append(current_inventory)
 	
 	#Retain the last direction we traveled so that it can be used for calculating the correct grid coordinate for the tool use animation.
 	if direction:
@@ -116,10 +118,10 @@ func get_basic_input():
 	if Input.is_action_just_pressed("dash"):
 		dash_speed()
 	
-	#if Input.is_action_just_pressed("seed_forward"):
-		#var dir2 = Input.get_action_strength("seed_forward")
-		#current_seed = posmod((current_seed + int(dir2)), Enum.Seed.size()) as Enum.Seed
-		#$ToolUI.reveal_seed()
+	if Input.is_action_just_pressed("seed_forward"):
+		var dir2 = Input.get_action_strength("seed_forward")
+		current_seed = posmod((current_seed + int(dir2)), Enum.Seed.size()) as Enum.Seed
+		$ToolUI.reveal_seed()
 	
 	#if Input.is_action_just_pressed("diagnose"):
 		#diagnose.emit()

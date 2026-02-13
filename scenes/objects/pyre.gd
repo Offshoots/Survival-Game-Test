@@ -15,7 +15,8 @@ var health := 4:
 			$AnimatedSprite2D.hide()
 			$PointLight2D.hide()
 			$PanelContainer.hide()
-			$CollisionShape2D.queue_free()
+			$CollisionPolygon2D.queue_free()
+			#$CollisionShape2D.queue_free()
 			stone = true
 		else:
 			stone = false

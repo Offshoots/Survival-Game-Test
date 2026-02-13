@@ -86,7 +86,7 @@ func combat_stats():
 	
 func sea_stats():
 	var journey : String
-	days_worth_of_supplies = (Scores.score_apples_collected - Scores.score_apples_eaten)/10 + Scores.motivation_boost
+	days_worth_of_supplies = (Scores.score_apples_collected - Scores.score_apples_eaten)/10 + Scores.score_plants_harvested/2 + Scores.motivation_boost
 	for day in range(days_worth_of_supplies):
 		print(day)
 		distance += randi_range(1,100)

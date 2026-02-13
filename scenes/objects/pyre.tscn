@@ -37,14 +37,11 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_orev0"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k8vn0"]
 resource_local_to_scene = true
 shader = ExtResource("5_02tvp")
 shader_parameter/Color = Color(1, 1, 1, 1)
 shader_parameter/Progress = 0.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_osgk1"]
-size = Vector2(23, 17)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ehmvm"]
 radius = 63.0
@@ -68,14 +65,13 @@ sprite_frames = SubResource("SpriteFrames_ac8kh")
 autoplay = "default"
 
 [node name="FlashSprite2D" parent="." unique_id=1425081756 instance=ExtResource("4_k8vn0")]
-material = SubResource("ShaderMaterial_orev0")
+material = SubResource("ShaderMaterial_k8vn0")
 position = Vector2(-0.19999695, -7.199997)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_ac8kh")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1629013321]
-position = Vector2(0.30000305, 0.30000305)
-shape = SubResource("RectangleShape2D_osgk1")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1669671412]
+polygon = PackedVector2Array(-7, -7, 7, -7, 15, 7, 9, 10, -6, 10, -13, 8)
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1365646536]
 position = Vector2(-0.19999695, -13.199997)
@@ -86,7 +82,7 @@ collision_mask = 14
 shape = SubResource("CircleShape2D_ehmvm")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1649821778]
-position = Vector2(-0.19999695, -13.199997)
+position = Vector2(1, -13)
 texture = ExtResource("2_ehmvm")
 texture_scale = 0.4
 

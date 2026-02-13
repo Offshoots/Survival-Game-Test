@@ -71,6 +71,8 @@ func hide_exit_area():
 
 func disable_collision_polygon():
 	$CollisionPolygon2D.disabled  = true
+	$Area2D.hide()
 
 func enable_collision_polygon():
 	$CollisionPolygon2D.disabled  = false
+	$Area2D.show()

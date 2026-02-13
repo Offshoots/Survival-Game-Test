@@ -3,6 +3,7 @@ extends Control
 signal buy_item_1
 signal buy_item_2
 signal buy_item_3
+signal nevermind
 
 @onready var texture_rect_1: TextureRect = $MarginContainer/HBoxContainer/VBoxContainer/TextureRect1
 @onready var label_1: Label = $MarginContainer/HBoxContainer/VBoxContainer/Label1
@@ -13,6 +14,7 @@ signal buy_item_3
 @onready var texture_rect_3: TextureRect = $MarginContainer/HBoxContainer/VBoxContainer3/TextureRect3
 @onready var label_3: Label = $MarginContainer/HBoxContainer/VBoxContainer3/Label3
 @onready var button_3: Button = $MarginContainer/HBoxContainer/VBoxContainer3/Button3
+@onready var return_button: Button = $MarginContainer/HBoxContainer/VBoxContainer4/ReturnButton
 
 #Set up functions to set prices and exchange gold for items in inventory back on the level scence
 var store_item_1 
@@ -55,3 +57,7 @@ func update_items(item_1 : Enum.Item, item_2 : Enum.Item, item_3 : Enum.Item):
 	texture_rect_3.texture = load(Data.INVENTORY_DATA[item_3]['icon_texture'])
 	label_3.text = Data.INVENTORY_DATA[item_3]['name'] + "
 	Cost: " + str(Data.INVENTORY_DATA[item_3]['cost'])
+
+
+func _on_return_button_pressed() -> void:
+	nevermind.emit()

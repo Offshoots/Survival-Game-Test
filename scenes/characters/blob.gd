@@ -60,47 +60,45 @@ func _ready() -> void:
 	print(colors)
 	color_selected = colors.pick_random()
 	print(color_selected)
-	#if Scores.score_days_survived > 1:
-		#target = [player, ship].pick_random()
-	#else:
-		#target = player
+
 
 func _physics_process(delta: float) -> void:
-	if tracking:
-		elapsed_attack_time += delta
-		if elapsed_attack_time > damage_interval:
-			elapsed_attack_time -= damage_interval
-			ship_damaged.emit()
-	
-	if leap_speed == true:
-		speed =  leap_force
-	else:
-		speed = normal_speed
-	direction = to_local(nav_agent.get_next_path_position()).normalized()
-	velocity = direction * speed + push_direction
-	
-	#Check for lead condition and the execute leap physics
-	if days > 3:
-		normal_speed = 25
-	if days > 5:
-		normal_speed = 30
-		leap_force = 55
-	if days > 9:
-		normal_speed = 35
-		leap_force = 60
+	if player.inside_dungeon == false:
+		if tracking:
+			elapsed_attack_time += delta
+			if elapsed_attack_time > damage_interval:
+				elapsed_attack_time -= damage_interval
+				ship_damaged.emit()
 		
-	if color_selected == Enum.Blob.RED:
-		if days > 4:
-			flash_sprite_2d.modulate = Color("ff005f")
-			normal_speed = 70
-	if color_selected == Enum.Blob.GREEN:
+		if leap_speed == true:
+			speed =  leap_force
+		else:
+			speed = normal_speed
+		direction = to_local(nav_agent.get_next_path_position()).normalized()
+		velocity = direction * speed + push_direction
+		
+		#Check for lead condition and the execute leap physics
 		if days > 3:
-			flash_sprite_2d.modulate = Color("00ff00")
-			if global_position.distance_to(target.global_position) < 300 and !leap_cooldown:
-				leap_visual()
-				leap_at_target()
-				start_leap_cooldown()
-	move_and_slide()
+			normal_speed = 25
+		if days > 5:
+			normal_speed = 30
+			leap_force = 55
+		if days > 9:
+			normal_speed = 35
+			leap_force = 60
+			
+		if color_selected == Enum.Blob.RED:
+			if days > 4:
+				flash_sprite_2d.modulate = Color("ff005f")
+				normal_speed = 70
+		if color_selected == Enum.Blob.GREEN:
+			if days > 3:
+				flash_sprite_2d.modulate = Color("00ff00")
+				if global_position.distance_to(target.global_position) < 300 and !leap_cooldown:
+					leap_visual()
+					leap_at_target()
+					start_leap_cooldown()
+		move_and_slide()
 
 func leap_visual():
 	var tween = create_tween()
@@ -119,7 +117,6 @@ func start_leap_cooldown():
 	leap_cooldown = true
 	var rand_cooldown = randi_range(0,leap_cooldown_freq_start)
 	var cooldown_time = 0.25 * rand_cooldown
-	#print(cooldown_time)
 	await get_tree().create_timer(cooldown_time).timeout
 	leap_cooldown = false
 	
@@ -161,4 +158,3 @@ func _on_timer_timeout() -> void:
 func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event.is_action_pressed('click'):
 		slice.emit()
-		print('slice')

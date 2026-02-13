@@ -107,7 +107,7 @@ func _ready() -> void:
 	#var rand_enemy = randi_range(2,3)
 	#spawn_enemies(rand_enemy)
 	interaction_ui.hide()
-	print(ship.position)
+	
 	
 	
 
@@ -135,7 +135,6 @@ func _process(delta: float) -> void:
 	var day_time = $Timers/DayTimer.time_left
 	var night_time = $Timers/NightTimer.time_left
 	main_ui.update_time(day_time, night_time, day_timer)
-	#print(daytime_point)
 	$Overlay/DayTimeColor.color = color
 	update_health()
 	update_ship_progress()
@@ -167,7 +166,7 @@ func _process(delta: float) -> void:
 	#When 1/3 of the time has past, a wave will be spawned at a random time over the next 1/3 of the night
 	if int($Timers/NightTimer.wait_time*2/3) == int(night_time) and extra_wave == false:
 		extra_wave = true
-		$Timers/WaveTimer.wait_time = randi_range(0,int($Timers/NightTimer.wait_time/3))
+		$Timers/WaveTimer.wait_time = randi_range(1,int($Timers/NightTimer.wait_time/3))
 		$Timers/WaveTimer.start()
 
 	
@@ -288,7 +287,7 @@ func build(craft: Enum.Craft, pos: Vector2):
 			#Test out removing the layer with navigation and placing a tile without navigation.
 			$Layers/GrassLayer.erase_cell(grid_coord)
 			$Layers/SoilLayer.set_cells_terrain_connect([grid_coord], 0, 0)
-			print(grid_coord)
+			print("grid coord: " +str(grid_coord))
 			#Test removing the grid cells up, down, left, and right of the box
 			#$Layers/GrassLayer.erase_cell(Vector2i(grid_coord.x - 1, grid_coord.y))
 			#$Layers/GrassLayer.erase_cell(Vector2i(grid_coord.x + 1, grid_coord.y))
@@ -337,27 +336,22 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 			if !cell:
 				print("Water")
 		Enum.Tool.SEED:
-			if has_soil and grid_coord not in used_cells:
-				var plant_res = PlantResource.new()
-				#Setup function for the plant data (in plant resource)
-				plant_res.setup(player.current_seed)
-				var plant = plant_scene.instantiate()
-				#Setup function for the plant scene
-				plant.setup(grid_coord, $Objects, plant_res, plant_death)
-				used_cells.append(grid_coord)
+			#Organized Plant_Seed function for each seed type:
+			if player.inventory.count(Enum.Item.TOMATO_SEED) > 0 and player.current_seed == Enum.Seed.TOMATO:
+				print("plant tomato")
+				remove_inventory(Enum.Item.TOMATO_SEED)
+				plant_seed(has_soil, grid_coord)
+			if player.inventory.count(Enum.Item.CORN_SEED) > 0 and player.current_seed == Enum.Seed.CORN:
+				plant_seed(has_soil, grid_coord)
+			if player.inventory.count(Enum.Item.WHEAT_SEED) > 0 and player.current_seed == Enum.Seed.WHEAT:
+				plant_seed(has_soil, grid_coord)
+			if player.inventory.count(Enum.Item.PUMPKIN_SEED) > 0 and player.current_seed == Enum.Seed.PUMPKIN:
+				plant_seed(has_soil, grid_coord)
 				
-				#print(used_cells)
-				#After Identifying that the used_cell is not cleared when a plant dies due to decay, because the decay function is in the plant_res script. 
-				#The "death_coord" function passes the grid coord of the plant and the plant_death function that will be connected
-				plant_res.death_coord(grid_coord, plant_death)
-				
-				var plant_info = plant_info_scene.instantiate()
-				plant_info.setup(plant_res)
-				$Overlay/CanvasLayer/PlantInfoContainer.add(plant_info)
 		Enum.Tool.PICKAXE:
 			#For now group for Rock has been changed from 'Objects' to new group 'Rock'.
 			for object in get_tree().get_nodes_in_group('Rock'):
-				if object.position.distance_to(pos)< 20 and (object.position.direction_to(player.position).round() == -player.last_direction):
+				if object.position.distance_to(player.position) < 20 and ((object.position.direction_to(player.position).round().x == -player.last_direction.x) or (object.position.direction_to(player.position).round().y == -player.last_direction.y)):
 					print(object.position.distance_to(pos))
 					object.hit(tool)
 					if object.stone:
@@ -369,12 +363,12 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 						var item_drop = Enum.Item.STONE
 						var stone_dropped = randi_range(6,10)
 						for num in stone_dropped:
-							player.inventory.append(item_drop)
+							#player.inventory.append(item_drop)
 							add_inventory(item_drop)
 							Scores.score_stone_collected += 1
 			#For now group for GiantPyre has been changed to new group 'GreatPyre'.
 			for object in get_tree().get_nodes_in_group('GreatPyre'):
-				if object.position.distance_to(pos)< 50 and (object.position.direction_to(player.position).round() == -player.last_direction):
+				if object.position.distance_to(player.position) < 50 and ((object.position.direction_to(player.position).round().x == -player.last_direction.x) or (object.position.direction_to(player.position).round().y == -player.last_direction.y)):
 					print(object.position.distance_to(pos))
 					object.hit(tool)
 					if object.stone:
@@ -386,11 +380,11 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 						var item_drop = Enum.Item.STONE
 						var stone_dropped = 1
 						for num in stone_dropped:
-							player.inventory.append(item_drop)
+							#player.inventory.append(item_drop)
 							add_inventory(item_drop)
 							Scores.score_stone_collected += 1
 			for object in get_tree().get_nodes_in_group('Pyres'):
-				if object.position.distance_to(pos)< 20 and (object.position.direction_to(player.position).round() == -player.last_direction):
+				if object.position.distance_to(player.position) < 20 and ((object.position.direction_to(player.position).round().x == -player.last_direction.x) or (object.position.direction_to(player.position).round().y == -player.last_direction.y)):
 					print(object.position.distance_to(pos))
 					object.hit(tool)
 					if object.stone:
@@ -402,25 +396,25 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 						var item_drop = Enum.Item.STONE
 						var stone_dropped = 6
 						for num in stone_dropped:
-							player.inventory.append(item_drop)
+							#player.inventory.append(item_drop)
 							add_inventory(item_drop)
 							Scores.score_stone_collected += 1
 			#Currently all stumps are still managed by the "Tree" sceene in group 'Objects'.
 			for object in get_tree().get_nodes_in_group('Objects'):
-				if object.position.distance_to(pos)< 20 and (object.position.direction_to(player.position).round() == -player.last_direction):
+				if object.position.distance_to(player.position) < 20 and ((object.position.direction_to(player.position).round().x == -player.last_direction.x) or (object.position.direction_to(player.position).round().y == -player.last_direction.y)):
 					print(object.position.distance_to(pos))
 					object.hit(tool)
 					if object.stump_wood:
 						var item_drop = Enum.Item.WOOD
 						var wood_dropped = 2
 						for num in wood_dropped:
-							player.inventory.append(item_drop)
+							#player.inventory.append(item_drop)
 							add_inventory(item_drop)
 							Scores.score_wood_collected += 1
 		Enum.Tool.SWORD:
 			#For now group for blob has been changed from 'Objects' to new group 'Enemy'.
 			for object in get_tree().get_nodes_in_group('Enemy'):
-				if object.position.distance_to(pos) < 20 and (object.position.direction_to(player.position).round() == -player.last_direction):
+				if object.position.distance_to(player.position) < 20 and ((object.position.direction_to(player.position).round().x == -player.last_direction.x) or (object.position.direction_to(player.position).round().y == -player.last_direction.y)):
 					print(object.position.distance_to(pos))
 					object.hit(tool)
 					if object.gold:
@@ -432,13 +426,13 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 						var item_drop = Enum.Item.GOLD
 						var gold_dropped = randi_range(3,3+day*2)
 						for num in gold_dropped:
-							player.inventory.append(item_drop)
+							#player.inventory.append(item_drop)
 							add_inventory(item_drop)
 							Scores.score_gold_collected += 1
 		Enum.Tool.AXE:
 			#For now group for blob has been changed from 'Objects' to new group 'Enemy'.
 			for object in get_tree().get_nodes_in_group('Enemy'):
-				if object.position.distance_to(pos)< 20 and (object.position.direction_to(player.position).round() == -player.last_direction):
+				if object.position.distance_to(player.position) < 20 and ((object.position.direction_to(player.position).round().x == -player.last_direction.x) or (object.position.direction_to(player.position).round().y == -player.last_direction.y)):
 					print(object.position.distance_to(pos))
 					object.hit(tool)
 					if object.gold:
@@ -450,15 +444,16 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 						var item_drop = Enum.Item.GOLD
 						var gold_dropped = randi_range(3,3+day*2)
 						for num in gold_dropped:
-							player.inventory.append(item_drop)
+							#player.inventory.append(item_drop)
 							add_inventory(item_drop)
 							Scores.score_gold_collected += 1
 			#Currently all trees are in group 'Objects'.
 			for object in get_tree().get_nodes_in_group('Objects'):
-				if object.position.distance_to(pos) < 20 and (object.position.direction_to(player.position).round() == -player.last_direction):
-					#print(player.last_direction)
-					print(object.position.distance_to(pos))
-					#print(object.position.direction_to(player.position).round())
+				if object.position.distance_to(player.position) < 50:
+					print('Player direction: ' + str(player.last_direction))
+					print('Distance to: ' + str(object.position.distance_to(pos)))
+					print('Direction to Player: ' + str(object.position.direction_to(player.position).round()))
+				if object.position.distance_to(player.position) < 15 and ((object.position.direction_to(player.position).round().x == -player.last_direction.x) or (object.position.direction_to(player.position).round().y == -player.last_direction.y)):
 					object.hit(tool)
 					if object.apples:
 						if player.inventory.count(Enum.Item.APPLE) == 0:
@@ -467,17 +462,36 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 							#interaction_tool(apple_message, Enum.Item.APPLE)
 							main_ui.update_message(apple_message)
 						var item_drop = Enum.Item.APPLE
-						player.inventory.append(item_drop)
+						#player.inventory.append(item_drop)
 						add_inventory(item_drop)
 						Scores.score_apples_collected += 1
 					if object.wood:
 						var item_drop = Enum.Item.WOOD
 						var wood_dropped = randi_range(4,8)
 						for num in wood_dropped:
-							player.inventory.append(item_drop)
+							#player.inventory.append(item_drop)
 							add_inventory(item_drop)
 							Scores.score_wood_collected += 1
 						
+
+
+func plant_seed(has_soil, grid_coord):
+	if has_soil and grid_coord not in used_cells:
+		var plant_res = PlantResource.new()
+		#Setup function for the plant data (in plant resource)
+		plant_res.setup(player.current_seed)
+		var plant = plant_scene.instantiate()
+		#Setup function for the plant scene
+		plant.setup(grid_coord, $Objects, plant_res, plant_death)
+		used_cells.append(grid_coord)
+		
+		#After Identifying that the used_cell is not cleared when a plant dies due to decay, because the decay function is in the plant_res script. 
+		#The "death_coord" function passes the grid coord of the plant and the plant_death function that will be connected
+		plant_res.death_coord(grid_coord, plant_death)
+		
+		var plant_info = plant_info_scene.instantiate()
+		plant_info.setup(plant_res)
+		$Overlay/CanvasLayer/PlantInfoContainer.add(plant_info)
 
 #region Inventory Add, Remove, and Update
 #Use Bool for item pickup inside the correct scenes. If the Item is present for the event that it would be collected, then the bool is true.
@@ -491,6 +505,7 @@ func add_item(item_drop : Enum.Item):
 
 func add_inventory(item_added : Enum.Item):
 	#Created simplified code for any item (no need to check which item it is anymore):
+	player.inventory.append(item_added)
 	if player.inventory.count(item_added) == 1:
 		add_item(item_added)
 	update_inventory(item_added)
@@ -508,7 +523,6 @@ func remove_all(item_enum: Enum.Item):
 func remove_inventory(item_removed: Enum.Item):
 	#Remove one matching item from the inventory using "erase"
 	player.inventory.erase(item_removed)
-	#print(player.inventory)
 	update_inventory(item_removed)
 #endregion
 
@@ -534,7 +548,7 @@ func death_screen():
 func day_restart():
 	#Survival Mode will require food to be consumed each day. Subtract 1 apple each day:
 	#need to remove ten apples from the player.inventory array
-	for number in range(1):
+	for number in range(10):
 		#May need to improve this to take damage if not enough apples
 		if player.inventory.count(Enum.Item.APPLE) > 0:
 			remove_inventory(Enum.Item.APPLE)
@@ -620,18 +634,14 @@ func _on_day_timer_timeout() -> void:
 func _on_night_timer_timeout() -> void:
 	day_restart()
 
-
 func _on_tree_chop():
 	player.current_tool = Enum.Tool.AXE
-	print(player.current_tool)
 
 func _on_rock_smash():
 	player.current_tool = Enum.Tool.PICKAXE
-	print(player.current_tool)
-	
+
 func _on_blob_slice():
 	player.current_tool = Enum.Tool.SWORD
-	print(player.current_tool)
 
 
 func _on_main_ui_heal() -> void:
@@ -696,6 +706,7 @@ func unfreeze_level():
 
 func _on_giant_pyre_entered_dungeon() -> void:
 	print("Entered Dungeon!")
+	player.inside_dungeon = true
 	$Dungeon.enable_layers()
 	for object in get_tree().get_nodes_in_group('GreatPyre'):
 		object.call_deferred("disable_collision_polygon")
@@ -709,6 +720,7 @@ func _on_giant_pyre_entered_dungeon() -> void:
 
 func _on_dungeon_exit_dungeon() -> void:
 	$Dungeon.disable_layers()
+	player.inside_dungeon = false
 	unfreeze_level()
 	for object in get_tree().get_nodes_in_group('GreatPyre'):
 		object.call_deferred("enable_collision_polygon")
@@ -760,7 +772,6 @@ func _on_ship_enter_ship(body) -> void:
 		repair_ship_message = false
 		if ship.ship_health < ship.max_ship_health and player.inventory.count(Enum.Item.WOOD) >= 1:
 			var wood_total = player.inventory.count(Enum.Item.WOOD)
-			print(wood_total)
 			ship.ship_health += wood_total
 			remove_all(Enum.Item.WOOD)
 			print('Ship Health: ' + str(ship.ship_health))
@@ -797,6 +808,7 @@ func _on_interaction_ui_no(_visit) -> void:
 	interaction_ui.grab_focus_once = true
 	print("More Work To Do!")
 	$Timers/NoRepairTimer.start()
+	$Timers/TransactingTimer.start()
 	no_repair = true
 	transacted = true
 	interaction_ui.hide()
@@ -804,12 +816,12 @@ func _on_interaction_ui_no(_visit) -> void:
 
 
 func _on_interaction_ui_yes(visit) -> void:
-	print(visit)
+	#print(visit)
 	interaction_ui.grab_focus_once = true
 	interaction_ui.hide()
 	Engine.time_scale = 1
 	if visit == Enum.Visit.SHIP:
-		await get_tree().create_timer(1.0).timeout
+		await get_tree().create_timer(0.3).timeout
 		print("You Survived The Island!")
 		get_tree().change_scene_to_file("res://scenes/Cutscenes/cutscene.tscn")
 	if visit == Enum.Visit.STATUE:
@@ -863,6 +875,8 @@ func _on_tool_seed_seed_found() -> void:
 	var interaction_message : String = 'Seeds!\nIf I plant seeds, I can water them to grow'
 	#interaction_tool(interaction_message, Enum.Tool.WATER)
 	main_ui.update_message(interaction_message)
+	for num in range(5):
+		add_inventory(Enum.Item.TOMATO_SEED)
 
 func _on_reward_toy_toy_found() -> void:
 	await get_tree().create_timer(0.05).timeout
@@ -911,18 +925,19 @@ func _on_dungeon_approach_statue() -> void:
 		interaction_yes_no(interaction_message, Enum.Visit.STATUE)
 
 func interaction_statue_start():
-	interaction_ui.hide()
 	store_screen_ui.show()
 	store_screen_ui.grab_focus_item_1()
 	Engine.time_scale = 0
 	if statue_transactions == 0:
-		store_screen_ui.update_items(Enum.Item.APPLE, Enum.Item.WOOD, Enum.Item.STONE)
+		store_screen_ui.update_items(Enum.Item.TOMATO_SEED, Enum.Item.STONE, Enum.Item.APPLE)
+	else:
+		store_screen_ui.update_items(Enum.Item.TOMATO_SEED, Enum.Item.WOOD, Enum.Item.APPLE)
 
 func interaction_statue_finish(item, cost):
 	Engine.time_scale = 1
-	interaction_ui.show()
 	store_screen_ui.hide()
-	await get_tree().create_timer(0.3).timeout
+	transacted = false
+	await get_tree().create_timer(1).timeout
 	interaction_ui.grab_focus_once = false
 	if player.inventory.count(Enum.Item.GOLD) >= cost:
 		add_inventory(item)
@@ -931,10 +946,13 @@ func interaction_statue_finish(item, cost):
 	else:
 		var messages : Array[String]= ["You do not have enough gold!", "Come back after you've slain more blobs.", "Are you trying to decieve ME!\nCome back with more gold."]
 		main_ui.update_message(messages.pick_random())
+	#Run the smae interaction of "Approach Statue" immediately
+	_on_dungeon_approach_statue()
 
 func _on_dungeon_warning() -> void:
 	var message = "WHO ENTERS MY LAIR?"
 	main_ui.update_message(message)
+	await get_tree().create_timer(20).timeout
 	print(message)
 
 func _on_dungeon_leave_statue() -> void:
@@ -943,13 +961,27 @@ func _on_dungeon_leave_statue() -> void:
 
 func _on_store_screen_ui_buy_item_1(item, cost) -> void:
 	interaction_statue_finish(item, cost)
+	statue_transactions += 1
 
 func _on_store_screen_ui_buy_item_2(item, cost) -> void:
 	interaction_statue_finish(item, cost)
+	statue_transactions += 1
 
 func _on_store_screen_ui_buy_item_3(item, cost) -> void:
 	interaction_statue_finish(item, cost)
+	statue_transactions += 1
 
 
 func _on_transacting_timer_timeout() -> void:
 	transacted = false
+
+
+func _on_store_screen_ui_nevermind() -> void:
+	#same status updates as interaction_no
+	interaction_ui.grab_focus_once = true
+	print("More Work To Do!")
+	$Timers/TransactingTimer.start()
+	no_repair = true
+	transacted = true
+	interaction_ui.hide()
+	Engine.time_scale = 1
