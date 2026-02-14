@@ -65,5 +65,6 @@ func select():
 func update_no(message:String):
 	no_button.text = message
 	
-func update_yes(message:String):
+func update_yes(message:String, visit: Enum.Visit):
 	yes_button.text = message
+	current_visit = visit

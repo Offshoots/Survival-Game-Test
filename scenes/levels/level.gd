@@ -80,7 +80,7 @@ func _ready() -> void:
 	Scores.score_stone_collected = 0
 	Scores.stones_mined_from_great_pyre = 0
 	Scores.score_fish_caught = 0
-	Scores.score_plants_harvested = 0
+	Scores.score_tomatoes_harvested = 0
 	
 	Scores.score_enemies_killed_by_daylight = 0
 	Scores.score_enemies_killed_by_pyre = 0
@@ -151,6 +151,7 @@ func _process(delta: float) -> void:
 			pause_menu_ui.show()
 			pause_menu_ui.grab_control_focus()
 			game_paused = true
+			
 		else:
 			Engine.time_scale = 1.0
 			pause_menu_ui.hide()
@@ -182,17 +183,18 @@ func _process(delta: float) -> void:
 		$Overlay/CanvasLayer/InventoryContainer.visible = not $Overlay/CanvasLayer/InventoryContainer.visible
 	
 	if Input.is_action_just_pressed("build"):
-		#Can use enums to select different builds, but for now build a box
-		#if player.inventory.count(Enum.Item.WOOD) >= 1:
-			#var craft = Enum.Craft.BOX
-			#build(craft, placement_pos)
-			#remove_inventory(Enum.Item.WOOD)
-		if player.inventory.count(Enum.Item.STONE) >= 12:
-			var craft = Enum.Craft.PYRE
-			build(craft, placement_pos)
-			for num in range(12):
-				remove_inventory(Enum.Item.STONE)
-				Scores.score_pyres_built += 1
+		if game_paused == false:
+			#Can use enums to select different builds, but for now build a box
+			#if player.inventory.count(Enum.Item.WOOD) >= 1:
+				#var craft = Enum.Craft.BOX
+				#build(craft, placement_pos)
+				#remove_inventory(Enum.Item.WOOD)
+			if player.inventory.count(Enum.Item.STONE) >= 12:
+				var craft = Enum.Craft.PYRE
+				build(craft, placement_pos)
+				for num in range(12):
+					remove_inventory(Enum.Item.STONE)
+					Scores.score_pyres_built += 1
 
 	if player.health < player.max_health:
 		main_ui.show_heal()
@@ -216,6 +218,8 @@ func _process(delta: float) -> void:
 		var item_dropped = player.current_inventory
 		add_inventory(item_dropped)
 		player.new_item = false
+		if item_dropped == Enum.Item.TOMATO:
+			Scores.score_tomatoes_harvested += 1
 
 	if player.death == true or ship.death == true:
 		player_dead() 
@@ -702,7 +706,6 @@ func unfreeze_level():
 		$Timers/DayTimer.paused = false
 	else:
 		$Timers/NightTimer.paused = false
-	$Dungeon.show()
 
 func _on_giant_pyre_entered_dungeon() -> void:
 	print("Entered Dungeon!")
@@ -729,6 +732,7 @@ func _on_dungeon_exit_dungeon() -> void:
 	$Layers.show()
 	$Layers/GrassLayer.enabled = true
 	$Objects.show()
+	$Dungeon.hide()
 
 
 func _on_giant_pyre_exited_pyre_doorway() -> void:
@@ -752,10 +756,10 @@ func interaction_tool(message : String, interaction):
 func interaction_yes_no(message: String, visit : Enum.Visit):
 	interaction_ui.select()
 	if visit == Enum.Visit.SHIP:
-		interaction_ui.update_yes("Yes\nGet Me OUT of HERE!")
+		interaction_ui.update_yes("Yes\nGet Me OUT of HERE!", visit)
 		interaction_ui.update_no("No\nI'll gather more resources\nfor the journey home.")
 	if visit == Enum.Visit.STATUE:
-		interaction_ui.update_yes("Yes")
+		interaction_ui.update_yes("Yes", visit)
 		interaction_ui.update_no("No")
 	interaction_ui.update_message(message)
 	interaction_ui.show()
@@ -933,15 +937,16 @@ func interaction_statue_start():
 	else:
 		store_screen_ui.update_items(Enum.Item.TOMATO_SEED, Enum.Item.WOOD, Enum.Item.APPLE)
 
-func interaction_statue_finish(item, cost):
+func interaction_statue_finish(item, cost, qty):
 	Engine.time_scale = 1
 	store_screen_ui.hide()
 	transacted = false
 	await get_tree().create_timer(1).timeout
 	interaction_ui.grab_focus_once = false
-	if player.inventory.count(Enum.Item.GOLD) >= cost:
-		add_inventory(item)
-		for num in range(cost):
+	if player.inventory.count(Enum.Item.GOLD) >= (cost*qty):
+		for num in range(qty):
+			add_inventory(item)
+		for num in range(cost*qty):
 			remove_inventory(Enum.Item.GOLD)
 	else:
 		var messages : Array[String]= ["You do not have enough gold!", "Come back after you've slain more blobs.", "Are you trying to decieve ME!\nCome back with more gold."]
@@ -959,16 +964,16 @@ func _on_dungeon_leave_statue() -> void:
 	await get_tree().create_timer(0.5).timeout
 	interaction_ui.grab_focus_once = false
 
-func _on_store_screen_ui_buy_item_1(item, cost) -> void:
-	interaction_statue_finish(item, cost)
+func _on_store_screen_ui_buy_item_1(item, cost, qty) -> void:
+	interaction_statue_finish(item, cost, qty)
 	statue_transactions += 1
 
-func _on_store_screen_ui_buy_item_2(item, cost) -> void:
-	interaction_statue_finish(item, cost)
+func _on_store_screen_ui_buy_item_2(item, cost, qty) -> void:
+	interaction_statue_finish(item, cost, qty)
 	statue_transactions += 1
 
-func _on_store_screen_ui_buy_item_3(item, cost) -> void:
-	interaction_statue_finish(item, cost)
+func _on_store_screen_ui_buy_item_3(item, cost, qty) -> void:
+	interaction_statue_finish(item, cost, qty)
 	statue_transactions += 1
 
 

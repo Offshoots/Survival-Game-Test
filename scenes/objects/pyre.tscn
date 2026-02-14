@@ -52,12 +52,6 @@ collision_layer = 4
 collision_mask = 8
 script = ExtResource("1_7epyt")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1368255943]
-visible = false
-position = Vector2(-0.19999695, -7.199997)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_ac8kh")
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1413525050]
 position = Vector2(-0.19999695, -7.199997)
 scale = Vector2(0.5, 0.5)
