@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ba1bb6c2dned3" path="res://scenes/Ending/score_screen.gd" id="1_4d2gj"]
 [ext_resource type="VideoStream" uid="uid://bk32035gi5oqs" path="res://videos/Viking_Ship_Video_Loop_Generation 2.ogv" id="2_2iisf"]
-[ext_resource type="Texture2D" uid="uid://vcnm26u31wyv" path="res://graphics/backgrounds/Final credits The lost viking 2.png" id="3_c021j"]
+[ext_resource type="Texture2D" uid="uid://c8jbtsgnw21wv" path="res://graphics/backgrounds/Final credits The lost viking 3.png" id="2_c021j"]
 
 [node name="ScoreScreen" type="Control" unique_id=484245641]
 layout_mode = 3
@@ -20,7 +20,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_c021j")
+texture = ExtResource("2_c021j")
 
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=1997740894]
 custom_minimum_size = Vector2(2130, 1200)

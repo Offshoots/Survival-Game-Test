@@ -19,7 +19,7 @@ extends Control
 @onready var sea_stats_label: RichTextLabel = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/VBoxContainer2/PanelContainer2/SeaStatsLabel
 
 var journey_results = ["Lost at Sea", "Lost in the Storm", "Disappeared in the Maelstrom"]
-var victory_threshold = 25
+var victory_threshold = 1
 var days_worth_of_supplies = 0
 var victory_days = 0
 var victory_score = 0
@@ -29,6 +29,7 @@ var distance = 0
 var victory : bool = false
 
 func _ready() -> void:
+	Scores.score_plants_harvested = Scores.score_pumpkins_harvested + Scores.score_wheat_harvested + Scores.score_corn_harvested + Scores.score_tomatoes_harvested
 	victory_button.hide()
 	return_container.hide()
 	$CreditTexture.hide()
@@ -51,6 +52,7 @@ func _ready() -> void:
 		sea_stats_label.text = "Days Worth of Supplies =  " + "[color=green]" + str(days_worth_of_supplies) + "[/color]" + "
 		Distance Sailed = " +  "[color=green]" + str(distance) + "[/color]" + "
 		Journey Result: " + "[color=green]You made it home![/color]"
+	
 
 func _on_main_menu_button_pressed() -> void:
 	AudioManager.music_player.stop()
@@ -86,7 +88,7 @@ func combat_stats():
 	
 func sea_stats():
 	var journey : String
-	days_worth_of_supplies = (Scores.score_apples_collected - Scores.score_apples_eaten)/10 + Scores.score_plants_harvested/2 + Scores.motivation_boost
+	days_worth_of_supplies = (Scores.score_apples_collected - Scores.score_apples_eaten) + Scores.score_tomatoes_harvested * 0.5 + Scores.score_corn_harvested + Scores.score_wheat_harvested * 1.5 + Scores.score_pumpkins_harvested * 3 + Scores.motivation_boost
 	for day in range(days_worth_of_supplies):
 		print(day)
 		distance += randi_range(1,100)
@@ -142,17 +144,18 @@ func _on_victory_button_pressed() -> void:
 
 func _on_credit_video_stream_player_finished() -> void:
 	$CreditVideoStreamPlayer.hide()
+	credit_texture.texture = load("res://graphics/backgrounds/Final credits The lost viking 3.png")
 	$CreditTexture.show()
 
 
 func _on_return_button_pressed() -> void:
-	main_menu_button.grab_focus()
 	main_menu_button.show()
 	quit_button.show()
 	victory_button.hide()
+	credit_texture.texture = load("res://graphics/backgrounds/Final credits The lost viking background.png")
 	margin_container.show()
 	return_container.hide()
-
+	main_menu_button.grab_focus()
 
 func _on_restart_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/levels/level.tscn")

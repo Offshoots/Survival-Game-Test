@@ -21,6 +21,7 @@ var placement_pos : Vector2
 
 var day: int = 1
 var statue_transactions : int = 0
+var last_statue_transaction: int = 0
 var day_timer: bool = true
 var statue_visited : bool = false
 var giant_pyre_visited : bool = false
@@ -56,14 +57,16 @@ var wheat: int
 @onready var pause_menu_ui: Control = $Overlay/CanvasLayer/PauseMenuUI
 @onready var store_screen_ui: Control = $Overlay/CanvasLayer/StoreScreenUI
 
+#Create a store array here. Can duplicate it and the create a random numer in the size to pop_at to select each of the thre items to show in the storefront.
+var store : Array[Enum.Item] = [Enum.Item.APPLE, Enum.Item.WOOD, Enum.Item.STONE, Enum.Item.TOMATO_SEED, Enum.Item.CORN_SEED, Enum.Item.PUMPKIN_SEED, Enum.Item.WHEAT_SEED, Enum.Item.HEART, Enum.Item.STRENGTH, Enum.Item.SPEED]
 
-#Test these unstored variabled for the connect signals for rewards
 
 
 func _ready() -> void:
 	dungeon.hide()
 	store_screen_ui.hide()
 	$Dungeon.disable_layers()
+	$Layers/DebugLayer.hide()
 	Scores.score_dead = false
 	Scores.ship_destroyed = false
 	Scores.starved_dead = false
@@ -81,6 +84,10 @@ func _ready() -> void:
 	Scores.stones_mined_from_great_pyre = 0
 	Scores.score_fish_caught = 0
 	Scores.score_tomatoes_harvested = 0
+	Scores.score_corn_harvested = 0
+	Scores.score_wheat_harvested = 0
+	Scores.score_pumpkins_harvested = 0
+	Scores.score_plants_harvested = Scores.score_pumpkins_harvested + Scores.score_wheat_harvested + Scores.score_corn_harvested + Scores.score_tomatoes_harvested
 	
 	Scores.score_enemies_killed_by_daylight = 0
 	Scores.score_enemies_killed_by_pyre = 0
@@ -97,8 +104,8 @@ func _ready() -> void:
 	player.get_node("Sprite2D").texture = Data.PLAYER_SKINS[player_selected]['texture']
 	Engine.time_scale = 1.0
 	pause_menu_ui.hide()
-	var rand_tree = randi_range(50,70)
-	var rand_rock = randi_range(8,20)
+	var rand_tree = randi_range(70,110)
+	var rand_rock = randi_range(12,20)
 	spawn_trees(rand_tree)
 	spawn_rocks(rand_rock)
 	fade_transition.color.a = 0.0
@@ -108,8 +115,8 @@ func _ready() -> void:
 	#spawn_enemies(rand_enemy)
 	interaction_ui.hide()
 	
-	
-	
+	#Create first storefront:
+	randomize_store()
 
 func fade_out():
 	var tween := create_tween()
@@ -144,6 +151,7 @@ func _process(delta: float) -> void:
 	#if Input.is_action_just_pressed("day_change"):
 		#day_restart()
 	
+	
 	#"pause_menu" opens up the InteractionUI but for a game pause
 	if Input.is_action_just_pressed("pause_menu"):
 		if game_paused == false:
@@ -156,8 +164,12 @@ func _process(delta: float) -> void:
 			Engine.time_scale = 1.0
 			pause_menu_ui.hide()
 			game_paused = false
-		
-		
+	
+	if player.current_tool == Enum.Tool.WATER or player.current_tool == Enum.Tool.SEED or player.current_tool == Enum.Tool.HOE:
+		$Layers/DebugLayer.show()
+	else:
+		$Layers/DebugLayer.hide()
+	
 	#Spawn extra waves of Enemies after Day 1. Adjust difficulty as necessary.
 	if day == 1:
 		extra_wave = true
@@ -169,7 +181,6 @@ func _process(delta: float) -> void:
 		extra_wave = true
 		$Timers/WaveTimer.wait_time = randi_range(1,int($Timers/NightTimer.wait_time/3))
 		$Timers/WaveTimer.start()
-
 	
 	if ship.ship_health >= ship.max_ship_health and interaction_ui.grab_focus_once == false and repair_ship_message == false:
 		repair_ship_message = true
@@ -177,7 +188,6 @@ func _process(delta: float) -> void:
 		print(final_message)
 		main_ui.update_message(final_message)
 	
-
 	
 	if Input.is_action_just_pressed("inventory"):
 		$Overlay/CanvasLayer/InventoryContainer.visible = not $Overlay/CanvasLayer/InventoryContainer.visible
@@ -220,6 +230,12 @@ func _process(delta: float) -> void:
 		player.new_item = false
 		if item_dropped == Enum.Item.TOMATO:
 			Scores.score_tomatoes_harvested += 1
+		if item_dropped == Enum.Item.CORN:
+			Scores.score_corn_harvested += 1
+		if item_dropped == Enum.Item.WHEAT:
+			Scores.score_wheat_harvested += 1
+		if item_dropped == Enum.Item.PUMPKIN:
+			Scores.score_pumpkins_harvested += 1
 
 	if player.death == true or ship.death == true:
 		player_dead() 
@@ -346,10 +362,13 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2) -> void:
 				remove_inventory(Enum.Item.TOMATO_SEED)
 				plant_seed(has_soil, grid_coord)
 			if player.inventory.count(Enum.Item.CORN_SEED) > 0 and player.current_seed == Enum.Seed.CORN:
+				remove_inventory(Enum.Item.CORN_SEED)
 				plant_seed(has_soil, grid_coord)
 			if player.inventory.count(Enum.Item.WHEAT_SEED) > 0 and player.current_seed == Enum.Seed.WHEAT:
+				remove_inventory(Enum.Item.WHEAT_SEED)
 				plant_seed(has_soil, grid_coord)
 			if player.inventory.count(Enum.Item.PUMPKIN_SEED) > 0 and player.current_seed == Enum.Seed.PUMPKIN:
+				remove_inventory(Enum.Item.PUMPKIN_SEED)
 				plant_seed(has_soil, grid_coord)
 				
 		Enum.Tool.PICKAXE:
@@ -928,14 +947,22 @@ func _on_dungeon_approach_statue() -> void:
 		var interaction_message : String = 'Do you have any gold for me?'
 		interaction_yes_no(interaction_message, Enum.Visit.STATUE)
 
+func randomize_store():
+	var store_goods = store.duplicate()
+	var rand_item_1 = randi_range(0,store.size()-1)
+	var rand_item_2 = randi_range(0,store.size()-2)
+	var rand_item_3 = randi_range(0,store.size()-3)
+	store_screen_ui.update_items(store_goods.pop_at(rand_item_1), store_goods.pop_at(rand_item_2), store_goods.pop_at(rand_item_3))
+
 func interaction_statue_start():
 	store_screen_ui.show()
 	store_screen_ui.grab_focus_item_1()
 	Engine.time_scale = 0
-	if statue_transactions == 0:
-		store_screen_ui.update_items(Enum.Item.TOMATO_SEED, Enum.Item.STONE, Enum.Item.APPLE)
+	if statue_transactions == last_statue_transaction:
+		print("The same selection, I see.")
 	else:
-		store_screen_ui.update_items(Enum.Item.TOMATO_SEED, Enum.Item.WOOD, Enum.Item.APPLE)
+		last_statue_transaction = statue_transactions
+		randomize_store()
 
 func interaction_statue_finish(item, cost, qty):
 	Engine.time_scale = 1
@@ -986,7 +1013,15 @@ func _on_store_screen_ui_nevermind() -> void:
 	interaction_ui.grab_focus_once = true
 	print("More Work To Do!")
 	$Timers/TransactingTimer.start()
-	no_repair = true
 	transacted = true
 	interaction_ui.hide()
+	store_screen_ui.hide()
 	Engine.time_scale = 1
+
+
+func _on_store_screen_ui_reroll() -> void:
+	if player.inventory.count(Enum.Item.GOLD) >= 10:
+		for num in range(10):
+			remove_inventory(Enum.Item.GOLD)
+		statue_transactions += 1
+		randomize_store()

@@ -1,22 +1,25 @@
-[gd_scene load_steps=2 format=3 uid="uid://dav64kvys2pab"]
+[gd_scene format=3 uid="uid://dav64kvys2pab"]
 
+[ext_resource type="Theme" uid="uid://rhcgh2v8xs3h" path="res://scenes/ui/game_theme.tres" id="1_27mob"]
 [ext_resource type="Script" uid="uid://cpqdncmsbbwb" path="res://scenes/ui/item_info.gd" id="1_ov2lr"]
 
-[node name="ItemInfo" type="PanelContainer"]
+[node name="ItemInfo" type="PanelContainer" unique_id=1499920607]
 offset_right = 40.0
 offset_bottom = 40.0
+theme = ExtResource("1_27mob")
 script = ExtResource("1_ov2lr")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1498371891]
 layout_mode = 2
 
-[node name="IconTexture" type="TextureRect" parent="HBoxContainer"]
-custom_minimum_size = Vector2(20, 0)
+[node name="IconTexture" type="TextureRect" parent="HBoxContainer" unique_id=1340173346]
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+expand_mode = 1
 stretch_mode = 5
 
-[node name="CountLabel" type="Label" parent="HBoxContainer"]
+[node name="CountLabel" type="Label" parent="HBoxContainer" unique_id=285927822]
 layout_mode = 2
 
-[node name="ItemLabel" type="Label" parent="HBoxContainer"]
+[node name="ItemLabel" type="Label" parent="HBoxContainer" unique_id=188092107]
 layout_mode = 2

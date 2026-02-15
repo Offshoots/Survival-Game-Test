@@ -4,6 +4,7 @@ signal buy_item_1
 signal buy_item_2
 signal buy_item_3
 signal nevermind
+signal reroll
 
 @onready var texture_rect_1: TextureRect = $MarginContainer/HBoxContainer/VBoxContainer/TextureRect1
 @onready var label_1: Label = $MarginContainer/HBoxContainer/VBoxContainer/Label1
@@ -22,8 +23,9 @@ signal nevermind
 @onready var qty_label_2: Label = $MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer/QTYLabel2
 @onready var qty_label_3: Label = $MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer/QTYLabel3
 
-
-
+@onready var total_label_1: Label = $MarginContainer/HBoxContainer/VBoxContainer/TotalLabel1
+@onready var total_label_2: Label = $MarginContainer/HBoxContainer/VBoxContainer2/TotalLabel2
+@onready var total_label_3: Label = $MarginContainer/HBoxContainer/VBoxContainer3/TotalLabel3
 
 #Set up functions to set prices and exchange gold for items in inventory back on the level scence
 var store_item_1 
@@ -38,16 +40,21 @@ var quantity_item_3 = 0
 
 func grab_focus_item_1():
 	button_1.grab_focus()
+	quantity_item_1 = 0
+	quantity_item_2 = 0
+	quantity_item_3 = 0
 
 func _on_button_1_pressed() -> void:
 	buy_item_1.emit(store_item_1, cost_1, quantity_item_1)
+	reset_total_costs()
 
 func _on_button_2_pressed() -> void:
 	buy_item_2.emit(store_item_2, cost_2, quantity_item_2)
+	reset_total_costs()
 
 func _on_button_3_pressed() -> void:
 	buy_item_3.emit(store_item_3, cost_3, quantity_item_3)
-
+	reset_total_costs()
 
 func update_items(item_1 : Enum.Item, item_2 : Enum.Item, item_3 : Enum.Item):
 	#Item 1
@@ -55,55 +62,70 @@ func update_items(item_1 : Enum.Item, item_2 : Enum.Item, item_3 : Enum.Item):
 	cost_1 = Data.INVENTORY_DATA[item_1]['cost']
 	texture_rect_1.texture = load(Data.INVENTORY_DATA[item_1]['icon_texture'])
 	label_1.text = Data.INVENTORY_DATA[item_1]['name'] + "
-	Cost: " + str(Data.INVENTORY_DATA[item_1]['cost'])
+	Cost: " + str(Data.INVENTORY_DATA[item_1]['cost']) + "
+	Details: " + Data.INVENTORY_DATA[item_1]['details']
 	
 	#Item 2
 	store_item_2 = item_2
 	cost_2 = Data.INVENTORY_DATA[item_2]['cost']
 	texture_rect_2.texture = load(Data.INVENTORY_DATA[item_2]['icon_texture'])
 	label_2.text = Data.INVENTORY_DATA[item_2]['name'] + "
-	Cost: " + str(Data.INVENTORY_DATA[item_2]['cost'])
+	Cost: " + str(Data.INVENTORY_DATA[item_2]['cost']) + "
+	Details: " + Data.INVENTORY_DATA[item_2]['details']
 	
 	#Item 3
 	store_item_3 = item_3
 	cost_3 = Data.INVENTORY_DATA[item_3]['cost']
 	texture_rect_3.texture = load(Data.INVENTORY_DATA[item_3]['icon_texture'])
 	label_3.text = Data.INVENTORY_DATA[item_3]['name'] + "
-	Cost: " + str(Data.INVENTORY_DATA[item_3]['cost'])
-
+	Cost: " + str(Data.INVENTORY_DATA[item_3]['cost']) + "
+	Details: " + Data.INVENTORY_DATA[item_3]['details']
 
 func _on_return_button_pressed() -> void:
 	nevermind.emit()
-
+	reset_total_costs()
 
 func _on_more_button_1_pressed() -> void:
 	quantity_item_1 += 1
 	qty_label_1.text = 'QTY: ' + str(quantity_item_1)
-
+	total_label_1.text = "Total Gold: " + str(cost_1*quantity_item_1)
 
 func _on_less_button_1_pressed() -> void:
 	if quantity_item_1 > 0:
 		quantity_item_1 -= 1
 		qty_label_1.text = 'QTY: ' + str(quantity_item_1)
-
+		total_label_1.text = "Total Gold: " + str(cost_1*quantity_item_1)
 
 func _on_more_button_2_pressed() -> void:
 	quantity_item_2 += 1
 	qty_label_2.text = 'QTY: ' + str(quantity_item_2)
-
+	total_label_2.text = "Total Gold: " + str(cost_2*quantity_item_2)
 
 func _on_less_button_2_pressed() -> void:
 	if quantity_item_2 > 0:
 		quantity_item_2 -= 1
 		qty_label_2.text = 'QTY: ' + str(quantity_item_2)
-
+		total_label_2.text = "Total Gold: " + str(cost_2*quantity_item_2)
 
 func _on_more_button_3_pressed() -> void:
 	quantity_item_3 += 1
 	qty_label_3.text = 'QTY: ' + str(quantity_item_3)
-
+	total_label_3.text = "Total Gold: " + str(cost_3*quantity_item_3)
 
 func _on_less_button_3_pressed() -> void:
 	if quantity_item_3 > 0:
 		quantity_item_3 -= 1
 		qty_label_3.text = 'QTY: ' + str(quantity_item_3)
+		total_label_3.text = "Total Gold: " + str(cost_3*quantity_item_3)
+
+func _on_roll_button_pressed() -> void:
+	reroll.emit()
+	reset_total_costs()
+
+func reset_total_costs():
+	total_label_1.text = "Total Gold: " + str(0)
+	total_label_2.text = "Total Gold: " + str(0)
+	total_label_3.text = "Total Gold: " + str(0)
+	qty_label_1.text = 'QTY: 0'
+	qty_label_2.text = 'QTY: 0'
+	qty_label_3.text = 'QTY: 0'

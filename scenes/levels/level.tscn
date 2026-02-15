@@ -1558,7 +1558,7 @@ mouse_filter = 2
 [node name="Timers" type="Node" parent="." unique_id=1507378834]
 
 [node name="DayTimer" type="Timer" parent="Timers" unique_id=1170833392]
-wait_time = 90.0
+wait_time = 5.0
 one_shot = true
 autostart = true
 
@@ -1614,6 +1614,7 @@ stream = ExtResource("20_lp2ca")
 [connection signal="buy_item_2" from="Overlay/CanvasLayer/StoreScreenUI" to="." method="_on_store_screen_ui_buy_item_2"]
 [connection signal="buy_item_3" from="Overlay/CanvasLayer/StoreScreenUI" to="." method="_on_store_screen_ui_buy_item_3"]
 [connection signal="nevermind" from="Overlay/CanvasLayer/StoreScreenUI" to="." method="_on_store_screen_ui_nevermind"]
+[connection signal="reroll" from="Overlay/CanvasLayer/StoreScreenUI" to="." method="_on_store_screen_ui_reroll"]
 [connection signal="timeout" from="Timers/DayTimer" to="." method="_on_day_timer_timeout"]
 [connection signal="timeout" from="Timers/NightTimer" to="." method="_on_night_timer_timeout"]
 [connection signal="timeout" from="Timers/HealTimer" to="." method="_on_heal_timer_timeout"]

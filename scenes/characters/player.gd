@@ -2,7 +2,8 @@ extends CharacterBody2D
 
 var direction: Vector2
 var last_direction: Vector2
-var speed = 50
+var normal_speed = 50
+var speed = normal_speed
 var dash = 90
 var can_move: bool = true
 var player_input: bool = false
@@ -50,6 +51,11 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	direction = Vector2.ZERO
+	if inventory.count(Enum.Item.SPEED) > 0:
+		normal_speed = 50 * 1.5 * inventory.count(Enum.Item.SPEED)
+		dash = 90 * 1.5 * inventory.count(Enum.Item.SPEED)
+	if inventory.count(Enum.Item.HEART) > 0:
+		max_health = 15 + inventory.count(Enum.Item.HEART)*15
 	if can_move:
 		
 		get_basic_input()
@@ -157,7 +163,7 @@ func dash_speed():
 		dash_cooldown = true
 		speed = dash
 		await get_tree().create_timer(0.3).timeout
-		speed = 50
+		speed = normal_speed
 		$Timer.start()
 		#await get_tree().create_timer(0.5).timeout
 		#dash_cooldown = false

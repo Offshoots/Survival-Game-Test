@@ -48,11 +48,13 @@ const INVENTORY_DATA = {
 		#'texture': "res://graphics/plants/tomato.png",
 		'icon_texture': "res://graphics/icons/wood.png",
 		'name':'Wood',
+		'details':'I need enough wood\nto repair my ship.',
 		'cost': 2},
 	Enum.Item.STONE: {
 		#'texture': "res://graphics/plants/tomato.png",
 		'icon_texture':"res://graphics/icons/stone.png",
 		'name':'Stone',
+		'details':'With enough stone\nI can build pyres.',
 		'cost': 2},
 	Enum.Item.GOLD: {
 		#'texture': "res://graphics/plants/tomato.png",
@@ -89,19 +91,19 @@ const INVENTORY_DATA = {
 	Enum.Item.CORN_SEED: {
 		#'texture': "res://graphics/plants/tomato.png",
 		'icon_texture': "res://graphics/icons/corn_seed.png",
-		'name':'Corn_Seed',
+		'name':'Corn Seed',
 		'details':'Plant in soil, water for 3 days\nYields Corn that adds 1 day of food ration.',
 		'cost': 6},
 	Enum.Item.PUMPKIN_SEED: {
 		#'texture': "res://graphics/plants/tomato.png",
 		'icon_texture': "res://graphics/icons/pumpkin_seed.png",
-		'name':'Pumpkin_Seed',
+		'name':'Pumpkin Seed',
 		'details':'Plant in soil, water for 6 days\nYields Pumpkin that adds 3 days of food ration.',
 		'cost': 10},
 	Enum.Item.WHEAT_SEED: {
 		#'texture': "res://graphics/plants/tomato.png",
 		'icon_texture': "res://graphics/icons/wheat_seed.png",
-		'name':'Wheat_Seed',
+		'name':'Wheat Seed',
 		'details':'Plant in soil, water for 4 days\nYields Wheat that adds 1.5 day of food ration.',
 		'cost': 8},
 	Enum.Item.ARMOR: {
@@ -113,19 +115,19 @@ const INVENTORY_DATA = {
 		#'texture': "res://graphics/plants/tomato.png",
 		'icon_texture': "res://graphics/icons/Heart.png",
 		'name':'Blessing of Health',
-		'details':'Increase maximum health by 15',
+		'details':'Double your maximum health',
 		'cost': 50},
 	Enum.Item.STRENGTH: {
 		#'texture': "res://graphics/plants/tomato.png",
-		'icon_texture': "res://graphics/icons/strength.png",
+		'icon_texture': "res://graphics/icons/strength.PNG",
 		'name':'Blessing of Strength',
 		'details':'Increase you strength to slay\nBlobs with a single strike',
 		'cost': 50},
 	Enum.Item.SPEED: {
 		#'texture': "res://graphics/plants/tomato.png",
-		'icon_texture': "res://graphics/icons/speed.png",
+		'icon_texture': "res://graphics/icons/speed.PNG",
 		'name':'Blessing of Speed',
-		'details':'Increase walking and dashing speed by 50%',
+		'details':'Increase walking and\ndashing speed by 50%',
 		'cost': 50},
 		}
 const MACHINE_UPGRADE_COST = {

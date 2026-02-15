@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dammxwyg10l3f" path="res://scenes/ui/store_screen_ui.gd" id="1_h2byj"]
 [ext_resource type="Texture2D" uid="uid://bldxvi5dvro6k" path="res://graphics/icons/apple.png" id="1_y7k2s"]
 [ext_resource type="Texture2D" uid="uid://bj3yq5p04rd6t" path="res://graphics/icons/sack 2.png" id="2_h2byj"]
-[ext_resource type="Texture2D" uid="uid://dsn4f1yaqlb8u" path="res://graphics/icons/wood.png" id="3_rvw0u"]
+[ext_resource type="Texture2D" uid="uid://chw6rknyk0j0p" path="res://graphics/icons/strength.PNG" id="4_h2byj"]
 
 [node name="StoreScreenUI" type="Control" unique_id=1237760155]
 layout_mode = 3
@@ -33,7 +33,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-size_flags_stretch_ratio = 10.0
+size_flags_stretch_ratio = 5.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=1715066781]
 layout_mode = 2
@@ -52,12 +52,14 @@ stretch_mode = 5
 
 [node name="Label1" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=2085205279]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 20
 text = "Apple"
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=547288290]
 layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
 
 [node name="QTYLabel1" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1130324888]
 layout_mode = 2
@@ -82,6 +84,11 @@ focus_neighbor_right = NodePath("../../../../VBoxContainer2/HBoxContainer/VBoxCo
 focus_neighbor_bottom = NodePath("../../../Button1")
 text = "Less"
 
+[node name="TotalLabel1" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=307052529]
+layout_mode = 2
+text = "Total Gold"
+horizontal_alignment = 1
+
 [node name="Button1" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1146454621]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -90,8 +97,8 @@ focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../HBoxContainer/VBoxContainer/LessButton1")
 focus_neighbor_right = NodePath("../../VBoxContainer2/Button2")
 focus_neighbor_bottom = NodePath(".")
-theme_override_font_sizes/font_size = 30
-text = "Buy"
+theme_override_font_sizes/font_size = 20
+text = "BUY"
 
 [node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1616577448]
 layout_mode = 2
@@ -119,12 +126,14 @@ stretch_mode = 5
 
 [node name="Label2" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1802478418]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 20
 text = "Seeds"
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer2" unique_id=836351917]
 layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
 
 [node name="QTYLabel2" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer" unique_id=1220576722]
 layout_mode = 2
@@ -149,6 +158,10 @@ focus_neighbor_right = NodePath("../../../../VBoxContainer3/HBoxContainer/VBoxCo
 focus_neighbor_bottom = NodePath("../../../Button2")
 text = "Less"
 
+[node name="TotalLabel2" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer2" unique_id=216249172]
+layout_mode = 2
+text = "Total Gold"
+
 [node name="Button2" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer2" unique_id=2115458232]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -157,7 +170,7 @@ focus_neighbor_left = NodePath("../../VBoxContainer/Button1")
 focus_neighbor_top = NodePath("../HBoxContainer/VBoxContainer/LessButton2")
 focus_neighbor_right = NodePath("../../VBoxContainer3/Button3")
 focus_neighbor_bottom = NodePath(".")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 20
 text = "Buy"
 
 [node name="Spacer4" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1538894651]
@@ -180,18 +193,20 @@ size_flags_vertical = 3
 [node name="TextureRect3" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer3" unique_id=697420895]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
-texture = ExtResource("3_rvw0u")
+texture = ExtResource("4_h2byj")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="Label3" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer3" unique_id=1438355989]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 20
 text = "Wood"
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer3" unique_id=664207458]
 layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
 
 [node name="QTYLabel3" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer" unique_id=407976043]
 layout_mode = 2
@@ -204,7 +219,7 @@ layout_mode = 2
 layout_mode = 2
 focus_neighbor_left = NodePath("../../../../VBoxContainer2/HBoxContainer/VBoxContainer/MoreButton2")
 focus_neighbor_top = NodePath(".")
-focus_neighbor_right = NodePath("../../../../VBoxContainer4/ReturnButton")
+focus_neighbor_right = NodePath("../../../../VBoxContainer4/RollButton")
 focus_neighbor_bottom = NodePath("../LessButton3")
 text = "More"
 
@@ -216,6 +231,10 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../../../../VBoxContainer4/ReturnButton")
 text = "Less"
 
+[node name="TotalLabel3" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer3" unique_id=1177382259]
+layout_mode = 2
+text = "Total Gold"
+
 [node name="Button3" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer3" unique_id=253112312]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -224,7 +243,7 @@ focus_neighbor_left = NodePath("../../VBoxContainer2/Button2")
 focus_neighbor_top = NodePath("../HBoxContainer/VBoxContainer/LessButton3")
 focus_neighbor_right = NodePath("../../VBoxContainer4/ReturnButton")
 focus_neighbor_bottom = NodePath(".")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 20
 text = "Buy"
 
 [node name="Spacer6" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer3" unique_id=1851642946]
@@ -242,27 +261,45 @@ layout_mode = 2
 [node name="Spacer2" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer4" unique_id=248986246]
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 10.0
 
-[node name="ReturnButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer4" unique_id=744685450]
+[node name="RollButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer4" unique_id=1774397068]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 focus_neighbor_left = NodePath("../../VBoxContainer3/Button3")
 focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../ReturnButton")
+theme_override_font_sizes/font_size = 20
+text = "Re-Roll Store
+Cost: 10 Gold"
+
+[node name="Spacer3" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer4" unique_id=790137588]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ReturnButton" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer4" unique_id=744685450]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_left = NodePath("../../VBoxContainer3/Button3")
+focus_neighbor_top = NodePath("../RollButton")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath(".")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 20
 text = "Return"
 
 [node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer4" unique_id=1735721706]
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 10.0
 
 [node name="Spacer6" type="Control" parent="MarginContainer/HBoxContainer" unique_id=1878502355]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-size_flags_stretch_ratio = 10.0
+size_flags_stretch_ratio = 5.0
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer/MoreButton1" to="." method="_on_more_button_1_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer/LessButton1" to="." method="_on_less_button_1_pressed"]
@@ -273,4 +310,5 @@ size_flags_stretch_ratio = 10.0
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer/VBoxContainer/MoreButton3" to="." method="_on_more_button_3_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer/VBoxContainer/LessButton3" to="." method="_on_less_button_3_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer3/Button3" to="." method="_on_button_3_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer4/RollButton" to="." method="_on_roll_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer4/ReturnButton" to="." method="_on_return_button_pressed"]

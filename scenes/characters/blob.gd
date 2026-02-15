@@ -122,7 +122,12 @@ func start_leap_cooldown():
 	
 
 func pathfind():
-	nav_agent.target_position = target.position
+	if target == ship:
+		#Add some randomness to the attack vector on the ship
+		var rand_vector = Vector2(randi_range(-100,100),0)
+		nav_agent.target_position = target.position + rand_vector
+	else:
+		nav_agent.target_position = target.position
 
 func death():
 	if tracking == true:
@@ -141,14 +146,22 @@ func push(hit_target):
 func hit(tool: Enum.Tool):
 	if tool == Enum.Tool.SWORD:
 		$FlashSprite2D.flash()
-		health -= 4
-		push_distance = 120
+		if player.inventory.count(Enum.Item.STRENGTH) > 0:
+			health -= 12
+			push_distance = 200
+		else:
+			health -= 4
+			push_distance = 120
 		var hit_target = (player.position - position).normalized() * -1 * push_distance
 		push(hit_target)
 	if tool == Enum.Tool.AXE:
 		$FlashSprite2D.flash()
-		health -= 3
-		push_distance = 100
+		if player.inventory.count(Enum.Item.STRENGTH) > 0:
+			health -= 12
+			push_distance = 200
+		else:
+			health -= 3
+			push_distance = 100
 		var hit_target = (player.position - position).normalized() * -1 * push_distance
 		push(hit_target)
 

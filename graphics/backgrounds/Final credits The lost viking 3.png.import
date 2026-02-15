@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://vcnm26u31wyv"
-path="res://.godot/imported/Final credits The lost viking 2.png-7a2389888ca493187f4b656e59a4a53a.ctex"
+uid="uid://c8jbtsgnw21wv"
+path="res://.godot/imported/Final credits The lost viking 3.png-6d877d0e1f852911a935d8d7c5f6ab54.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://graphics/backgrounds/Final credits The lost viking 2.png"
-dest_files=["res://.godot/imported/Final credits The lost viking 2.png-7a2389888ca493187f4b656e59a4a53a.ctex"]
+source_file="res://graphics/backgrounds/Final credits The lost viking 3.png"
+dest_files=["res://.godot/imported/Final credits The lost viking 3.png-6d877d0e1f852911a935d8d7c5f6ab54.ctex"]
 
 [params]
 

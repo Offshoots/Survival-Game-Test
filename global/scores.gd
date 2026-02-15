@@ -15,6 +15,10 @@ var score_wood_collected
 var score_stone_collected
 var score_fish_caught
 var score_tomatoes_harvested
+var score_corn_harvested
+var score_wheat_harvested
+var score_pumpkins_harvested
+var score_plants_harvested
 
 var score_enemies_killed_by_daylight
 var score_enemies_killed_by_pyre
