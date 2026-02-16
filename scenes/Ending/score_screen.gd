@@ -26,6 +26,7 @@ var victory_score = 0
 var victory_criteria = 0
 var distance = 0
 
+var defeat : bool = false
 var victory : bool = false
 
 func _ready() -> void:
@@ -95,6 +96,7 @@ func sea_stats():
 	if days_worth_of_supplies > victory_threshold:
 		Scores.victory_chance = true
 	if Scores.score_dead == true:
+		defeat = true
 		victory_label.text = "Died in Combat"
 		journey = "Died in Combat"
 		distance = 0
@@ -102,6 +104,7 @@ func sea_stats():
 		journey = journey_results.pick_random()
 		distance = randi_range(1,100) * days_worth_of_supplies
 	if Scores.ship_destroyed == true:
+		defeat = true
 		journey = "Ship Destory. Stranded. Surrounded."
 		distance = 0
 	if Scores.score_dead == true and Scores.starved_dead:
@@ -118,7 +121,7 @@ func sea_stats():
 		Journey Result: " + "[color=red]" + journey + "[/color]"
 
 func victoy_chance():
-	if Scores.victory_chance == true:
+	if Scores.victory_chance == true and defeat == false:
 		#percent increase in Victory every day passed the victory threshold
 		victory_days = (days_worth_of_supplies - victory_threshold)
 		victory_score = victory_days * randi_range(1,10)

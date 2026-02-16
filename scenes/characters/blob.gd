@@ -31,6 +31,7 @@ var days
 var elapsed_attack_time = 0.0
 var damage_interval = 5
 var target
+var rand_vector
 var colors : Array[Enum.Blob] = [Enum.Blob.BLUE, Enum.Blob.GREEN, Enum.Blob.RED]
 var color_selected : Enum.Blob
 
@@ -56,6 +57,7 @@ func _ready() -> void:
 	days = Scores.score_days_survived
 	#Assign Target for blob
 	target = [player, ship].pick_random()
+	rand_vector = Vector2(randi_range(-50,50),0)
 	print(target)
 	print(colors)
 	color_selected = colors.pick_random()
@@ -124,7 +126,6 @@ func start_leap_cooldown():
 func pathfind():
 	if target == ship:
 		#Add some randomness to the attack vector on the ship
-		var rand_vector = Vector2(randi_range(-100,100),0)
 		nav_agent.target_position = target.position + rand_vector
 	else:
 		nav_agent.target_position = target.position
