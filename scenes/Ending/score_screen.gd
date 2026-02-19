@@ -19,7 +19,7 @@ extends Control
 @onready var sea_stats_label: RichTextLabel = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/VBoxContainer2/PanelContainer2/SeaStatsLabel
 
 var journey_results = ["Lost at Sea", "Lost in the Storm", "Disappeared in the Maelstrom"]
-var victory_threshold = 1
+var victory_threshold = 25
 var days_worth_of_supplies = 0
 var victory_days = 0
 var victory_score = 0
@@ -89,7 +89,7 @@ func combat_stats():
 	
 func sea_stats():
 	var journey : String
-	days_worth_of_supplies = (Scores.score_apples_collected - Scores.score_apples_eaten) + Scores.score_tomatoes_harvested * 0.5 + Scores.score_corn_harvested + Scores.score_wheat_harvested * 1.5 + Scores.score_pumpkins_harvested * 3 + Scores.motivation_boost
+	days_worth_of_supplies = (Scores.score_apples_collected - Scores.score_apples_eaten)*0.1 + Scores.score_tomatoes_harvested * 0.5 + Scores.score_corn_harvested + Scores.score_wheat_harvested * 1.5 + Scores.score_pumpkins_harvested * 3 + Scores.motivation_boost
 	for day in range(days_worth_of_supplies):
 		print(day)
 		distance += randi_range(1,100)
